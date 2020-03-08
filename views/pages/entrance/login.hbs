@@ -1,0 +1,41 @@
+{{#extend "main-layout"}}
+  {{#content "body" mode="append"}}
+    <div class="auth">
+        <div class="auth-container">
+            <div class="card">
+                <header class="auth-header">
+                    <h1 class="auth-title">
+                      {{> app/_common/logo/logo}}
+                        {{__ 'Brand'}}
+                    </h1>
+                </header>
+                <div class="auth-content">
+                    <p class="text-center"></p>
+                    <form id="login-form" action="entrance/login" novalidate="">
+                        <div class="form-group">
+                            <label for="emailAddress" >{{__ 'Username'}}</label>
+                            <input type="email" class="form-control underlined" name="emailAddress" id="emailAddress" placeholder="{{__ 'Your email address'}}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" >{{__ 'Password'}}</label>
+                            <input type="password" class="form-control underlined" name="password" id="password" placeholder="{{__ 'Your password'}}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="remember">
+                                <input class="checkbox" id="remember" name="remember" type="checkbox">
+                                <span>{{__ 'Remember me'}}</span>
+                            </label>
+
+                            <a href="/password/forgot" class="forgot-btn pull-right">{{__ 'Forgot password'}}?</a>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-block btn-primary">{{__ 'Login'}}</button>
+                        </div>
+                    </form>
+                    <div class="error-message" style="display: none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+  {{/content}}
+{{/extend}}

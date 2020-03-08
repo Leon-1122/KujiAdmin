@@ -1,0 +1,27 @@
+{{#extend "main-layout"}}
+  {{#content "body" mode="append"}}
+    <div class="main-wrapper">
+      <div class="app" id="app">
+        {{!-- Default header block --}}
+        {{> app/_common/header/header}}
+
+        {{!-- Default sidebar block --}}
+        {{> app/_common/sidebar/sidebar}}
+
+        <div class="mobile-menu-handle"></div>
+
+        {{!-- Content section --}}
+        <article class="content {{pagename}}-page {{#is pagename "like" "/.*-list$/g"}}items-list-page{{/is}} ">
+          {{#block "article"}}
+
+          {{/block}}
+        </article>
+
+        {{!-- Default footer block --}}
+        {{> app/_common/footer/footer}}
+
+        {{> app/_common/modals/modals}}
+      </div>
+    </div>
+  {{/content}}
+{{/extend}}

@@ -1,0 +1,169 @@
+{{#extend "app-layout"}}
+  {{#content "article" mode="append"}}
+      <div class="title-search-block">
+
+          <div class="title-block">
+              <div class="row">
+                {{!-- Title --}}
+                  <div class="col-md-6">
+                      <h3 class="title">
+                        {{__ 'User'}}
+                          <a href="/user/add" class="btn btn-primary btn-sm rounded-s">
+                              {{__ 'Add New'}}
+                          </a>
+                          <div class="action dropdown">
+                          <button class="btn  btn-sm rounded-s btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{__ 'More actions...'}}
+                          </button>
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="deleteCheckedUsers()"><i class="fa fa-close icon"></i>{{__ 'Delete'}}</a>
+                          </div>
+                      </div>
+                      </h3>
+                      <p class="title-description">
+                        {{__ 'User list'}}
+                      </p>
+                  </div>
+
+              </div>
+          </div>
+
+
+          <div class="items-search">
+              <form id="user-list-form" class="form-inline" action="/user/list">
+                  <div class="input-group">
+                      <input type="text" name="searchFor" class="form-control boxed rounded-s" placeholder="{{__ 'Search for user'}}" value="{{searchFor}}">
+                      <span class="input-group-btn">
+                        <button class="btn btn-secondary rounded-s" type="submit">
+                          <i class="fa fa-search"></i>
+                        </button>
+                      </span>
+                  </div>
+              </form>
+          </div>
+      </div>
+
+      <div class="card items">
+          <ul class="item-list striped">
+              <li class="item item-list-header">
+                  <div class="item-row">
+                      <div class="item-col fixed item-col-check">
+                          <label class="item-check" id="select-all-items">
+                              <input type="checkbox" class="checkbox">
+                              <span></span>
+                          </label>
+                      </div>
+                      <div class="item-col item-col-header item-col-title item-col-6">
+                          <div>
+                              <span>{{__ 'Email Address'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date item-col-3">
+                          <div>
+                              <span>{{__ 'Full Name'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date item-col-3">
+                          <div>
+                              <span>{{__ 'Role'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date">
+                          <div>
+                              <span>{{__ 'Created At'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date">
+                          <div>
+                              <span>{{__ 'Last Seen At'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header fixed item-col-actions-dropdown">
+
+                      </div>
+                  </div>
+              </li>
+            {{#each items}}
+                <li class="item">
+
+                    <div class="item-row">
+
+                        <div class="item-col fixed item-col-check">
+
+                            <label class="item-check" id="select-all-items">
+                                <input type="checkbox" class="checkbox" value="{{this.id}}">
+                                <span></span>
+                            </label>
+                        </div>
+
+                        <div class="item-col fixed pull-left item-col-title item-col-6">
+                            <div class="item-heading">{{../__ 'Email Address'}}</div>
+                            <div>
+                                <a href="/user/{{this.id}}" class="">
+                                    <h4 class="item-title">
+                                      {{this.emailAddress}}
+                                    </h4>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date item-col-3">
+                            <div class="item-heading">{{../__ 'Full Name'}}</div>
+                            <div>
+                              {{this.fullName}}
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date item-col-3">
+                            <div class="item-heading">{{../__ 'Role'}}</div>
+                            <div>
+                              {{this.role.desc}}
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date">
+                            <div class="item-heading">{{../__ 'Created At'}}</div>
+                            <div class="no-overflow">
+                              {{#date this.createdAt}}{{/date}}
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date">
+                            <div class="item-heading">{{../__ 'Last Seen At'}}</div>
+                            <div class="no-overflow">
+                              {{#date this.lastSeenAt}}{{/date}}
+                            </div>
+                        </div>
+                        <div class="item-col fixed item-col-actions-dropdown">
+                            <div class="item-actions-dropdown">
+                                <a class="item-actions-toggle-btn">
+                                  <span class="inactive">
+                                      <i class="fa fa-cog"></i>
+                                  </span>
+                                      <span class="active">
+                                  <i class="fa fa-chevron-circle-right"></i>
+                                  </span>
+                                </a>
+                                <div class="item-actions-block">
+                                    <ul class="item-actions-list">
+                                        <li>
+                                            <a class="remove" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="deleteOneUser('{{this.id}}')">
+                                                <i class="fa fa-trash-o "></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="edit" href="/user/{{this.id}}">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
+            {{/each}}
+          </ul>
+      </div>
+
+      {{> app/_common/pager/pager}}
+
+  {{/content}}
+{{/extend}}

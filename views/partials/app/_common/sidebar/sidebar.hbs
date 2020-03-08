@@ -1,0 +1,94 @@
+<aside class="sidebar">
+    <div class="sidebar-container">
+
+        <div class="sidebar-header">
+            <div class="brand">
+              {{> app/_common/logo/logo}}
+              {{__ 'Brand'}}
+            </div>
+        </div>
+
+        <nav class="menu">
+            <ul class="sidebar-menu metismenu" id="sidebar-menu">
+
+                <li {{#is pagename "===" "dashboard"}}class="active"{{/is}} >
+                    <a href="/welcome">
+                        <i class="fa fa-home"></i> {{__ 'Dashboard'}}
+                    </a>
+                </li>
+
+              {{#is "user" "in" res.locals.me.permissionModules}}
+                  <li {{#is pagename "in" "user-list,user-editor"}}class="active"{{/is}} >
+                      <a href="/user/list">
+                          <i class="fa fa-users"></i> {{__ 'Users Manager'}}
+                      </a>
+                  </li>
+              {{/is}}
+
+              {{#is "role" "in" res.locals.me.permissionModules}}
+                  <li {{#is pagename "in" "role-list,role-editor"}}class="active"{{/is}} >
+                      <a href="/authority">
+                          <i class="fa fa-sitemap"></i> {{__ 'Authority Manager'}}
+                      </a>
+                  </li>
+              {{/is}}
+
+              {{#is "machine" "in" res.locals.me.permissionModules}}
+                  <li {{#is pagename "in" "machine-list,machine-stock,machine-lottery,machine-logs"}}class="active open"{{/is}} >
+
+                      <a href="">
+                          <i class="fa fa-list-alt"></i> {{__ 'Machines Manager'}}
+                          <i class="fa arrow"></i>
+                      </a>
+
+                      <ul class="sidebar-nav">
+                          <li {{#is pagename "===" "machine-list"}}class="active"{{/is}} >
+                              <a href="/machines">
+                                {{__ 'Machines List'}}
+                              </a>
+                          </li>
+
+                          <li {{#is pagename "===" "machine-stock"}}class="active"{{/is}} >
+                              <a href="/machine/stock">
+                                {{__ 'Machine Stock'}}
+                              </a>
+                          </li>
+
+                          <li {{#is pagename "===" "machine-lottery"}}class="active"{{/is}} >
+                              <a href="/machine/lottery">
+                                {{__ 'Machine Lottery'}}
+                              </a>
+                          </li>
+
+                          <li {{#is pagename "===" "machine-logs"}}class="active"{{/is}} >
+                              <a href="/machine/logs">
+                                {{__ 'Machine Logs'}}
+                              </a>
+                          </li>
+                      </ul>
+                  </li>
+              {{/is}}
+
+              {{#is "product" "in" res.locals.me.permissionModules}}
+                  <li {{#is pagename "in" "product-list"}}class="active"{{/is}} >
+                      <a href="/products">
+                          <i class="fa fa-book"></i> {{__ 'Product List'}}
+                      </a>
+                  </li>
+              {{/is}}
+
+              {{#is "lottery" "in" res.locals.me.permissionModules}}
+                  <li {{#is pagename "in" "lottery-list"}}class="active"{{/is}} >
+                      <a href="/lotteries">
+                          <i class="fa fa-ticket"></i> {{__ 'Lottery Manager'}}
+                      </a>
+                  </li>
+              {{/is}}
+            </ul>
+        </nav>
+
+    </div>
+
+</aside>
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+<div class="sidebar-mobile-menu-handle" id="sidebar-mobile-menu-handle"></div>

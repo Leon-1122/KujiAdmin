@@ -1,0 +1,38 @@
+<header class="header">
+
+    <div class="header-block header-block-collapse d-lg-none d-xl-none" >
+        <button class="collapse-btn" id="sidebar-collapse-btn">
+            <i class="fa fa-bars"></i>
+        </button>
+    </div>
+
+    <div class="header-block header-block-nav">
+        <ul class="nav-profile">
+
+          {{!-- Profile Dropdown --}}
+            <li class="profile dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <div style="display: inline-block;font-size: 26px;text-align: center;vertical-align: middle;width: 50px;">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <span class="name">
+                      {{res.locals.me.fullName}}
+                    </span>
+                </a>
+                <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <a class="dropdown-item" href="#">
+                        <i class="fa fa-user icon"></i>
+                        {{__ 'Profile'}}
+                    </a>
+                    <div class="dropdown-divider" ></div>
+                    <a class="dropdown-item" href="/logout">
+                        <i class="fa fa-power-off icon"></i>
+                      {{__ 'Logout'}}
+                    </a>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+</header>

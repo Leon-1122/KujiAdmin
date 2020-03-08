@@ -1,0 +1,41 @@
+<nav class="text-right">
+    <ul class="pagination">
+      {{#if pager.previousPage}}
+          <li class="page-item">
+              <a class="page-link" href="javascript:doPage('{{pagename}}', {{pager.previousPage}})">
+                {{__ 'Prev'}}
+              </a>
+          </li>
+      {{/if}}
+
+      {{#page-item pager.page pager.pageCount}}
+        {{#is ../pager.page "===" this}}
+            <li class="page-item active">
+                      <span class="page-link">
+                        {{this}}
+                      </span>
+            </li>
+        {{/is}}
+        {{#is ../pager.page "!==" this}}
+            <li class="page-item">
+                <a class="page-link" href="javascript:doPage('{{../pagename}}', {{this}})">
+                  {{this}}
+                </a>
+            </li>
+        {{/is}}
+      {{/page-item}}
+
+      {{#if pager.nextPage}}
+          <li class="page-item">
+              <a class="page-link" href="javascript:doPage('{{pagename}}', {{pager.nextPage}})">
+                {{__ 'Next'}}
+              </a>
+          </li>
+      {{/if}}
+        <li class="page-item page-total">
+            <div class="page-link">
+              {{__ 'Total'}} {{pager.pageCount}}
+            </div>
+        </li>
+    </ul>
+</nav>
