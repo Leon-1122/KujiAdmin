@@ -27,7 +27,7 @@
 
               {{#is "role" "in" res.locals.me.permissionModules}}
                   <li {{#is pagename "in" "role-list,role-editor"}}class="active"{{/is}} >
-                      <a href="/authority">
+                      <a href="/role/list">
                           <i class="fa fa-sitemap"></i> {{__ 'Authority Manager'}}
                       </a>
                   </li>

@@ -24,9 +24,12 @@ module.exports.routes = {
   'GET /user/list':          { action: 'user/view-user-list' },
   'GET /user/list/:pageNum': { action: 'user/view-user-list' },
   'GET /user/add':           { action: 'user/view-user-editor' },
-  'GET /user/:userId':       { action: 'user/view-user-editor' },
+  'GET /user/:id':           { action: 'user/view-user-editor' },
 
-
+  'GET /role/list':          { action: 'role/view-role-list' },
+  'GET /role/list/:pageNum': { action: 'role/view-role-list' },
+  'GET /role/add':           { action: 'role/view-role-editor' },
+  'GET /role/:id':           { action: 'role/view-role-editor' },
 
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
@@ -46,12 +49,15 @@ module.exports.routes = {
   //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
   // Note that, in this app, these API endpoints may be accessed using the `Cloud.*()` methods
   // from the Parasails library, or by using those method names as the `action` in <ajax-form>.
-  '/api/v1/entrance/logout':                             { action: 'entrance/logout' },
-  'PUT   /api/v1/user/update-password':                  { action: 'user/update-password' },
-  'PUT   /api/v1/user/update-profile':                   { action: 'user/update-profile' },
-  'DELETE   /api/v1/user':                               { action: 'user/delete-user' },
-  'PUT   /api/v1/entrance/login':                        { action: 'entrance/login' },
-  'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
-  'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
+  '/api/v1/entrance/logout':                              { action: 'entrance/logout' },
+  'PUT    /api/v1/entrance/login':                        { action: 'entrance/login' },
+  'POST   /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
+  'POST   /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
+  'PUT    /api/v1/user/update-password':                  { action: 'user/update-password' },
+  'PUT    /api/v1/user/update-profile':                   { action: 'user/update-profile' },
+  'DELETE /api/v1/user':                                  { action: 'user/delete-user' },
+  'PUT    /api/v1/role':                                  { action: 'role/update-role' },
+  'DELETE /api/v1/role':                                  { action: 'role/delete-role' },
+
 
 };

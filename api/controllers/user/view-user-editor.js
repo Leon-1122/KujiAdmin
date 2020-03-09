@@ -1,14 +1,14 @@
 module.exports = {
 
 
-  friendlyName: 'View edit profile',
+  friendlyName: 'View user editor',
 
 
-  description: 'Display "Edit profile" page.',
+  description: 'Display "User Editor" page.',
 
   inputs: {
 
-    userId: {
+    id: {
       type: 'string',
     },
   },
@@ -30,8 +30,8 @@ module.exports = {
 
     var userInfo;
 
-    if (inputs.userId) {
-      userInfo = await User.findOne({id: inputs.userId});
+    if (inputs.id) {
+      userInfo = await User.findOne({id: inputs.id});
 
       if (!userInfo) {
         throw "userNotExist";
@@ -41,7 +41,7 @@ module.exports = {
     var roleList = await Role.find();
 
     return {
-      pagename: 'edit-profile',
+      pagename: 'user-editor',
       roleList: roleList,
       user: userInfo
     };

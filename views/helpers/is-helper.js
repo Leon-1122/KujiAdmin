@@ -56,6 +56,9 @@ module.exports.register = function (handlebars) {
         return left !== right;
     });
     eR.add('in', function(left, right) {
+        if (right === undefined) {
+          return false;
+        }
         if ( ! isArray(right)) {
             right = right.split(',');
         }

@@ -1,28 +1,24 @@
-//UserEditorForm validation
+//RoleEditorForm validation
 $(function () {
-  if (!$('#user-editor-form').length) {
+  if (!$('#role-editor-form').length) {
     return false;
   }
 
-  var userEditorValidationSettings = {
+  var roleEditorValidationSettings = {
     rules: {
-      emailAddress: {
-        required: true,
-        email: true
-      },
-      fullName: "required",
-      role: "required",
+      code: "required",
+      desc: "required"
     },
     // submit handler
     submitHandler: function (form) {
       $.ajax({
         type: 'put',
-        url: '/api/v1/user/update-profile',
+        url: '/api/v1/role',
         data: $(form).serialize(),
         success: function (data) {
           console.log(data);
           $('.error-message').hide();
-          window.location = '/user/list';
+          window.location = '/role/list';
         },
         error: function (xhr) {
           console.log(xhr);
@@ -38,7 +34,7 @@ $(function () {
     }
   }
 
-  $.extend(userEditorValidationSettings, config.validations);
+  $.extend(roleEditorValidationSettings, config.validations);
 
-  $('#user-editor-form').validate(userEditorValidationSettings);
+  $('#role-editor-form').validate(roleEditorValidationSettings);
 })

@@ -1,10 +1,10 @@
 module.exports = {
 
 
-  friendlyName: 'Delete user',
+  friendlyName: 'Delete role',
 
 
-  description: 'Delete user.',
+  description: 'Delete role.',
 
 
   inputs: {
@@ -19,7 +19,7 @@ module.exports = {
 
   exits: {
     success: {
-      description: 'The requesting users have been successfully deleted.',
+      description: 'The requesting roles have been successfully deleted.',
     },
 
   },
@@ -27,7 +27,7 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    await User.destroy({
+    await Role.destroy({
       id: {in: inputs.ids}
     });
 

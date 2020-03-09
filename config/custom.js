@@ -96,7 +96,7 @@ module.exports.custom = {
   appsecret: '724724dcc80bc3a3d5e3cf10748c4d86',
   envname: 'cloud-rhf5t',
 
-  dataPerPage: 1,
+  dataPerPage: 10,
   defaultPassword: '$2a$10$nd5LZPfrDoaSxYrilWoQ7udXhtltlWTkr3tW3.gKjKQRSwhraa5Pe',
 
 };

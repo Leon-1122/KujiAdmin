@@ -1,4 +1,33 @@
 $(function () {
+  /***********************************************
+   *        actions dropdown setting
+   ***********************************************/
+  var $itemActions = $(".item-actions-dropdown");
+
+  $(document).on('click', function (e) {
+    if (!$(e.target).closest('.item-actions-dropdown').length) {
+      $itemActions.removeClass('active');
+    }
+  });
+
+  $('.item-actions-toggle-btn').on('click', function (e) {
+    e.preventDefault();
+    var $thisActionList = $(this).closest('.item-actions-dropdown');
+    $itemActions.not($thisActionList).removeClass('active');
+    $thisActionList.toggleClass('active');
+  });
+
+  /***********************************************
+   *        table select all checkbox setting
+   ***********************************************/
+  $('#select-all-items').on('change', function () {
+    var $this = $(this).children(':checkbox').get(0);
+    $(this).parents('li')
+      .siblings()
+      .find(':checkbox')
+      .prop('checked', $this.checked)
+      .change();
+  });
 
   setSameHeights();
 
@@ -53,7 +82,7 @@ $(function () {
     var target = $(e.relatedTarget);
     var callback = target.data('callback');
     if (callback) {
-      $('#confirm-ok').one('click', function(){
+      $('#confirm-ok').one('click', function () {
         eval(callback)
       });
     }
@@ -129,6 +158,9 @@ NProgress.start();
 // end loading bar
 NProgress.done();
 
+/***********************************************
+ *        table pager
+ ***********************************************/
 function doPage(formName, pageNum) {
   var $formObj = $('#' + formName + '-form')
   if ($formObj.length) {
@@ -137,6 +169,9 @@ function doPage(formName, pageNum) {
   }
 }
 
+/***********************************************
+ *        message display
+ ***********************************************/
 function showAlert(msg, callback) {
   $('#alert-modal .modal-body p').text(msg);
   if (callback && $.isFunction(callback)) {
@@ -144,3 +179,53 @@ function showAlert(msg, callback) {
   }
   $('#alert-modal').modal({backdrop: 'static'});
 }
+
+/***********************************************
+ *        delete data
+ ***********************************************/
+function deleteCheckedRecords(module) {
+  var ids = [];
+  $(".item input.checkbox:checked").each(function (i) {
+    ids.push($(this).val());
+  });
+
+  if (ids.length === 0) {
+    showAlert("请选择要删除的数据");
+    return;
+  }
+
+  $.ajax({
+    type: 'delete',
+    url: '/api/v1/' + module,
+    data: {
+      ids: ids
+    },
+    success: function (data) {
+      showAlert("删除成功", function () {
+        window.location = '/' + module + '/list';
+      });
+    },
+    error: function (xhr) {
+      showAlert("删除失败");
+    }
+  });
+}
+
+function deleteOneRecord(module, id) {
+  $.ajax({
+    type: 'delete',
+    url: '/api/v1/' + module,
+    data: {
+      ids: [id]
+    },
+    success: function (data) {
+      showAlert("删除成功", function () {
+        window.location = '/' + module + '/list';
+      });
+    },
+    error: function (xhr) {
+      showAlert("删除失败");
+    }
+  });
+}
+

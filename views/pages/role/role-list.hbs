@@ -7,8 +7,8 @@
                 {{!-- Title --}}
                   <div class="col-md-6">
                       <h3 class="title">
-                        {{__ 'User'}}
-                          <a href="/user/add" class="btn btn-primary btn-sm rounded-s">
+                        {{__ 'Role'}}
+                          <a href="/role/add" class="btn btn-primary btn-sm rounded-s">
                               {{__ 'Add New'}}
                           </a>
                           <div class="action dropdown">
@@ -16,12 +16,12 @@
                             {{__ 'More actions...'}}
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="deleteCheckedRecords('user')"><i class="fa fa-close icon"></i>{{__ 'Delete'}}</a>
+                              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="deleteCheckedRecords('role')"><i class="fa fa-close icon"></i>{{__ 'Delete'}}</a>
                           </div>
                       </div>
                       </h3>
                       <p class="title-description">
-                        {{__ 'User list'}}
+                        {{__ 'Role list'}}
                       </p>
                   </div>
 
@@ -30,9 +30,9 @@
 
 
           <div class="items-search">
-              <form id="user-list-form" class="form-inline" action="/user/list">
+              <form id="role-list-form" class="form-inline" action="/role/list">
                   <div class="input-group">
-                      <input type="text" name="searchFor" class="form-control boxed rounded-s" placeholder="{{__ 'Search for user'}}" value="{{searchFor}}">
+                      <input type="text" name="searchFor" class="form-control boxed rounded-s" placeholder="{{__ 'Search for role'}}" value="{{searchFor}}">
                       <span class="input-group-btn">
                         <button class="btn btn-secondary rounded-s" type="submit">
                           <i class="fa fa-search"></i>
@@ -53,19 +53,14 @@
                               <span></span>
                           </label>
                       </div>
-                      <div class="item-col item-col-header item-col-title item-col-6">
+                      <div class="item-col item-col-header item-col-title item-col-3">
                           <div>
-                              <span>{{__ 'Email Address'}}</span>
+                              <span>{{__ 'Code'}}</span>
                           </div>
                       </div>
                       <div class="item-col item-col-header item-col-date item-col-3">
                           <div>
-                              <span>{{__ 'Full Name'}}</span>
-                          </div>
-                      </div>
-                      <div class="item-col item-col-header item-col-date item-col-3">
-                          <div>
-                              <span>{{__ 'Role'}}</span>
+                              <span>{{__ 'Desc'}}</span>
                           </div>
                       </div>
                       <div class="item-col item-col-header item-col-date">
@@ -75,7 +70,7 @@
                       </div>
                       <div class="item-col item-col-header item-col-date">
                           <div>
-                              <span>{{__ 'Last Seen At'}}</span>
+                              <span>{{__ 'Updated At'}}</span>
                           </div>
                       </div>
                       <div class="item-col item-col-header fixed item-col-actions-dropdown">
@@ -96,26 +91,20 @@
                             </label>
                         </div>
 
-                        <div class="item-col fixed pull-left item-col-title item-col-6">
-                            <div class="item-heading">{{../__ 'Email Address'}}</div>
+                        <div class="item-col fixed pull-left item-col-title item-col-3">
+                            <div class="item-heading">{{../__ 'Code'}}</div>
                             <div>
-                                <a href="/user/{{this.id}}" class="">
+                                <a href="/role/{{this.id}}" class="">
                                     <h4 class="item-title">
-                                      {{this.emailAddress}}
+                                      {{this.code}}
                                     </h4>
                                 </a>
                             </div>
                         </div>
                         <div class="item-col item-col-date item-col-3">
-                            <div class="item-heading">{{../__ 'Full Name'}}</div>
+                            <div class="item-heading">{{../__ 'Desc'}}</div>
                             <div>
-                              {{this.fullName}}
-                            </div>
-                        </div>
-                        <div class="item-col item-col-date item-col-3">
-                            <div class="item-heading">{{../__ 'Role'}}</div>
-                            <div>
-                              {{this.role.code}}-{{this.role.desc}}
+                              {{this.desc}}
                             </div>
                         </div>
                         <div class="item-col item-col-date">
@@ -125,9 +114,9 @@
                             </div>
                         </div>
                         <div class="item-col item-col-date">
-                            <div class="item-heading">{{../__ 'Last Seen At'}}</div>
+                            <div class="item-heading">{{../__ 'Updated At'}}</div>
                             <div class="no-overflow">
-                              {{#date this.lastSeenAt}}{{/date}}
+                              {{#date this.updatedAt}}{{/date}}
                             </div>
                         </div>
                         <div class="item-col fixed item-col-actions-dropdown">
@@ -143,12 +132,12 @@
                                 <div class="item-actions-block">
                                     <ul class="item-actions-list">
                                         <li>
-                                            <a class="remove" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="deleteOneRecord('user', '{{this.id}}')">
+                                            <a class="remove" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="deleteOneRecord('role', '{{this.id}}')">
                                                 <i class="fa fa-trash-o "></i>
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="edit" href="/user/{{this.id}}">
+                                            <a class="edit" href="/role/{{this.id}}">
                                                 <i class="fa fa-pencil"></i>
                                             </a>
                                         </li>

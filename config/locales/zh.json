@@ -49,5 +49,13 @@
   "Add user": "新增用户",
   "Select one": "请选择",
   "Submit": "提交",
-  "The provided email address is already in use.": "邮箱地址已被使用。"
+  "The provided email address is already in use.": "邮箱地址已被使用。",
+  "Role list": "角色一览",
+  "Code": "代码",
+  "Desc": "角色名",
+  "Updated At": "更新时间",
+  "Search for role": "代码、角色名",
+  "Edit role": "修改角色",
+  "Add role": "新增角色",
+  "Modules": "模块"
 }

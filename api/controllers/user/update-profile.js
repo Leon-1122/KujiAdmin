@@ -9,7 +9,7 @@ module.exports = {
 
   inputs: {
 
-    userId: {
+    id: {
       type: 'string',
     },
 
@@ -52,8 +52,8 @@ module.exports = {
       role: inputs.role
     };
 
-    if (inputs.userId) {
-      await User.updateOne({id: inputs.userId}).set(valuesToSet)
+    if (inputs.id) {
+      await User.updateOne({id: inputs.id}).set(valuesToSet)
         .intercept('E_UNIQUE', () => {
           return {emailAlreadyInUse: {errorMsg: sails.__('The provided email address is already in use.')}}
         });
