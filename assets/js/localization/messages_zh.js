@@ -21,5 +21,10 @@ $.extend($.validator.messages, {
   step: $.validator.format("请输入 {0} 的整数倍值"),
   max: $.validator.format("请输入不大于 {0} 的数值"),
   min: $.validator.format("请输入不小于 {0} 的数值"),
-  sendPasswordRecoverSuccess: "密码重置链接已发送。"
+  sendPasswordRecoverSuccess: "密码重置链接已发送",
+  badRequest: "请求失败",
+  operationSuccess: "操作成功",
+  selectDeleteRecords: "请选择要删除的数据",
+  deleteSuccess: "删除成功",
+  deleteFailed: "删除失败"
 });

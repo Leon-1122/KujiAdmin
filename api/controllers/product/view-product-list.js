@@ -1,10 +1,10 @@
 module.exports = {
 
 
-  friendlyName: 'View user list',
+  friendlyName: 'View product list',
 
 
-  description: 'Display "User List" page.',
+  description: 'Display "Product List" page.',
 
   inputs: {
 
@@ -21,7 +21,7 @@ module.exports = {
   exits: {
 
     success: {
-      viewTemplatePath: 'pages/user/user-list',
+      viewTemplatePath: 'pages/product/product-list',
     }
 
   },
@@ -35,26 +35,25 @@ module.exports = {
       currentPage = inputs.pageNum;
     }
 
-    var criteria = {};
-    var searchFor = '';
+
+    var criteria = {}, meta = {}, searchFor = '';
     if (inputs.searchFor) {
-      searchFor = inputs.searchFor;
       criteria = {
         or: [
-          {emailAddress: {'contains': inputs.searchFor}},
-          {fullName: {'contains': inputs.searchFor}}
+          {'name.zh_CN': {'contains': inputs.searchFor}},
         ]
-      }
+      };
+      meta = {enableExperimentalDeepTargets: true}
     }
-    var pagerData = await pager.paginate(User, criteria, currentPage, perPage, [{name: 'role'}], 'createdAt');
+
+    var pagerData = await pager.paginate(Product, criteria, currentPage, perPage, null, 'createdAt DESC', meta);
 
     return {
-      pagename: 'user-list',
+      pagename: 'product-list',
       items: pagerData.data,
       pager: pagerData.meta,
       searchFor: searchFor
     };
-
   }
 
 

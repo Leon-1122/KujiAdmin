@@ -1,5 +1,8 @@
 var config = window.config = {};
 
+// Prevent double-posting
+var syncing = false;
+
 // Config reference element
 var $ref = $("#ref");
 
@@ -14,7 +17,7 @@ config.ResponsiveBootstrapToolkitVisibilityDivs = {
 
 ResponsiveBootstrapToolkit.use('Custom', config.ResponsiveBootstrapToolkitVisibilityDivs);
 
-//validation configuration
+// validation configuration
 config.validations = {
   debug: false,
   errorClass: 'has-error',
@@ -34,9 +37,57 @@ config.validations = {
       .removeClass(errorClass)
       .addClass(validClass);
   },
-}
 
-//delay time configuration
+  // submit handler
+  submitHandler: async function (form) {
+    if (syncing) {
+      return;
+    }
+
+    syncing = true;
+
+    var errorMsg = '', $errorContent = $('.error-message'), $successContent = $('.success-message');
+    var result = await Cloud[$(form).data('action')].with($(form).parseForm())
+      .tolerate((err) => {
+        var responseInfo = err.responseInfo;
+        if (responseInfo.data.errorMsg) {
+          errorMsg = responseInfo.data.errorMsg;
+        } else {
+          errorMsg = $.validator.messages.badRequest;
+        }
+      });
+
+    if ($errorContent) {
+      $errorContent.hide();
+    }
+
+    if ($successContent) {
+      $successContent.hide();
+    }
+
+    syncing = false;
+
+    if (result) {
+      var redirect = $(form).data('redirect');
+      if (redirect) {
+        syncing = true;
+        window.location = $(form).data('redirect');
+      } else {
+        if ($successContent) {
+          $successContent.html($.validator.messages.operationSuccess);
+          $successContent.show();
+        }
+      }
+    } else {
+      if ($errorContent) {
+        $errorContent.html(errorMsg);
+        $errorContent.show();
+      }
+    }
+  }
+};
+
+// delay time configuration
 config.delayTime = 50;
 
 // chart configurations
@@ -44,3 +95,30 @@ config.chart = {};
 
 config.chart.colorPrimary = tinycolor($ref.find(".chart .color-primary").css("color"));
 config.chart.colorSecondary = tinycolor($ref.find(".chart .color-secondary").css("color"));
+
+// form's inputs serialize to object
+(function ($) {
+  $.fn.parseForm = function () {
+    var serializeObj = {};
+    var array = this.serializeArray();
+    var str = this.serialize();
+    $(array).each(function () {
+      if (serializeObj[this.name]) {
+        if ($.isArray(serializeObj[this.name])) {
+          serializeObj[this.name].push(this.value);
+        } else {
+          serializeObj[this.name] = [serializeObj[this.name], this.value];
+        }
+      } else {
+        serializeObj[this.name] = this.value;
+      }
+    });
+    return serializeObj;
+  };
+})(jQuery);
+
+String.prototype.firstUpperCase = function () {
+  return this.replace(/^\S/, function (s) {
+    return s.toUpperCase();
+  });
+};

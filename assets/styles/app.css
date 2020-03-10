@@ -1291,7 +1291,8 @@ label,
             color: #40B726; }
           .item-list .item-actions-dropdown .item-actions-block .item-actions-list a.remove {
             color: #DB0E1E; }
-
+          .item-list .item-actions-dropdown .item-actions-block .item-actions-list a.view {
+            color: #3629db; }
 /* *******************************************
 *				Adjustments
 ********************************************** */
@@ -2873,10 +2874,12 @@ pre {
       margin-top: 8px; } }
 .success-message {
   color: blue;
+  font-size: 14px
 }
 
 .error-message {
   color: red;
+  font-size: 14px
 }
 
 .item-list .item-col.item-col-6 {

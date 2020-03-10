@@ -43,7 +43,7 @@
 
                       <ul class="sidebar-nav">
                           <li {{#is pagename "===" "machine-list"}}class="active"{{/is}} >
-                              <a href="/machines">
+                              <a href="/machine/list">
                                 {{__ 'Machines List'}}
                               </a>
                           </li>
@@ -70,8 +70,8 @@
               {{/is}}
 
               {{#is "product" "in" res.locals.me.permissionModules}}
-                  <li {{#is pagename "in" "product-list"}}class="active"{{/is}} >
-                      <a href="/products">
+                  <li {{#is pagename "in" "product-list,product-detail,product-add"}}class="active"{{/is}} >
+                      <a href="/product/list">
                           <i class="fa fa-book"></i> {{__ 'Product List'}}
                       </a>
                   </li>
@@ -79,7 +79,7 @@
 
               {{#is "lottery" "in" res.locals.me.permissionModules}}
                   <li {{#is pagename "in" "lottery-list"}}class="active"{{/is}} >
-                      <a href="/lotteries">
+                      <a href="/lottery/list">
                           <i class="fa fa-ticket"></i> {{__ 'Lottery Manager'}}
                       </a>
                   </li>

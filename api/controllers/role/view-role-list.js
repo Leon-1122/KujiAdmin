@@ -28,7 +28,7 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    var pager = require('sails-pager');
+    var pager = require('../../custom_modules/sails-pager');
     var perPage = sails.config.custom.dataPerPage;
     var currentPage = 1;
     if (inputs.pageNum) {

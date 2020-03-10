@@ -1,11 +1,3 @@
-/*
-    Custom handlebars helpers which allows to make
-
-    {{#is a '===' b}}}
-
-    {{/is}}
-*/
-
 module.exports.register = function (handlebars) {
   handlebars.registerHelper('page-item', function(page, pageCount, block) {
     var accum = '';

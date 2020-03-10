@@ -1,0 +1,66 @@
+{
+  "_from": "sails-pager",
+  "_id": "sails-pager@2.1.0",
+  "_inBundle": false,
+  "_integrity": "sha1-7RWcvOKXzMZzGNjq8AGqpJYIGH0=",
+  "_location": "/sails-pager",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "sails-pager",
+    "name": "sails-pager",
+    "escapedName": "sails-pager",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/sails-pager/-/sails-pager-2.1.0.tgz",
+  "_shasum": "ed159cbce297ccc67318d8eaf001aaa49608187d",
+  "_spec": "sails-pager",
+  "_where": "D:\\Workspace\\KujiAdmin",
+  "author": {
+    "name": "Chuka Ofili",
+    "email": "ofili@microsmart.tk"
+  },
+  "bugs": {
+    "url": "https://github.com/chukaofili/sails-pager/issues"
+  },
+  "bundleDependencies": false,
+  "contributors": [
+    {
+      "name": "Mustafa Segun",
+      "email": "segsalerty@gmail.com"
+    }
+  ],
+  "dependencies": {
+    "bluebird": "^3.4.1",
+    "lodash": "^4.12.0"
+  },
+  "deprecated": false,
+  "description": "Pagination Service for SailsJS projects",
+  "homepage": "https://github.com/chukaofili/sails-pager#readme",
+  "keywords": [
+    "sailsjs",
+    "pagination",
+    "pager",
+    "paginate",
+    "sails",
+    "express"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "sails-pager",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chukaofili/sails-pager.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "2.1.0"
+}

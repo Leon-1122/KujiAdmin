@@ -162,7 +162,7 @@ NProgress.done();
  *        table pager
  ***********************************************/
 function doPage(formName, pageNum) {
-  var $formObj = $('#' + formName + '-form')
+  var $formObj = $('#' + formName + '-form');
   if ($formObj.length) {
     $formObj.attr('action', $formObj.attr('action') + '/' + pageNum);
     $formObj.submit();
@@ -181,7 +181,7 @@ function showAlert(msg, callback) {
 }
 
 /***********************************************
- *        delete data
+ *        delete records
  ***********************************************/
 function deleteCheckedRecords(module) {
   var ids = [];
@@ -190,42 +190,30 @@ function deleteCheckedRecords(module) {
   });
 
   if (ids.length === 0) {
-    showAlert("请选择要删除的数据");
+    showAlert($.validator.messages.selectDeleteRecords);
     return;
   }
 
-  $.ajax({
-    type: 'delete',
-    url: '/api/v1/' + module,
-    data: {
-      ids: ids
-    },
-    success: function (data) {
-      showAlert("删除成功", function () {
-        window.location = '/' + module + '/list';
-      });
-    },
-    error: function (xhr) {
-      showAlert("删除失败");
-    }
-  });
+  deleteRecord(module, ids);
 }
 
 function deleteOneRecord(module, id) {
-  $.ajax({
-    type: 'delete',
-    url: '/api/v1/' + module,
-    data: {
-      ids: [id]
-    },
-    success: function (data) {
-      showAlert("删除成功", function () {
-        window.location = '/' + module + '/list';
-      });
-    },
-    error: function (xhr) {
-      showAlert("删除失败");
-    }
-  });
+  var ids = [id];
+  deleteRecord(module, ids);
+}
+
+async function deleteRecord(module, ids) {
+  var result = await Cloud['delete' + module.firstUpperCase()].with({ids: ids})
+    .tolerate((err) => {
+      console.log(err);
+    });
+
+  if (result) {
+    showAlert($.validator.messages.deleteSuccess, function () {
+      window.location = '/' + module + '/list';
+    });
+  } else {
+    showAlert($.validator.messages.deleteFailed);
+  }
 }
 

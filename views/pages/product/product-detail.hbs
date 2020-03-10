@@ -1,0 +1,130 @@
+{{#extend "app-layout"}}
+  {{#content "article" mode="append"}}
+      <div class="title-block">
+          <h3 class="title">
+              {{__ 'Product detail'}}
+          </h3>
+      </div>
+
+
+      <form id="product-detail-form" novalidate="" onsubmit="return false">
+          <div class="card card-block">
+
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                    {{__ 'PPID'}}:
+                  </label>
+                  <div class="col-sm-10">
+                      {{product.ppid}}
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                    {{__ 'Sku'}}:
+                  </label>
+                  <div class="col-sm-10">
+                    {{product.sku}}
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                    {{__ 'Name'}}:
+                  </label>
+                  <div class="col-sm-10">
+                    {{product.name.zh_CN}}
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                    {{__ 'Market price'}}:
+                  </label>
+                  <div class="col-sm-10">
+                    {{product.market_price}}
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                    {{__ 'Category'}}:
+                  </label>
+                  <div class="col-sm-10">
+                    {{#unescape product.category.[0].name.zh_CN}}{{/unescape}}
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                    {{__ 'Manufacturer'}}:
+                  </label>
+                  <div class="col-sm-10">
+                    {{product.manufacturer.zh_CN}}
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                    {{__ 'Model'}}:
+                  </label>
+                  <div class="col-sm-10">
+                    {{product.model}}
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                    {{__ 'Package length'}}:
+                  </label>
+                  <div class="col-sm-10">
+                    {{product.package_length}}
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                    {{__ 'Package width'}}:
+                  </label>
+                  <div class="col-sm-10">
+                    {{product.package_width}}
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                    {{__ 'Package height'}}:
+                  </label>
+                  <div class="col-sm-10">
+                    {{product.package_height}}
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                    {{__ 'Description'}}:
+                  </label>
+                  <div class="col-sm-10">
+                    {{{product.description.zh_CN}}}
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                    {{__ 'Picture'}}:
+                  </label>
+                  <div class="col-sm-10">
+                      <div class="images-container">
+                        {{#each product.product_pic}}
+                            <div class="image-container">
+                                <div class="image" style="background-image:url('{{this.[0]}}')"></div>
+                            </div>
+                        {{/each}}
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <input type="hidden" name="id" value="{{product.id}}">
+      </form>
+  {{/content}}
+{{/extend}}
