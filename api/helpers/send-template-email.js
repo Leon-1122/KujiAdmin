@@ -89,7 +89,7 @@ module.exports = {
     var path = require('path');
     var url = require('url');
     var util = require('util');
-
+    var nodemailer = require('nodemailer');
 
     if (!_.startsWith(path.basename(inputs.template), 'email-')) {
       sails.log.warn(
@@ -172,62 +172,87 @@ module.exports = {
       // Otherwise, we'll check that all required Mailgun credentials are set up
       // and, if so, continue to actually send the email.
 
-      if (!sails.config.custom.mailgunSecret || !sails.config.custom.mailgunDomain) {
-        throw new Error(
-          'Cannot deliver email to "' + inputs.to + '" because:\n' +
-          (() => {
-            let problems = [];
-            if (!sails.config.custom.mailgunSecret) {
-              problems.push(' • Mailgun secret is missing from this app\'s configuration (`sails.config.custom.mailgunSecret`)');
-            }
-            if (!sails.config.custom.mailgunDomain) {
-              problems.push(' • Mailgun domain is missing from this app\'s configuration (`sails.config.custom.mailgunDomain`)');
-            }
-            return problems.join('\n');
-          })() +
-          '\n' +
-          'To resolve these configuration issues, add the missing config variables to\n' +
-          '\`config/custom.js\`-- or in staging/production, set them up as system\n' +
-          'environment vars.  (If you don\'t have a Mailgun domain or secret, you can\n' +
-          'sign up for free at https://mailgun.com to receive sandbox credentials.)\n' +
-          '\n' +
-          '> Note that, for convenience during development, there is another alternative:\n' +
-          '> In lieu of setting up real Mailgun credentials, you can "fake" email\n' +
-          '> delivery by using any email address that ends in "@example.com".  This will\n' +
-          '> write automated emails to your logs rather than actually sending them.\n' +
-          '> (To simulate clicking on a link from an email, just copy and paste the link\n' +
-          '> from the terminal output into your browser.)\n' +
-          '\n' +
-          '[?] If you\'re unsure, visit https://sailsjs.com/support'
-        );
-      }
+      // if (!sails.config.custom.mailgunSecret || !sails.config.custom.mailgunDomain) {
+      //   throw new Error(
+      //     'Cannot deliver email to "' + inputs.to + '" because:\n' +
+      //     (() => {
+      //       let problems = [];
+      //       if (!sails.config.custom.mailgunSecret) {
+      //         problems.push(' • Mailgun secret is missing from this app\'s configuration (`sails.config.custom.mailgunSecret`)');
+      //       }
+      //       if (!sails.config.custom.mailgunDomain) {
+      //         problems.push(' • Mailgun domain is missing from this app\'s configuration (`sails.config.custom.mailgunDomain`)');
+      //       }
+      //       return problems.join('\n');
+      //     })() +
+      //     '\n' +
+      //     'To resolve these configuration issues, add the missing config variables to\n' +
+      //     '\`config/custom.js\`-- or in staging/production, set them up as system\n' +
+      //     'environment vars.  (If you don\'t have a Mailgun domain or secret, you can\n' +
+      //     'sign up for free at https://mailgun.com to receive sandbox credentials.)\n' +
+      //     '\n' +
+      //     '> Note that, for convenience during development, there is another alternative:\n' +
+      //     '> In lieu of setting up real Mailgun credentials, you can "fake" email\n' +
+      //     '> delivery by using any email address that ends in "@example.com".  This will\n' +
+      //     '> write automated emails to your logs rather than actually sending them.\n' +
+      //     '> (To simulate clicking on a link from an email, just copy and paste the link\n' +
+      //     '> from the terminal output into your browser.)\n' +
+      //     '\n' +
+      //     '[?] If you\'re unsure, visit https://sailsjs.com/support'
+      //   );
+      // }
 
-      var deferred = sails.helpers.mailgun.sendHtmlEmail.with({
-        htmlMessage: htmlEmailContents,
+      var smtpConfig = {
+        host: sails.config.custom.host,
+        port: sails.config.custom.port,
+        secure: true,
+        auth: {
+          user: sails.config.custom.authUser,
+          pass: sails.config.custom.authPass
+        }
+      };
+      var transporter = nodemailer.createTransport(smtpConfig);
+
+      var option = {
+        from: sails.config.custom.authUser,
         to: inputs.to,
-        subject: inputs.subject
+        subject: inputs.subject,
+        html: htmlEmailContents
+      };
+      transporter.sendMail(option, function (error, response) {
+        if (error) {
+          sails.log.error("Email send failed: " + error);
+        } else {
+          sails.log.info("Email send success: " + response.messageId);
+        }
       });
 
-      if (inputs.ensureAck) {
-        await deferred;
-      } else {
-        // FUTURE: take advantage of .background() here instead (when available)
-        deferred.exec((err) => {
-          if (err) {
-            sails.log.error(
-              'Background instruction failed:  Could not deliver email:\n' +
-              util.inspect(inputs, {depth: null}) + '\n',
-              'Error details:\n' +
-              util.inspect(err)
-            );
-          } else {
-            sails.log.info(
-              'Background instruction complete:  Email sent (or at least queued):\n' +
-              util.inspect(inputs, {depth: null})
-            );
-          }
-        });//_∏_
-      }//ﬁ
+      // var deferred = sails.helpers.mailgun.sendHtmlEmail.with({
+      //   htmlMessage: htmlEmailContents,
+      //   to: inputs.to,
+      //   subject: inputs.subject
+      // });
+      //
+      // if (inputs.ensureAck) {
+      //   await deferred;
+      // } else {
+      //   // FUTURE: take advantage of .background() here instead (when available)
+      //   deferred.exec((err) => {
+      //     if (err) {
+      //       sails.log.error(
+      //         'Background instruction failed:  Could not deliver email:\n' +
+      //         util.inspect(inputs, {depth: null}) + '\n',
+      //         'Error details:\n' +
+      //         util.inspect(err)
+      //       );
+      //     } else {
+      //       sails.log.info(
+      //         'Background instruction complete:  Email sent (or at least queued):\n' +
+      //         util.inspect(inputs, {depth: null})
+      //       );
+      //     }
+      //   });//_∏_
+      // }//ﬁ
     }//ﬁ
 
     // All done!

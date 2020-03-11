@@ -33,7 +33,7 @@ module.exports.routes = {
 
   'GET /product/list':          { action: 'product/view-product-list' },
   'GET /product/list/:pageNum': { action: 'product/view-product-list' },
-  'GET /product/add':           { action: 'role/view-product-add' },
+  'GET /product/add':           { action: 'product/view-product-add' },
   'GET /product/:id':           { action: 'product/view-product-detail' },
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
@@ -62,7 +62,7 @@ module.exports.routes = {
   'DELETE /api/v1/user':                                  { action: 'user/delete-user' },
   'PUT    /api/v1/role':                                  { action: 'role/update-role' },
   'DELETE /api/v1/role':                                  { action: 'role/delete-role' },
-  'POST   /api/v1/product':                               { action: 'product/add-product' },
+  'PUT   /api/v1/product':                                { action: 'product/add-product' },
   'DELETE /api/v1/product':                               { action: 'product/delete-product' },
 
 };
