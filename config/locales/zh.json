@@ -78,5 +78,16 @@
   "Description": "描述",
   "Get product info": "获取商品信息",
   "Add product": "增加商品",
-  "Add product placeholder": "输入产品ID，每行一个"
+  "Add product placeholder": "输入产品ID，每行一个",
+  "Lottery": "一番赏",
+  "Lottery list": "一番赏一览",
+  "Search for lottery": "名字",
+  "Status": "状态",
+  "Price": "价格",
+  "Card total": "奖券总数",
+  "Add lottery": "增加一番赏",
+  "Edit lottery": "修改一番赏",
+  "BannerImg": "Banner图片",
+  "TopImg": "置顶图片",
+  "Resolution": "分辨率"
 }

@@ -2899,3 +2899,17 @@ pre {
     display: none;
   }
 }
+
+.images-container .image-container.banner-image-container,.images-container .image-container.single-image-container {
+  margin-bottom: 5px;
+}
+
+.images-container .image-container.banner-image-container .image {
+  width: 251px;
+  height: 107px;
+}
+
+.input-description {
+  font-size: 0.8rem;
+  color: #0c4fdb;
+}

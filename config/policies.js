@@ -14,7 +14,9 @@ module.exports.policies = {
 
   'user/*': 'has-permission',
   'role/*': 'has-permission',
+  'machine/*': 'has-permission',
   'product/*': 'has-permission',
+  'lottery/*': 'has-permission',
 
   // Allow anyone to access the follow action, even if they're not logged in.
   'entrance/*': true,

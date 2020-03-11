@@ -36,6 +36,11 @@ module.exports.routes = {
   'GET /product/add':           { action: 'product/view-product-add' },
   'GET /product/:id':           { action: 'product/view-product-detail' },
 
+  'GET /lottery/list':          { action: 'lottery/view-lottery-list' },
+  'GET /lottery/list/:pageNum': { action: 'lottery/view-lottery-list' },
+  'GET /lottery/add':           { action: 'lottery/view-lottery-editor' },
+  'GET /lottery/:id':           { action: 'lottery/view-lottery-editor' },
+
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗
   //  ╩ ╩╩╚═╝╚═╝  ╩╚═╚═╝═╩╝╩╩╚═╚═╝╚═╝ ╩ ╚═╝  └┘   ═╩╝╚═╝╚╩╝╝╚╝╩═╝╚═╝╩ ╩═╩╝╚═╝
@@ -64,5 +69,7 @@ module.exports.routes = {
   'DELETE /api/v1/role':                                  { action: 'role/delete-role' },
   'PUT   /api/v1/product':                                { action: 'product/add-product' },
   'DELETE /api/v1/product':                               { action: 'product/delete-product' },
+  'PUT    /api/v1/lottery':                               { action: 'lottery/update-lottery' },
+  'DELETE /api/v1/lottery':                               { action: 'lottery/delete-lottery' },
 
 };
