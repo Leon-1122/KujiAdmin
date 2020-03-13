@@ -3,6 +3,41 @@ var config = window.config = {};
 // Prevent double-posting
 var syncing = false;
 
+// Config dropzone
+var mediaTarget = null;
+Dropzone.options.dropzoneUpload = {
+  paramName: 'file', // The name that will be used to transfer the file
+  maxFilesize: 3, // MB
+  maxFiles: 1,
+  acceptedFiles: 'image/*',
+  addRemoveLinks: true,
+  dictDefaultMessage: '拖动文件到此处或单击选择文件上传',
+  dictInvalidFileType: '不支持该文件格式',
+  dictCancelUpload: '取消上传',
+  dictRemoveFile: '删除',
+  success: function (file, response, e) {
+    console.log(file);
+    // 添加图片id和访问url
+    file.id = response.id;
+    file.imageSrc = response.imageSrc;
+  },
+  maxfilesexceeded: function (file) {
+    console.log(file);
+    this.removeFile(file);
+    showAlert('超过上传文件最大数量，请移除后重新上传');
+  },
+  removedfile: async function (file) {
+    // 删除服务器上的文件
+    if (file.id && file.imageSrc) {
+      await Cloud['deletePicture'].with({id: file.id});
+    }
+    if (file.previewElement != null && file.previewElement.parentNode != null) {
+      file.previewElement.parentNode.removeChild(file.previewElement);
+    }
+  }
+};
+
+
 // Config reference element
 var $ref = $("#ref");
 

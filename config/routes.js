@@ -71,5 +71,7 @@ module.exports.routes = {
   'DELETE /api/v1/product':                               { action: 'product/delete-product' },
   'PUT    /api/v1/lottery':                               { action: 'lottery/update-lottery' },
   'DELETE /api/v1/lottery':                               { action: 'lottery/delete-lottery' },
-
+  'POST  /api/v1/lottery':                                { action: 'lottery/upload-picture' },
+  'GET   /api/v1/lottery/:id/picture':                    { action: 'lottery/download-picture', skipAssets: false },
+  'DELETE  /api/v1/lottery/:id/picture':                  { action: 'lottery/delete-picture' },
 };

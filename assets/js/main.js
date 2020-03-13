@@ -88,6 +88,26 @@ $(function () {
     }
   });
 
+  /***********************************************
+   *        media modal setting
+   ***********************************************/
+  $('#modal-media').on('hide.bs.modal', function (e) {
+    Dropzone.forElement("#dropzone-upload").removeAllFiles();
+  });
+  $('#media-ok').on('click', function () {
+    var files = Dropzone.forElement("#dropzone-upload").getAcceptedFiles();
+    if (files && files.length > 0) {
+      var imageSrc = files[0].imageSrc;
+      if (mediaTarget) {
+        var parent = mediaTarget.parents('.images-container');
+        parent.find('a').attr('href', imageSrc);
+        parent.find('input[type=hidden]').val(imageSrc);
+        parent.find('.image').css('backgroundImage', `url('${imageSrc}')`);
+      }
+    }
+    $('#modal-media').modal('hide');
+  });
+
   $("body").addClass("loaded");
 
 });

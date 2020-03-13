@@ -981,6 +981,8 @@ label,
         content: "\f005"; }
     .images-container .controls .control-btn.remove {
       color: #FF4444; }
+.images-container .controls .control-btn.upload {
+  color: #0c4fdb; }
 
 .images-container .image {
   background-size: cover;
@@ -2898,6 +2900,15 @@ pre {
   .pagination .page-item.page-total {
     display: none;
   }
+
+  .images-container .controls {
+    opacity: 0.5;
+    bottom: 0;
+   }
+
+  .images-container .controls .control-btn {
+    opacity: 1;
+  }
 }
 
 .images-container .image-container.banner-image-container,.images-container .image-container.single-image-container {
@@ -2912,4 +2923,12 @@ pre {
 .input-description {
   font-size: 0.8rem;
   color: #0c4fdb;
+}
+
+.card .card.float-card {
+  -webkit-box-shadow: 1px 1px 5px rgba(126, 142, 159, 0.1);
+  box-shadow: 1px 1px 5px rgba(126, 142, 159, 0.1);
+  width: 500px;
+  margin: 20px;
+  background-color: #f7f7f2;
 }

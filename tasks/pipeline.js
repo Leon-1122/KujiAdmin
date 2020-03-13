@@ -45,7 +45,7 @@ var cssFilesToInject = [
   'dependencies/quill/dist/quill.snow.css',
   'dependencies/morris.js/morris.css',
   'dependencies/bootstrap/dist/css/bootstrap.css',
-
+  'dependencies/baguettebox.js/dist/baguetteBox.css',
   // All of the rest of your custom `.css` files will be injected here,
   // in no particular order.  To customize the ordering, add additional
   // items here, _above_ this one.
@@ -103,6 +103,7 @@ var jsFilesToInject = [
   'dependencies/bootstrap/dist/js/bootstrap.js',
   'dependencies/raphael/raphael.js',
   'dependencies/morris.js/morris.js',
+  'dependencies/baguettebox.js/dist/baguetteBox.js',
   'dependencies/cloud.js',
 
   // First amongst the app-level files, bring in cloud configuration
