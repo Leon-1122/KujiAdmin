@@ -93,5 +93,10 @@
   "Media Upload": "图片上传",
   "Confirm edit":"确认修改",
   "Drop files here or click to upload.": "拖动文件到此处或单击选择文件上传",
-  "Awards setting":"奖项设置"
+  "Awards setting":"奖项设置",
+  "Award": "赏",
+  "Amount": "数量",
+  "Select level to add": "选择要添加的奖项...",
+  "Product Select": "商品选择"
+
 }

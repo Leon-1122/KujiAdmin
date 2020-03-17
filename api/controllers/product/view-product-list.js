@@ -36,7 +36,7 @@ module.exports = {
     }
 
 
-    var criteria = {}, meta = {}, searchFor = '';
+    var criteria = {}, meta = {};
     if (inputs.searchFor) {
       criteria = {
         or: [
@@ -52,7 +52,7 @@ module.exports = {
       pagename: 'product-list',
       items: pagerData.data,
       pager: pagerData.meta,
-      searchFor: searchFor
+      searchFor: inputs.searchFor
     };
   }
 

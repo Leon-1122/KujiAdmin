@@ -27,7 +27,8 @@ module.exports = {
       type: 'string'
     },
     pid: {
-      type: 'string'
+      type: 'string',
+      allowNull: true
     },
     order: {
       type: 'number'

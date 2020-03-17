@@ -2932,3 +2932,86 @@ pre {
   margin: 20px;
   background-color: #f7f7f2;
 }
+
+.table-img {
+  width: 80px;
+  height: 80px;
+}
+
+.table.table-striped td,.table.table-striped th {
+  vertical-align: middle;
+}
+
+.float-card .card-header .header-block .control-btn.remove {
+  display: inline-block;
+  width: 420px;
+  text-align: right;
+}
+
+.float-card .card .card-block .card-title-block .title {
+  display: inline-block;
+}
+
+.float-card .card .card-block .card-title-block .control-btn.plus {
+  display: inline-block;
+  width: 330px;
+  text-align: right;
+}
+
+.float-card .control-btn i {
+  cursor: pointer;
+}
+
+input.form-control.number-input {
+  width: 60px;
+}
+
+.level-add-container {
+  border: 1px #85CE36 solid;
+  color: #85CE36;
+}
+
+#addLevel {
+  display: inline-block;
+  width: 300px;
+}
+
+.level-add-container {
+  display: inline-block;
+}
+
+.level-add-container .control-btn {
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  cursor: pointer;
+}
+
+#modal-product .item-col.fixed.item-col-title {
+  flex-grow: 3;
+  flex-shrink: 3;
+  flex-basis: 0;
+}
+
+@media (max-width: 575.98px) {
+  .card .card-header .title {
+    width: auto;
+  }
+
+  .float-card .card-block .card {
+    margin-top: 10px;
+  }
+
+  .float-card .card-header .header-block .control-btn.remove {
+    width: 220px;
+  }
+
+  .float-card .card .card-block .card-title-block .control-btn.plus {
+    width: 160px;
+  }
+
+  #addLevel {
+    width: 260px;
+  }
+}

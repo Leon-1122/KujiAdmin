@@ -20,7 +20,7 @@
                     {{__ 'Name'}}:
                   </label>
                   <div class="col-sm-10">
-                      <input type="text" class="form-control boxed" name="code" id="code" placeholder="" value="{{lottery.name}}" required>
+                      <input type="text" class="form-control boxed" name="name" id="name" placeholder="" value="{{lottery.name}}" required>
                   </div>
               </div>
 
@@ -29,7 +29,7 @@
                     {{__ 'Price'}}:
                   </label>
                   <div class="col-sm-10">
-                      <input type="text" class="form-control boxed" name="desc" id="desc" placeholder="" value="{{lottery.price}}" required>
+                      <input type="text" class="form-control boxed" name="price" id="price" placeholder="" value="{{lottery.price}}" required>
                   </div>
               </div>
 
@@ -38,7 +38,7 @@
                     {{__ 'Card total'}}:
                   </label>
                   <div class="col-sm-10">
-                      <input type="text" class="form-control boxed" name="desc" id="desc" placeholder="" value="{{lottery.cardTotal}}" readonly required>
+                      <input type="text" class="form-control boxed" name="cardTotal" id="cardTotal" placeholder="" value="{{lottery.cardTotal}}" readonly required>
                   </div>
               </div>
 
@@ -48,19 +48,17 @@
                   </label>
                   <div class="col-sm-10">
                       <div class="images-container">
-                          <a href="{{lottery.bannerImg}}">
-                              <div class="image-container banner-image-container">
-                                  <div class="controls">
-                                      <span class="control-btn upload">
-                                          <i class="fa fa-upload"></i>
-                                      </span>
-                                  </div>
-                                  <div class="image" style="background-image:url('{{lottery.bannerImg}}')"></div>
-                                  <input type="hidden" name="topImg" value="{{lottery.bannerImg}}">
+                          <div class="image-container banner-image-container">
+                              <div class="controls">
+                                  <span class="control-btn upload">
+                                      <i class="fa fa-upload"></i>
+                                  </span>
                               </div>
-                          </a>
+                              <div class="image" style="background-image:url('{{lottery.bannerImg}}')"></div>
+                              <input type="hidden" name="bannerImg" id="bannerImg" value="{{lottery.bannerImg}}">
+                          </div>
                       </div>
-                      <p class="input-description">{{__ 'Resolution'}}:1002*429</p>
+                      <p class="input-description">{{__ 'Resolution'}}:1000*430</p>
                   </div>
               </div>
 
@@ -70,17 +68,15 @@
                   </label>
                   <div class="col-sm-10">
                       <div class="images-container">
-                          <a href="{{lottery.topImg}}">
-                              <div class="image-container single-image-container">
-                                  <div class="controls">
-                                      <span class="control-btn remove">
-                                          <i class="fa fa-upload"></i>
-                                      </span>
-                                  </div>
-                                  <div class="image" style="background-image:url('{{lottery.topImg}}')"></div>
-                                  <input type="hidden" name="topImg" value="{{lottery.topImg}}">
+                          <div class="image-container single-image-container">
+                              <div class="controls">
+                                  <span class="control-btn upload">
+                                      <i class="fa fa-upload"></i>
+                                  </span>
                               </div>
-                          </a>
+                              <div class="image" style="background-image:url('{{lottery.topImg}}')"></div>
+                              <input type="hidden" name="topImg" id="topImg" value="{{lottery.topImg}}">
+                          </div>
                       </div>
                       <p class="input-description">{{__ 'Resolution'}}:1000*1000</p>
                   </div>
@@ -91,25 +87,106 @@
                     {{__ 'Awards setting'}}:
                   </label>
                   <div class="col-sm-10">
+                      <select class="c-select form-control boxed" id="addLevel">
+                          <option value="">{{__ 'Select level to add'}}</option>
+                        {{#each level}}
+                            <option value="{{this.code}}">{{this.code}}</option>
+                        {{/each}}
+                      </select>
+                      <div class="level-add-container">
+                          <div class="control-btn" id="addLevelBtn" onclick="addAward()">
+                              <i class="fa fa-plus"></i>
+                          </div>
+                      </div>
                   </div>
               </div>
 
-              <div class="form-group row">
-                  <div class="card float-card card-info">
-                      <div class="card-header">
-                          <div class="header-block">
-                              <p class="title">
-                                  Info card
-                              </p>
+              <div class="form-group row" id="productPreviewContainer">
+                  {{#each lottery.productPreview}}
+                      <div class="card float-card card-info">
+                          <div class="card-header">
+                              <div class="header-block row">
+                                  <p class="title col-sm-4">
+                                    {{this.level}}{{../__ 'Award'}}
+                                  </p>
+                                  <span class="control-btn remove col-sm-8" data-level="{{this.level}}" onclick="deleteAward(this)">
+                                      <i class="fa fa-remove"></i>
+                                  </span>
+                              </div>
+                          </div>
+                          <div class="card-block">
+                              <div class="images-container row">
+                                  <div class="col-sm-4">
+                                      <div class="image-container single-image-container">
+                                          <div class="controls">
+                                              <span class="control-btn upload">
+                                                  <i class="fa fa-upload"></i>
+                                              </span>
+                                          </div>
+                                          <div class="image" style="background-image:url('{{this.productImg}}')"></div>
+                                          <input type="hidden" name="productImg" value="{{this.productImg}}">
+                                      </div>
+                                      <p class="input-description">{{../__ 'Resolution'}}:1000*1000</p>
+                                  </div>
+                                  <div class="col-sm-8">
+                                      <label class="form-control-label text-xs-right">
+                                        {{../__ 'Name'}}:
+                                      </label>
+                                      <div>
+                                          <input type="text" class="form-control boxed" name="awardName" value="{{this.name}}" required>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="card">
+                                  <div class="card-block">
+                                      <div class="card-title-block">
+                                          <h3 class="title">
+                                              {{../__ 'Product List'}}
+                                          </h3>
+                                          <span class="control-btn plus" onclick="initProductModal(this)">
+                                              <i class="fa fa-plus"></i>
+                                          </span>
+                                      </div>
+
+                                      <div class="table-responsive">
+                                          <table class="table table-striped table-hover">
+                                              <thead>
+                                                  <tr>
+                                                      <th>{{../__ 'Picture'}}</th>
+                                                      <th>{{../__ 'SKU'}}</th>
+                                                      <th>{{../__ 'Amount'}}</th>
+                                                      <th></th>
+                                                  </tr>
+                                              </thead>
+                                          <tbody>
+                                            {{#each ../lottery.productList}}
+                                                {{#is this.level ../this.level}}
+                                                    <tr>
+                                                        <td>
+                                                            <img class="table-img rounded product-img" src="{{this.productImg}}">
+                                                        </td>
+                                                        <td class="product-sku">{{this.sku}}</td>
+                                                        <td>
+                                                            <input type="text" class="form-control boxed number-input product-total" name="total" value="{{this.total}}" onblur="calculateCardTotal()" required>
+                                                            <input type="hidden" class="product-name" name="productName" value="{{this.name}}">
+                                                        </td>
+                                                        <td>
+                                                            <span class="control-btn remove" onclick="deleteAwardProduct(this)">
+                                                                <i class="fa fa-remove"></i>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                {{/is}}
+                                            {{/each}}
+                                          </tbody>
+                                      </table>
+                                      </div>
+                                  </div>
+                              </div>
                           </div>
                       </div>
-                      <div class="card-block">
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
-                      </div>
-                      <div class="card-footer">
-                          Card Footer
-                      </div>
-                  </div>
+                  {{/each}}
+
               </div>
 
               <div class="form-group row">
@@ -125,6 +202,92 @@
               </div>
           </div>
           <input type="hidden" name="id" value="{{lottery.id}}">
+          <input type="hidden" name="productList" id="productList">
+          <input type="hidden" name="productPreview" id="productPreview">
       </form>
+
+      <div id="awardTemplate" class="card float-card card-info" style="display: none">
+          <div class="card-header">
+              <div class="header-block row">
+                  <p class="title col-sm-4">
+
+                  </p>
+                  <span class="control-btn remove col-sm-8" onclick="deleteAward(this)">
+                      <i class="fa fa-remove"></i>
+                  </span>
+              </div>
+          </div>
+          <div class="card-block">
+              <div class="images-container row">
+                  <div class="col-sm-4">
+                      <div class="image-container single-image-container">
+                          <div class="controls">
+                              <span class="control-btn upload">
+                                  <i class="fa fa-upload"></i>
+                              </span>
+                          </div>
+                          <div class="image" style=""></div>
+                          <input type="hidden" name="productImg" value="">
+                      </div>
+                      <p class="input-description">{{../__ 'Resolution'}}:1000*1000</p>
+                  </div>
+                  <div class="col-sm-8">
+                      <label class="form-control-label text-xs-right">
+                        {{../__ 'Name'}}:
+                      </label>
+                      <div>
+                          <input type="text" class="form-control boxed" name="awardName" value="" required>
+                      </div>
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-block">
+                      <div class="card-title-block">
+                          <h3 class="title">
+                            {{../__ 'Product List'}}
+                          </h3>
+                          <span class="control-btn plus" onclick="initProductModal(this)">
+                              <i class="fa fa-plus"></i>
+                          </span>
+                      </div>
+
+                      <div class="table-responsive">
+                          <table class="table table-striped table-hover">
+                              <thead>
+                              <tr>
+                                  <th>{{../__ 'Picture'}}</th>
+                                  <th>{{../__ 'SKU'}}</th>
+                                  <th>{{../__ 'Amount'}}</th>
+                                  <th></th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div id="awardProductTemplateContainer" style="display: none">
+          <table>
+              <tr id="awardProductTemplate">
+                  <td>
+                      <img class="table-img rounded product-img" src="">
+                  </td>
+                  <td class="product-sku"></td>
+                  <td>
+                      <input type="text" class="form-control boxed number-input product-total" name="total" value="" onblur="calculateCardTotal()" required>
+                      <input type="hidden" class="product-name" name="productName" value="">
+                  </td>
+                  <td>
+                      <span class="control-btn remove" onclick="deleteAwardProduct(this)">
+                          <i class="fa fa-remove"></i>
+                      </span>
+                  </td>
+              </tr>
+          </table>
+      </div>
+      <div id="modal-product-container"></div>
   {{/content}}
 {{/extend}}

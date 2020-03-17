@@ -12,7 +12,34 @@ module.exports = {
     id: {
       type: 'string',
     },
-
+    name: {
+      type: 'string',
+      required: true
+    },
+    price: {
+      type: 'number',
+      required: true
+    },
+    cardTotal: {
+      type: 'number',
+      required: true
+    },
+    bannerImg: {
+      type: 'string',
+      required: true
+    },
+    topImg: {
+      type: 'string',
+      required: true
+    },
+    productPreview: {
+      type: 'json',
+      required: true
+    },
+    productList: {
+      type: 'json',
+      required: true
+    },
   },
 
 
@@ -31,7 +58,18 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    var valuesToSet = {};
+    var productPreview = _.sortByAll(JSON.parse(inputs.productPreview), ['level']);
+    var productList = _.sortByAll(JSON.parse(inputs.productList), ['level', 'sku']);
+
+    var valuesToSet = {
+      name: inputs.name,
+      price: inputs.price,
+      cardTotal: inputs.cardTotal,
+      bannerImg: inputs.bannerImg,
+      topImg: inputs.topImg,
+      productPreview: productPreview,
+      productList: productList,
+    };
 
     if (inputs.id) {
       await Lottery.updateOne({id: inputs.id}).set(valuesToSet)

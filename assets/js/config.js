@@ -3,6 +3,9 @@ var config = window.config = {};
 // Prevent double-posting
 var syncing = false;
 
+// product modal trigger target
+var productTarget = null;
+
 // Config dropzone
 var mediaTarget = null;
 Dropzone.options.dropzoneUpload = {
@@ -27,10 +30,10 @@ Dropzone.options.dropzoneUpload = {
     showAlert('超过上传文件最大数量，请移除后重新上传');
   },
   removedfile: async function (file) {
-    // 删除服务器上的文件
-    if (file.id && file.imageSrc) {
-      await Cloud['deletePicture'].with({id: file.id});
-    }
+    // // 删除服务器上的文件
+    // if (file.id && file.imageSrc) {
+    //   await Cloud['deletePicture'].with({id: file.id});
+    // }
     if (file.previewElement != null && file.previewElement.parentNode != null) {
       file.previewElement.parentNode.removeChild(file.previewElement);
     }
@@ -80,6 +83,9 @@ config.validations = {
     }
 
     syncing = true;
+    if (this.settings.beforeSubmit && $.isFunction(this.settings.beforeSubmit)) {
+      this.settings.beforeSubmit.call(this, form);
+    }
 
     var errorMsg = '', $errorContent = $('.error-message'), $successContent = $('.success-message');
     var result = await Cloud[$(form).data('action')].with($(form).parseForm())

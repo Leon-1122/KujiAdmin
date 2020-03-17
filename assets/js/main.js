@@ -205,7 +205,7 @@ function showAlert(msg, callback) {
  ***********************************************/
 function deleteCheckedRecords(module) {
   var ids = [];
-  $(".item input.checkbox:checked").each(function (i) {
+  $(".item:not(.item-list-header) input.checkbox:checked").each(function (i) {
     ids.push($(this).val());
   });
 
@@ -237,3 +237,30 @@ async function deleteRecord(module, ids) {
   }
 }
 
+/***********************************************
+ *        product modal
+ ***********************************************/
+function doAjaxPage(pageNum) {
+  $.ajax({
+    url: '/lottery/product',
+    data: {
+      searchFor: $('#searchFor').val(),
+      pageNum: pageNum || 1
+    },
+    success: function (result) {
+      var doc = $(result);
+      $('#modal-product').html($(doc[0]).html());
+    }
+  });
+}
+
+function initProductModal(target) {
+  $.ajax({
+    url: '/lottery/product',
+    success: function (result) {
+      $('#modal-product-container').html(result);
+      productTarget = target;
+      $('#modal-product').modal({backdrop: 'static'});
+    }
+  });
+}

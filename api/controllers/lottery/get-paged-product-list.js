@@ -1,10 +1,10 @@
 module.exports = {
 
 
-  friendlyName: 'View lottery list',
+  friendlyName: 'Get product list',
 
 
-  description: 'Display "Lottery List" page.',
+  description: 'Get product list',
 
   inputs: {
 
@@ -21,7 +21,7 @@ module.exports = {
   exits: {
 
     success: {
-      viewTemplatePath: 'pages/lottery/lottery-list',
+      viewTemplatePath: 'partials/app/_common/modals/modal-product/modal-product',
     }
 
   },
@@ -35,24 +35,22 @@ module.exports = {
       currentPage = inputs.pageNum;
     }
 
-    var criteria = {};
+    var criteria = {}, meta = {}, searchFor = '';
     if (inputs.searchFor) {
       criteria = {
         or: [
-          {'name': {'contains': inputs.searchFor}},
+          {'name.zh_CN': {'contains': inputs.searchFor}},
         ]
       };
+      meta = {enableExperimentalDeepTargets: true}
     }
 
-    var pagerData = await pager.paginate(Lottery, criteria, currentPage, perPage, null, 'createdAt DESC');
-    var lotteryStatusCode = await Code.find({category: 'lotteryStatus'}).sort('order ASC');
+    var pagerData = await pager.paginate(Product, criteria, currentPage, perPage, null, 'createdAt DESC', meta);
 
     return {
-      pagename: 'lottery-list',
       items: pagerData.data,
       pager: pagerData.meta,
       searchFor: inputs.searchFor,
-      lotteryStatusCode: lotteryStatusCode
     };
   }
 

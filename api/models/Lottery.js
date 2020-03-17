@@ -27,7 +27,7 @@ module.exports = {
     },
     status: {
       type: 'number',
-      required: true,
+      defaultsTo : 1
     },
     price: {
       type: 'number',

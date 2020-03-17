@@ -40,6 +40,7 @@ module.exports.routes = {
   'GET /lottery/list/:pageNum': { action: 'lottery/view-lottery-list' },
   'GET /lottery/add':           { action: 'lottery/view-lottery-editor' },
   'GET /lottery/:id':           { action: 'lottery/view-lottery-editor' },
+  'GET /lottery/product':       { action: 'lottery/get-paged-product-list' },
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗

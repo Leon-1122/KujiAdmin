@@ -1,0 +1,126 @@
+<div class="modal fade" id="modal-product">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{__ 'Product Select'}}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="title-search-block">
+
+                    <div class="title-block">
+                        <div class="row">
+                          {{!-- Title --}}
+                            <div class="col-md-6">
+                                <p class="title-description">
+                                  {{__ 'Product List'}}
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="items-search">
+                        <form class="form-inline" onsubmit="return false">
+                            <div class="input-group">
+                                <input type="text" id="searchFor" name="searchFor" class="form-control boxed rounded-s" placeholder="{{__ 'Search for product'}}" value="{{searchFor}}">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-secondary rounded-s" type="button" onclick="doAjaxPage()">
+                                      <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+                <div class="card items">
+                    <ul class="item-list striped">
+                        <li class="item item-list-header">
+                            <div class="item-row">
+                                <div class="item-col fixed item-col-check">
+                                    <label class="item-check" id="select-all-items">
+                                        <input type="checkbox" class="checkbox">
+                                        <span></span>
+                                    </label>
+                                </div>
+                                <div class="item-col item-col-header fixed item-col-img md">
+                                    <div>
+                                        <span>{{__ 'Picture'}}</span>
+                                    </div>
+                                </div>
+                                <div class="item-col item-col-header item-col-title">
+                                    <div>
+                                        <span>{{__ 'Name'}}</span>
+                                    </div>
+                                </div>
+                                <div class="item-col item-col-header item-col-category">
+                                    <div class="no-overflow">
+                                        <span>{{__ 'SKU'}}</span>
+                                    </div>
+                                </div>
+                                <div class="item-col item-col-header item-col-category">
+                                    <div class="no-overflow">
+                                        <span>{{__ 'Category'}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                      {{#each items}}
+                          <li class="item">
+
+                              <div class="item-row">
+
+                                  <div class="item-col fixed item-col-check">
+
+                                      <label class="item-check">
+                                          <input type="checkbox" class="checkbox" value="{{this.id}}">
+                                          <span></span>
+                                      </label>
+                                  </div>
+
+                                  <div class="item-col fixed item-col-img md">
+                                      <div class="item-img rounded" style="background-image: url({{this.main_pic_url}})">
+                                          <input type="hidden" class="product-img" value="{{this.main_pic_url}}">
+                                      </div>
+                                  </div>
+                                  <div class="item-col fixed pull-left item-col-title">
+                                      <div class="item-heading">{{../__ 'Name'}}</div>
+                                      <div>
+                                          <h4 class="item-title">
+                                            {{this.name.zh_CN}}
+                                              <input type="hidden" class="product-name" value="{{this.name.zh_CN}}">
+                                          </h4>
+                                      </div>
+                                  </div>
+                                  <div class="item-col item-col-date">
+                                      <div class="item-heading">{{../__ 'SKU'}}</div>
+                                      <div class="no-overflow">
+                                        {{this.sku}}
+                                          <input type="hidden" class="product-sku" value="{{this.sku}}">
+                                      </div>
+                                  </div>
+                                  <div class="item-col item-col-date">
+                                      <div class="item-heading">{{../__ 'Category'}}</div>
+                                      <div class="no-overflow">
+                                        {{#unescape this.category.[0].name.zh_CN}}{{/unescape}}
+                                      </div>
+                                  </div>
+                              </div>
+                          </li>
+                      {{/each}}
+                    </ul>
+                </div>
+                {{> app/_common/pager/ajax-pager}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__ 'Close'}}</button>
+                <button type="button" class="btn btn-primary" id="product-ok" data-dismiss="modal" onclick="addAwardProduct(productTarget);">{{__ 'Confirm'}}</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

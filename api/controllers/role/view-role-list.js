@@ -36,9 +36,7 @@ module.exports = {
     }
 
     var criteria = {};
-    var searchFor = '';
     if (inputs.searchFor) {
-      searchFor = inputs.searchFor;
       criteria = {
         or: [
           {code: {'contains': inputs.searchFor}},
@@ -52,7 +50,7 @@ module.exports = {
       pagename: 'role-list',
       items: pagerData.data,
       pager: pagerData.meta,
-      searchFor: searchFor
+      searchFor: inputs.searchFor
     };
 
   }
