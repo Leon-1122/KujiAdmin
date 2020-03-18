@@ -26,5 +26,9 @@ $.extend($.validator.messages, {
   operationSuccess: "操作成功",
   selectDeleteRecords: "请选择要删除的数据",
   deleteSuccess: "删除成功",
-  deleteFailed: "删除失败"
+  deleteFailed: "删除失败",
+  selectTakeOutProducts: "请选择要取出的商品",
+  tooManyMachines: "一次只能取出一台售货机的商品",
+  takeOutSuccess: "取出成功",
+  takeOutFailed: "取出失败"
 });

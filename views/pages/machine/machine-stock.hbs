@@ -1,0 +1,171 @@
+{{#extend "app-layout"}}
+  {{#content "article" mode="append"}}
+      <div class="title-search-block">
+
+          <div class="title-block">
+              <div class="row">
+                {{!-- Title --}}
+                  <div class="col-md-6">
+                      <h3 class="title">
+                        {{__ 'Machine'}}
+                          <div class="action dropdown">
+                          <button class="btn  btn-sm rounded-s btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{__ 'More actions...'}}
+                          </button>
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="takeOutCheckedProducts()"><i class="fa fa-wrench icon"></i>{{__ 'Take Out'}}</a>
+                          </div>
+                      </div>
+                      </h3>
+                      <p class="title-description">
+                        {{__ 'Machine Stock'}}
+                      </p>
+                  </div>
+
+              </div>
+          </div>
+
+
+          <div class="items-search">
+              <form id="machine-stock-form" class="form-inline" action="/machine/stock">
+                  <div class="input-group">
+                      <input type="text" name="searchFor" class="form-control boxed rounded-s" placeholder="{{__ 'Search for machine stock'}}" value="{{searchFor}}">
+                      <span class="input-group-btn">
+                        <button class="btn btn-secondary rounded-s" type="submit">
+                          <i class="fa fa-search"></i>
+                        </button>
+                      </span>
+                  </div>
+              </form>
+          </div>
+      </div>
+
+
+      <div class="card items">
+          <ul class="item-list striped">
+              <li class="item item-list-header">
+                  <div class="item-row">
+                      <div class="item-col fixed item-col-check">
+                          <label class="item-check" id="select-all-items">
+                              <input type="checkbox" class="checkbox">
+                              <span></span>
+                          </label>
+                      </div>
+                      <div class="item-col item-col-header item-col-title item-col-3">
+                          <div>
+                              <span>{{__ 'Machine ID'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date">
+                          <div class="no-overflow">
+                              <span>{{__ 'SKU'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date item-col-9">
+                          <div class="no-overflow">
+                              <span>{{__ 'Name'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date">
+                          <div class="no-overflow">
+                              <span>{{__ 'Quantity'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date">
+                          <div class="no-overflow">
+                              <span>{{__ 'Mismatch quantity'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date">
+                          <div class="no-overflow">
+                              <span>{{__ 'Reserver quantity'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header fixed item-col-actions-dropdown">
+
+                      </div>
+                  </div>
+              </li>
+            {{#each items}}
+                <li class="item">
+
+                    <div class="item-row">
+
+                        <div class="item-col fixed item-col-check">
+
+                            <label class="item-check">
+                                <input type="checkbox" class="checkbox" value="{{this.id}}">
+                                <span></span>
+                            </label>
+                        </div>
+
+                        <div class="item-col fixed pull-left item-col-title item-col-3">
+                            <div class="item-heading">{{../__ 'Machine ID'}}</div>
+                            <div>
+                                <h4 class="item-title machineId" style="color: #969696;">
+                                  {{this.machine_id}}
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date">
+                            <div class="item-heading">{{../__ 'SKU'}}</div>
+                            <div class="no-overflow sku">
+                              {{this.sku}}
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date item-col-9">
+                            <div class="item-heading">{{../__ 'Name'}}</div>
+                            <div class="no-overflow name">
+                              {{this.name}}
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date">
+                            <div class="item-heading">{{../__ 'Quantity'}}</div>
+                            <div class="no-overflow">
+                              {{this.quantity}}
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date">
+                            <div class="item-heading">{{../__ 'Mismatch quantity'}}</div>
+                            <div class="no-overflow">
+                              {{this.mismatch_quantity}}
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date">
+                            <div class="item-heading">{{../__ 'Reserver quantity'}}</div>
+                            <div class="no-overflow">
+                              {{this.reserver_quantity}}
+                            </div>
+                        </div>
+                        <div class="item-col fixed item-col-actions-dropdown">
+                            <div class="item-actions-dropdown">
+                                <a class="item-actions-toggle-btn">
+                                <span class="inactive">
+                                    <i class="fa fa-cog"></i>
+                                </span>
+                                    <span class="active">
+                                <i class="fa fa-chevron-circle-right"></i>
+                                </span>
+                                </a>
+                                <div class="item-actions-block">
+                                    <ul class="item-actions-list">
+                                        <li>
+                                            <a class="pull" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="takeOutOneProduct('{{this.machine_id}}', '{{this.sku}}', '{{this.name}}')">
+                                                <i class="fa fa-wrench"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
+            {{/each}}
+          </ul>
+      </div>
+
+      {{> app/_common/pager/pager}}
+
+  {{/content}}
+{{/extend}}

@@ -36,6 +36,13 @@ module.exports.routes = {
   'GET /product/add':           { action: 'product/view-product-add' },
   'GET /product/:id':           { action: 'product/view-product-detail' },
 
+  'GET /machine/list':          { action: 'machine/view-machine-list' },
+  'GET /machine/list/:pageNum': { action: 'machine/view-machine-list' },
+  'GET /machine/add':           { action: 'machine/view-machine-add' },
+  'GET /machine/:id':           { action: 'machine/view-machine-detail' },
+  'GET /machine/stock':          { action: 'machine/view-machine-stock' },
+  'GET /machine/stock/:pageNum': { action: 'machine/view-machine-stock' },
+
   'GET /lottery/list':          { action: 'lottery/view-lottery-list' },
   'GET /lottery/list/:pageNum': { action: 'lottery/view-lottery-list' },
   'GET /lottery/add':           { action: 'lottery/view-lottery-editor' },
@@ -70,6 +77,9 @@ module.exports.routes = {
   'DELETE /api/v1/role':                                  { action: 'role/delete-role' },
   'PUT   /api/v1/product':                                { action: 'product/add-product' },
   'DELETE /api/v1/product':                               { action: 'product/delete-product' },
+  'PUT   /api/v1/machine':                                { action: 'machine/add-machine' },
+  'DELETE /api/v1/machine':                               { action: 'machine/delete-machine' },
+  'POST  /api/v1/machine/take-out-product':               { action: 'machine/take-out-product' },
   'PUT    /api/v1/lottery':                               { action: 'lottery/update-lottery' },
   'DELETE /api/v1/lottery':                               { action: 'lottery/delete-lottery' },
   'POST  /api/v1/lottery':                                { action: 'lottery/upload-picture' },

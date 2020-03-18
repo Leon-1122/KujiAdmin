@@ -34,17 +34,17 @@
               {{/is}}
 
               {{#is "machine" "in" res.locals.me.permissionModules}}
-                  <li {{#is pagename "in" "machine-list,machine-stock,machine-lottery,machine-logs"}}class="active open"{{/is}} >
+                  <li {{#is pagename "in" "machine-list,machine-detail,machine-add,machine-stock,machine-lottery,machine-logs"}}class="active open"{{/is}} >
 
                       <a href="">
-                          <i class="fa fa-list-alt"></i> {{__ 'Machines Manager'}}
+                          <i class="fa fa-list-alt"></i> {{__ 'Machine Manager'}}
                           <i class="fa arrow"></i>
                       </a>
 
                       <ul class="sidebar-nav">
-                          <li {{#is pagename "===" "machine-list"}}class="active"{{/is}} >
+                          <li {{#is pagename "in" "machine-list,machine-detail,machine-add"}}class="active"{{/is}} >
                               <a href="/machine/list">
-                                {{__ 'Machines List'}}
+                                {{__ 'Machine List'}}
                               </a>
                           </li>
 
@@ -78,7 +78,7 @@
               {{/is}}
 
               {{#is "lottery" "in" res.locals.me.permissionModules}}
-                  <li {{#is pagename "in" "lottery-list"}}class="active"{{/is}} >
+                  <li {{#is pagename "in" "lottery-list,lottery-editor"}}class="active"{{/is}} >
                       <a href="/lottery/list">
                           <i class="fa fa-ticket"></i> {{__ 'Lottery Manager'}}
                       </a>

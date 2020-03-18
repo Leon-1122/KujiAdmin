@@ -1295,6 +1295,8 @@ label,
             color: #DB0E1E; }
           .item-list .item-actions-dropdown .item-actions-block .item-actions-list a.view {
             color: #3629db; }
+          .item-list .item-actions-dropdown .item-actions-block .item-actions-list a.refresh {
+            color: #15db2b; }
 /* *******************************************
 *				Adjustments
 ********************************************** */
@@ -2894,6 +2896,12 @@ pre {
   -webkit-box-flex: 3 !important;
   -ms-flex-positive: 3 !important;
   flex-grow: 3 !important;
+}
+
+.item-list .item-col.item-col-9 {
+  -webkit-box-flex: 9 !important;
+  -ms-flex-positive: 9 !important;
+  flex-grow: 9 !important;
 }
 
 @media (max-width: 575.98px) {

@@ -264,3 +264,52 @@ function initProductModal(target) {
     }
   });
 }
+
+/***********************************************
+ *        take out product
+ ***********************************************/
+function takeOutCheckedProducts() {
+  var machineId = '';
+  var items = [];
+  $(".item:not(.item-list-header) input.checkbox:checked").each(function (i, e) {
+    var $selectedRow = $(e).parents('.item-row');
+    var selectedMachineId = $selectedRow.find('.machineId').text();
+    var selectedSku = $(e).find('.sku').text();
+    var selectedName = $(e).find('.name').text();
+
+    if (machineId !== '' && machineId !== selectedMachineId) {
+      showAlert($.validator.messages.tooManyMachines);
+      return;
+    }
+
+    machineId = selectedMachineId;
+    items.push({sku: selectedSku, count: 1, name: selectedName});
+  });
+
+  if (items.length === 0) {
+    showAlert($.validator.messages.selectTakeOutProducts);
+    return;
+  }
+
+  takeOutProduct(machineId, items);
+}
+
+function takeOutOneProduct(machineId, sku, name) {
+  var items = [{sku: sku, count: 1, name: name}];
+  takeOutProduct(machineId, items);
+}
+
+async function takeOutProduct(machineId, items) {
+  var result = await Cloud['takeOutProduct'].with({machineId: machineId, items: items})
+    .tolerate((err) => {
+      console.log(err);
+    });
+
+  if (result) {
+    showAlert($.validator.messages.takeOutSuccess, function () {
+      window.location = '/machine/stock';
+    });
+  } else {
+    showAlert($.validator.messages.takeOutFailed);
+  }
+}
