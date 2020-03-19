@@ -30,5 +30,8 @@ $.extend($.validator.messages, {
   selectTakeOutProducts: "请选择要取出的商品",
   tooManyMachines: "一次只能取出一台售货机的商品",
   takeOutSuccess: "取出成功",
-  takeOutFailed: "取出失败"
+  takeOutFailed: "取出失败",
+  selectMachineLottery: "请选择要生效售货机一番赏",
+  activeSuccess: "生效成功",
+  activeFailed: "生效失败",
 });

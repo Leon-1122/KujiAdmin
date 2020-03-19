@@ -1,0 +1,140 @@
+{{#extend "app-layout"}}
+  {{#content "article" mode="append"}}
+      <div class="title-block">
+          <h3 class="title">
+              {{__ 'Machine lottery detail'}}
+          </h3>
+      </div>
+
+
+      <form id="machine-lottery-detail-form"  novalidate="" onsubmit="return false">
+          <div class="card card-block">
+
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                    {{__ 'Machine ID'}}:
+                  </label>
+                  <div class="col-sm-10">
+                      {{machineLottery.main.machineCode}}
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                    {{__ 'Name'}}:
+                  </label>
+                  <div class="col-sm-10">
+                      {{machineLottery.main.name}}
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                    {{__ 'Time title'}}:
+                  </label>
+                  <div class="col-sm-10">
+                    {{machineLottery.main.timeTitle}}
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                    {{__ 'Card total'}}:
+                  </label>
+                  <div class="col-sm-10">
+                      {{machineLottery.detail.cardTotal}}
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                    {{__ 'Card remain'}}:
+                  </label>
+                  <div class="col-sm-10">
+                    {{machineLottery.detail.cardRemain}}
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                    {{__ 'Status'}}:
+                  </label>
+                  <div class="col-sm-10">
+                    {{#if machineLottery.main.comingSoon}}{{../__ 'Coming soon'}}
+                    {{else if machineLottery.main.soldOut}}{{../__ 'Sold out'}}
+                    {{else}}{{../__ 'Selling'}}{{/if}}
+                  </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                    {{__ 'Awards setting'}}:
+                  </label>
+                  <div class="col-sm-10">
+                  </div>
+              </div>
+
+              <div class="form-group row" id="productPreviewContainer">
+                  {{#each machineLottery.detail.productPreview}}
+                      <div class="card float-card card-info">
+                          <div class="card-header">
+                              <div class="header-block row">
+                                  <p class="title">
+                                    {{this.level}}{{../__ 'Award'}}
+                                  </p>
+                              </div>
+                          </div>
+                          <div class="card-block">
+                              <div class="card">
+                                  <div class="card-block">
+                                      <div class="card-title-block">
+                                          <h3 class="title">
+                                              {{../__ 'Product List'}}
+                                          </h3>
+                                      </div>
+
+                                      <div class="table-responsive">
+                                          <table class="table table-striped table-hover">
+                                              <thead>
+                                                  <tr>
+                                                      <th>{{../__ 'SKU'}}</th>
+                                                      <th>{{../__ 'Name'}}</th>
+                                                      <th>{{../__ 'Total amount'}}</th>
+                                                      <th>{{../__ 'Remain amount'}}</th>
+                                                  </tr>
+                                              </thead>
+                                          <tbody>
+                                            {{#each ../machineLottery.detail.productList}}
+                                                {{#is this.level ../this.level}}
+                                                    <tr>
+                                                        <td>{{this.sku}}</td>
+                                                        <td>{{this.name}}</td>
+                                                        <td>{{this.total}}</td>
+                                                        <td>{{this.remain}}</td>
+                                                    </tr>
+                                                {{/is}}
+                                            {{/each}}
+                                          </tbody>
+                                      </table>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  {{/each}}
+
+              </div>
+
+              <div class="form-group row">
+                  <div class="col-sm-2"></div>
+                  <div class="col-sm-10 error-message" style="display: none"></div>
+              </div>
+              <div class="form-group row">
+                  <div class="col-sm-10 col-sm-offset-2">
+                  </div>
+              </div>
+          </div>
+          <input type="hidden" name="id" value="{{machineLottery.main._id}}">
+      </form>
+  {{/content}}
+{{/extend}}

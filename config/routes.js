@@ -42,6 +42,11 @@ module.exports.routes = {
   'GET /machine/:id':           { action: 'machine/view-machine-detail' },
   'GET /machine/stock':          { action: 'machine/view-machine-stock' },
   'GET /machine/stock/:pageNum': { action: 'machine/view-machine-stock' },
+  'GET /machine/lottery/add':      { action: 'machine/view-machine-lottery-add' },
+  'GET /machine/lottery':          { action: 'machine/view-machine-lottery' },
+  'GET /machine/lottery/:pageNum':    { action: 'machine/view-machine-lottery' },
+  'GET /machine/lottery/detail/:id':      { action: 'machine/view-machine-lottery-detail' },
+
 
   'GET /lottery/list':          { action: 'lottery/view-lottery-list' },
   'GET /lottery/list/:pageNum': { action: 'lottery/view-lottery-list' },
@@ -80,6 +85,9 @@ module.exports.routes = {
   'PUT   /api/v1/machine':                                { action: 'machine/add-machine' },
   'DELETE /api/v1/machine':                               { action: 'machine/delete-machine' },
   'POST  /api/v1/machine/take-out-product':               { action: 'machine/take-out-product' },
+  'DELETE /api/v1/machine/lottery':                       { action: 'machine/delete-machine-lottery' },
+  'PUT   /api/v1/machine/lottery':                        { action: 'machine/add-machine-lottery' },
+  'PUT   /api/v1/machine/lottery/active':                 { action: 'machine/active-machine-lottery' },
   'PUT    /api/v1/lottery':                               { action: 'lottery/update-lottery' },
   'DELETE /api/v1/lottery':                               { action: 'lottery/delete-lottery' },
   'POST  /api/v1/lottery':                                { action: 'lottery/upload-picture' },

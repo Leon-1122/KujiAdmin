@@ -203,7 +203,7 @@ function showAlert(msg, callback) {
 /***********************************************
  *        delete records
  ***********************************************/
-function deleteCheckedRecords(module) {
+function deleteCheckedRecords(module, redirect) {
   var ids = [];
   $(".item:not(.item-list-header) input.checkbox:checked").each(function (i) {
     ids.push($(this).val());
@@ -214,15 +214,15 @@ function deleteCheckedRecords(module) {
     return;
   }
 
-  deleteRecord(module, ids);
+  deleteRecord(module, ids, redirect);
 }
 
-function deleteOneRecord(module, id) {
+function deleteOneRecord(module, id, redirect) {
   var ids = [id];
-  deleteRecord(module, ids);
+  deleteRecord(module, ids, redirect);
 }
 
-async function deleteRecord(module, ids) {
+async function deleteRecord(module, ids, redirect) {
   var result = await Cloud['delete' + module.firstUpperCase()].with({ids: ids})
     .tolerate((err) => {
       console.log(err);
@@ -230,7 +230,12 @@ async function deleteRecord(module, ids) {
 
   if (result) {
     showAlert($.validator.messages.deleteSuccess, function () {
-      window.location = '/' + module + '/list';
+      if (redirect) {
+        window.location = redirect;
+      } else {
+        window.location = '/' + module + '/list';
+      }
+
     });
   } else {
     showAlert($.validator.messages.deleteFailed);
@@ -311,5 +316,43 @@ async function takeOutProduct(machineId, items) {
     });
   } else {
     showAlert($.validator.messages.takeOutFailed);
+  }
+}
+
+
+/***********************************************
+ *        active machine lottery
+ ***********************************************/
+function activeCheckedMachineLotteries() {
+  var ids = [];
+  $(".item:not(.item-list-header) input.checkbox:checked").each(function (i, e) {
+    ids.push($(this).val());
+  });
+
+  if (ids.length === 0) {
+    showAlert($.validator.messages.selectMachineLottery);
+    return;
+  }
+
+  activeMachineLottery(ids);
+}
+
+function activeOneMachineLottery(id) {
+  var ids = [id];
+  activeMachineLottery(ids);
+}
+
+async function activeMachineLottery(ids) {
+  var result = await Cloud['activeMachineLottery'].with({ids: ids})
+    .tolerate((err) => {
+      console.log(err);
+    });
+
+  if (result) {
+    showAlert($.validator.messages.activeSuccess, function () {
+      window.location = '/machine/lottery';
+    });
+  } else {
+    showAlert($.validator.messages.activeFailed);
   }
 }

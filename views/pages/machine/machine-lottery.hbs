@@ -1,0 +1,189 @@
+{{#extend "app-layout"}}
+  {{#content "article" mode="append"}}
+      <div class="title-search-block">
+
+          <div class="title-block">
+              <div class="row">
+                {{!-- Title --}}
+                  <div class="col-md-6">
+                      <h3 class="title">
+                        {{__ 'Machine'}}
+                          <a href="/machine/lottery/add" class="btn btn-primary btn-sm rounded-s">
+                            {{__ 'Add New'}}
+                          </a>
+                          <div class="action dropdown">
+                          <button class="btn  btn-sm rounded-s btn-secondary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{__ 'More actions...'}}
+                          </button>
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="activeCheckedMachineLotteries()"><i class="fa fa-trophy icon"></i>{{__ 'Take Effect'}}</a>
+                              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="deleteCheckedRecords('machineLottery', '/machine/lottery')"><i class="fa fa-close icon"></i>{{__ 'Delete'}}</a>
+                          </div>
+                      </div>
+                      </h3>
+                      <p class="title-description">
+                        {{__ 'Machine Lottery'}}
+                      </p>
+                  </div>
+
+              </div>
+          </div>
+
+
+          <div class="items-search">
+              <form id="machine-lottery-form" class="form-inline" action="/machine/lottery">
+                  <div class="input-group">
+                      <input type="text" name="searchFor" class="form-control boxed rounded-s" placeholder="{{__ 'Search for machine lottery'}}" value="{{searchFor}}">
+                      <span class="input-group-btn">
+                        <button class="btn btn-secondary rounded-s" type="submit">
+                          <i class="fa fa-search"></i>
+                        </button>
+                      </span>
+                  </div>
+              </form>
+          </div>
+      </div>
+
+
+      <div class="card items">
+          <ul class="item-list striped">
+              <li class="item item-list-header">
+                  <div class="item-row">
+                      <div class="item-col fixed item-col-check">
+                          <label class="item-check" id="select-all-items">
+                              <input type="checkbox" class="checkbox">
+                              <span></span>
+                          </label>
+                      </div>
+                      <div class="item-col item-col-header item-col-title item-col-3">
+                          <div>
+                              <span>{{__ 'Machine ID'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date">
+                          <div class="no-overflow">
+                              <span>{{__ 'Name'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date">
+                          <div class="no-overflow">
+                              <span>{{__ 'Time title'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date">
+                          <div class="no-overflow">
+                              <span>{{__ 'Status'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date">
+                          <div>
+                              <span>{{__ 'Created At'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date">
+                          <div>
+                              <span>{{__ 'Updated At'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header fixed item-col-actions-dropdown">
+
+                      </div>
+                  </div>
+              </li>
+            {{#each items}}
+                <li class="item">
+
+                    <div class="item-row">
+
+                        <div class="item-col fixed item-col-check">
+
+                            <label class="item-check">
+                                <input type="checkbox" class="checkbox" value="{{this._id}}">
+                                <span></span>
+                            </label>
+                        </div>
+
+                        <div class="item-col fixed pull-left item-col-title item-col-3">
+                            <div class="item-heading">{{../__ 'Machine ID'}}</div>
+                            <div>
+                                <a href="/machine/lottery/detail/{{this._id}}" class="">
+                                    <h4 class="item-title" style="color: #969696;">
+                                      {{this.machineCode}}
+                                    </h4>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date">
+                            <div class="item-heading">{{../__ 'Name'}}</div>
+                            <div class="no-overflow">
+                              {{this.name}}
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date">
+                            <div class="item-heading">{{../__ 'Time title'}}</div>
+                            <div class="no-overflow">
+                              {{this.timeTitle}}
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date">
+                            <div class="item-heading">{{../__ 'Status'}}</div>
+                            <div class="no-overflow">
+                                {{#if this.comingSoon}}{{../__ 'Coming soon'}}
+                                {{else if this.soldOut}}{{../__ 'Sold out'}}
+                                {{else}}{{../__ 'Selling'}}{{/if}}
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date">
+                            <div class="item-heading">{{../__ 'Created At'}}</div>
+                            <div class="no-overflow">
+                              {{#date this.createdAt}}{{/date}}
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date">
+                            <div class="item-heading">{{../__ 'Updated At'}}</div>
+                            <div class="no-overflow">
+                              {{#date this.updatedAt}}{{/date}}
+                            </div>
+                        </div>
+                        <div class="item-col fixed item-col-actions-dropdown">
+                            <div class="item-actions-dropdown">
+                                <a class="item-actions-toggle-btn">
+                                <span class="inactive">
+                                    <i class="fa fa-cog"></i>
+                                </span>
+                                    <span class="active">
+                                <i class="fa fa-chevron-circle-right"></i>
+                                </span>
+                                </a>
+                                <div class="item-actions-block">
+                                    <ul class="item-actions-list">
+                                        <li>
+                                            <a class="remove" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="deleteOneRecord('machineLottery', '{{this._id}}', '/machine/lottery')">
+                                                <i class="fa fa-trash-o "></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="pull" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="activeOneMachineLottery('{{this._id}}')">
+                                                <i class="fa fa-trophy"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="view" href="/machine/lottery/detail/{{this._id}}">
+                                                <i class="fa fa-eye "></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </li>
+            {{/each}}
+          </ul>
+      </div>
+
+      {{> app/_common/pager/pager}}
+
+  {{/content}}
+{{/extend}}

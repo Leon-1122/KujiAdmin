@@ -1,5 +1,6 @@
 {
-  "Brand": "ModularAdmin",
+  "Title": "一番赏管理系统",
+  "Brand": "一番赏",
   "Username": "用户名",
   "Password": "密码",
   "Your email address": "请输入邮箱地址",
@@ -118,5 +119,16 @@
   "Quantity": "商品数量",
   "Mismatch quantity": "不匹配数量",
   "Reserver quantity": "预留数量",
-  "Take Out": "取出"
+  "Take Out": "取出",
+  "Search for machine lottery": "机器ID、名字",
+  "Time title": "期数",
+  "Coming soon": "即将到来",
+  "Sold out": "已售磐",
+  "Selling": "在售",
+  "Take Effect": "生效",
+  "Add machine lottery": "新增售货机一番赏",
+  "Machine lottery detail": "售货机一番赏详情",
+  "Card remain": "奖券剩余数量",
+  "Total amount": "总数",
+  "Remain amount": "剩余数"
 }
