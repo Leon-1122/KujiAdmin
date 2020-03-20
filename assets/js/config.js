@@ -82,6 +82,7 @@ config.validations = {
       return;
     }
 
+    $('#loading').show();
     syncing = true;
     if (this.settings.beforeSubmit && $.isFunction(this.settings.beforeSubmit)) {
       this.settings.beforeSubmit.call(this, form);
@@ -114,17 +115,20 @@ config.validations = {
         syncing = true;
         window.location = $(form).data('redirect');
       } else {
+        $('#loading').hide();
         if ($successContent) {
           $successContent.html($.validator.messages.operationSuccess);
           $successContent.show();
         }
       }
     } else {
+      $('#loading').hide();
       if ($errorContent) {
         $errorContent.html(errorMsg);
         $errorContent.show();
       }
     }
+
   }
 };
 

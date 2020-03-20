@@ -75,6 +75,70 @@ module.exports = {
     return result;
   },
 
+  // 获取指定一番赏期数
+  getMachineLotteryTimeTitle: async function (machineId, lotteryName) {
+    let accessToken = await sails.helpers.getAccessToken();
+
+    const axios = require('axios');
+    const env = sails.config.custom.envname;
+    const mainCollection = 'project';
+    let timeTitle = 0;
+
+    // 获取主表数据
+    let postbody = {
+      env: env,
+      query: `db.collection("${mainCollection}").aggregate().match({machineCode:"${machineId}", name:"${lotteryName}"})
+      .group({_id: "$name", maxTime: db.command.aggregate.max("$timeTitle")}).end()`
+    };
+    let response = await axios.post(
+      `https://api.weixin.qq.com/tcb/databaseaggregate?access_token=${accessToken}`,
+      postbody
+    );
+
+    if (response.data && response.data.errcode === 0) {
+      if (response.data.data) {
+        response.data.data.forEach(record => timeTitle = parseInt(JSON.parse(record).maxTime.$numberDouble));
+      }
+
+    } else {
+      throw new Error('cloud error');
+    }
+
+    return timeTitle;
+  },
+
+  // 获取指定售货机一番赏排序
+  getMachineLotteryOrder: async function (machineId) {
+    let accessToken = await sails.helpers.getAccessToken();
+
+    const axios = require('axios');
+    const env = sails.config.custom.envname;
+    const mainCollection = 'project';
+    let order = 0;
+
+    // 获取主表数据
+    let postbody = {
+      env: env,
+      query: `db.collection("${mainCollection}").aggregate().match({machineCode:"${machineId}"})
+      .group({_id: null, maxOrder: db.command.aggregate.max("$order")}).end()`
+    };
+    let response = await axios.post(
+      `https://api.weixin.qq.com/tcb/databaseaggregate?access_token=${accessToken}`,
+      postbody
+    );
+
+    if (response.data && response.data.errcode === 0) {
+      if (response.data.data) {
+        response.data.data.forEach(record => order = parseInt(JSON.parse(record).maxOrder.$numberDouble));
+      }
+
+    } else {
+      throw new Error('cloud error');
+    }
+
+    return order;
+  },
+
   // 获取详细信息
   findDetail: async function (id) {
     let accessToken = await sails.helpers.getAccessToken();
@@ -169,6 +233,56 @@ module.exports = {
     return result;
   },
 
+  // 新增售货机一番赏
+  addMachineLottery: async function (mainData, detailData) {
+    let accessToken = await sails.helpers.getAccessToken();
+
+    const axios = require('axios');
+    const env = sails.config.custom.envname;
+    const mainCollection = 'project';
+    const detailCollection = 'project-detail';
+    let projectId = null;
+    let result = 0;
+
+    // 插入主表数据
+    let main = JSON.stringify(mainData);
+    let postbody = {
+      env: env,
+      query: `db.collection("${mainCollection}").add({data:${main}})`
+    };
+    let response = await axios.post(
+      `https://api.weixin.qq.com/tcb/databaseadd?access_token=${accessToken}`,
+      postbody
+    );
+
+    if (response.data && response.data.errcode === 0) {
+      projectId = response.data.id_list[0];
+      result++;
+    } else {
+      throw new Error('cloud error');
+    }
+
+    // 插入详细表数据
+    detailData.projectId = projectId;
+    let detail = JSON.stringify(detailData);
+    postbody = {
+      env: env,
+      query: `db.collection("${detailCollection}").add({data:${detail}})`
+    };
+    response = await axios.post(
+      `https://api.weixin.qq.com/tcb/databaseadd?access_token=${accessToken}`,
+      postbody
+    );
+
+    if (response.data && response.data.errcode === 0) {
+      result++;
+    } else {
+      throw new Error('cloud error');
+    }
+
+    return result;
+  },
+
   // 激活售货机一番赏
   activeMachineLottery: async function (id) {
     let accessToken = await sails.helpers.getAccessToken();
@@ -214,4 +328,5 @@ module.exports = {
 
     return result;
   },
+
 };

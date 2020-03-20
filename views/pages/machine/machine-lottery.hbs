@@ -76,6 +76,11 @@
                           </div>
                       </div>
                       <div class="item-col item-col-header item-col-date">
+                          <div class="no-overflow">
+                              <span>{{__ 'Sort'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date">
                           <div>
                               <span>{{__ 'Created At'}}</span>
                           </div>
@@ -131,6 +136,12 @@
                                 {{#if this.comingSoon}}{{../__ 'Coming soon'}}
                                 {{else if this.soldOut}}{{../__ 'Sold out'}}
                                 {{else}}{{../__ 'Selling'}}{{/if}}
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date">
+                            <div class="item-heading">{{../__ 'Sort'}}</div>
+                            <div class="no-overflow">
+                              {{this.order}}
                             </div>
                         </div>
                         <div class="item-col item-col-date">

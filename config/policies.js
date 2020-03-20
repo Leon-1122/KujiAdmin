@@ -21,4 +21,5 @@ module.exports.policies = {
   // Allow anyone to access the follow action, even if they're not logged in.
   'entrance/*': true,
   'view-homepage-or-redirect': true,
+  'lottery/download-picture': true,
 };
