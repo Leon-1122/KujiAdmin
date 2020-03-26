@@ -26,58 +26,65 @@ module.exports = {
     },
     pick_method: {
       type: 'string',
+      allowNull: true,
       description: '捡货方式'
     },
     sale_channel: {
-      type: 'number',
+      type: 'json',
       description: '销售渠道'
     },
     is_gift: {
-      type: 'number',
+      type: 'json',
       description: '是否是赠品'
     },
     eject_weight: {
-      type: 'number',
+      type: 'json',
       description: '多件同出商品权重'
     },
     supplier_name: {
       type: 'string',
+      allowNull: true,
       description: '供应商'
     },
     model: {
       type: 'string',
+      allowNull: true,
       description: '规格参数'
     },
     add_time: {
       type: 'string',
+      allowNull: true,
       description: '增加时间'
     },
     is_virtual: {
-      type: 'number',
+      type: 'json',
       description: '是否是虚拟商品'
     },
     is_id_card_presented_item: {
-      type: 'number',
+      type: 'json',
       description: '是否需要实名'
     },
     main_pic_url: {
       type: 'string',
+      allowNull: true,
       description: '主图片url'
     },
     package_length: {
-      type: 'number',
+      type: 'json',
       description: '包装长度'
     },
     package_width: {
-      type: 'number',
+      type: 'json',
       description: '包装宽度'
     },
     supplier_id: {
       type: 'string',
+      allowNull: true,
       description: '供应商ID'
     },
     fetch_style: {
       type: 'string',
+      allowNull: true,
       description: '抓取方式'
     },
     ppid: {
@@ -91,22 +98,26 @@ module.exports = {
     },
     upc: {
       type: 'string',
+      allowNull: true,
       description: '条码'
     },
     main_pic_id: {
       type: 'string',
+      allowNull: true,
       description: '主图片ID'
     },
     sale_price: {
       type: 'string',
+      allowNull: true,
       description: '售价'
     },
     package_height: {
-      type: 'number',
+      type: 'json',
       description: '包装高度'
     },
     last_update_time: {
       type: 'string',
+      allowNull: true,
       description: '最近更新时间'
     },
     description: {
@@ -114,19 +125,21 @@ module.exports = {
       description: '描述'
     },
     is_date_sensitive: {
-      type: 'number',
+      type: 'json',
       description: '是否时间敏感'
     },
     service_phone: {
       type: 'string',
+      allowNull: true,
       description: '服务电话'
     },
     load_region: {
-      type: 'number',
+      type: 'json',
       description: '上架区域：0：原始机组 1：易触机组'
     },
     market_price: {
       type: 'string',
+      allowNull: true,
       description: '市场价格'
     },
     slot_max_count: {
@@ -134,11 +147,12 @@ module.exports = {
       description: '槽位最大计数'
     },
     pre_alert_time: {
-      type: 'number',
-      description: '（到期日前）通知时间'
+      type: 'json',
+      description: '（到期日前）通知时间',
     },
     sku: {
       type: 'string',
+      allowNull: true,
       description: 'SKU信息'
     },
     product_spec: {

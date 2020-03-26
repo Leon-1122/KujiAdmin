@@ -103,4 +103,10 @@ module.exports.custom = {
   dataPerPage: 10,
   defaultPassword: '$2a$10$nd5LZPfrDoaSxYrilWoQ7udXhtltlWTkr3tW3.gKjKQRSwhraa5Pe',
 
+  // cereson api config
+  api_url: 'https://connt.cereson.cn/api/v2/',
+  auth_name: 'admin',
+  auth_password: 'admin',
+
+
 };

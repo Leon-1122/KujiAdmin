@@ -25,12 +25,32 @@ module.exports = {
     success: {
       description: 'The requesting products have been successfully taken out.',
     },
+
+    takeOutProductFailed: {
+      description: `Take out product failed.`,
+      responseType: 'badRequest'
+    }
   },
 
 
   fn: async function (inputs) {
-    // TODO 远程取出商品
-    sails.log(inputs);
+    let result = {};
+    const api = 'remote_deliver';
+    // TODO 生成外部订单号
+    const orderNo = 'RT' + Date.now();
+    let params = {out_order_no: orderNo, machine_id: inputs.machineId, items: JSON.stringify(inputs.items)};
+    let response = await sails.helpers.ceresonApi.with({api, params}).intercept(function (err) {
+      console.log(err);
+      return 'takeOutProductFailed';
+    });
+
+    if (response.status_code === 0) {
+      result = {item: inputs.machineId, status: 'ok', msg: response.msg};
+    } else {
+      result = {item: inputs.machineId, status: 'ng', msg: response.msg};
+    }
+
+    return {data: result};
   }
 
 };

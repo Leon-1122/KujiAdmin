@@ -84,6 +84,7 @@ module.exports.routes = {
   'DELETE /api/v1/product':                               { action: 'product/delete-product' },
   'PUT   /api/v1/machine':                                { action: 'machine/add-machine' },
   'DELETE /api/v1/machine':                               { action: 'machine/delete-machine' },
+  'PUT  /api/v1/machine/refresh-machine-stock':           { action: 'machine/refresh-machine-stock' },
   'POST  /api/v1/machine/take-out-product':               { action: 'machine/take-out-product' },
   'DELETE /api/v1/machine/lottery':                       { action: 'machine/delete-machine-lottery' },
   'PUT   /api/v1/machine/lottery':                        { action: 'machine/add-machine-lottery' },
@@ -93,4 +94,7 @@ module.exports.routes = {
   'POST  /api/v1/lottery':                                { action: 'lottery/upload-picture' },
   'GET   /api/v1/lottery/:id/picture':                    { action: 'lottery/download-picture', skipAssets: false },
   'DELETE  /api/v1/lottery/:id/picture':                  { action: 'lottery/delete-picture' },
+  'POST   /api/v1/wx/login':                              { action: 'wxuser/wxuser-login'},
+  'GET   /api/v1/wx/getUserInfo':                         { action: 'wxuser/get-wxuser'},
+  'PUT   /api/v1/wx/updateUserInfo':                      { action: 'wxuser/update-wxuser'},
 };
