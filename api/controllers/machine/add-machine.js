@@ -1,20 +1,13 @@
 module.exports = {
 
 
-  friendlyName: 'Add machine',
+  friendlyName: 'Add machines',
 
 
-  description: 'Add machine.',
+  description: 'Add machines.',
 
 
-  inputs: {
-
-    machineIds: {
-      type: 'string',
-      required: true
-    },
-
-  },
+  inputs: {},
 
 
   exits: {
@@ -30,34 +23,26 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    // remove empty value and trim the values, return unique values
-    let machineIds = _.uniq(_.compact(inputs.machineIds.split('\n')), function (n) {
-      return n.trim();
+    let result = {};
+    const api = 'get_machines';
+    let response = await sails.helpers.ceresonApi.with({api}).intercept(function (err) {
+      console.log(err);
+      return 'getMachineFailed';
     });
 
-    let result = [];
-    const api = 'get_machines';
-    for (const machineId of machineIds) {
-      let params = {machine_id: machineId};
-      let response = await sails.helpers.ceresonApi.with({api, params}).intercept(function (err) {
-        console.log(err);
-        return 'getMachineFailed';
-      });
-
-      if (response.status_code === 0) {
-        let data = response.data;
-        let machineInfo = await Machine.find({machine_id: data.machine_id});
-
+    if (response.status_code === 0) {
+      let machineList = response.data;
+      for (const machineData of machineList) {
+        let machineInfo = await Machine.find({machine_id: machineData.machine_id});
         if (machineInfo.length > 0) {
-          await Machine.update({machine_id: data.machine_id}).set(data);
+          await Machine.update({machine_id: machineData.machine_id}).set(machineData);
         } else {
-          await Machine.create(data);
+          await Machine.create(machineData);
         }
-
-        result.push({item: machineId, status: 'ok', msg: response.msg});
-      } else {
-        result.push({item: machineId, status: 'ng', msg: response.msg});
       }
+      result = {status: 'ok', msg: response.msg};
+    } else {
+      result = {status: 'ng', msg: response.msg};
     }
 
     return {data: result};

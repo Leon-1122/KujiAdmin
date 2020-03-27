@@ -38,7 +38,6 @@ module.exports.routes = {
 
   'GET /machine/list':          { action: 'machine/view-machine-list' },
   'GET /machine/list/:pageNum': { action: 'machine/view-machine-list' },
-  'GET /machine/add':           { action: 'machine/view-machine-add' },
   'GET /machine/:id':           { action: 'machine/view-machine-detail' },
   'GET /machine/stock':          { action: 'machine/view-machine-stock' },
   'GET /machine/stock/:pageNum': { action: 'machine/view-machine-stock' },

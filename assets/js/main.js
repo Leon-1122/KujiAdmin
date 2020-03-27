@@ -396,3 +396,25 @@ async function refreshMachineStock() {
     showAlert($.validator.messages.refreshFailed);
   }
 }
+
+/***********************************************
+ *        refresh machine
+ ***********************************************/
+async function refreshMachine() {
+  var result = await Cloud['addMachine'].with({})
+    .tolerate((err) => {
+      console.log(err);
+    });
+
+  if (result) {
+    if (result.data.status === 'ok') {
+      showAlert($.validator.messages.refreshSuccess, function () {
+        window.location = '/machine/list';
+      });
+    } else {
+      showAlert(result.data.msg);
+    }
+  } else {
+    showAlert($.validator.messages.refreshFailed);
+  }
+}
