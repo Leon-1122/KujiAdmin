@@ -132,5 +132,6 @@
   "Total amount": "总数",
   "Remain amount": "剩余数",
   "Sort": "排序",
-  "Refresh stock": "刷新库存"
+  "Refresh stock": "刷新库存",
+  "Refresh machine": "刷新售货机"
 }
