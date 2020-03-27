@@ -16,38 +16,43 @@ module.exports = {
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
     machine_id: {
       type: 'string',
+      allowNull: true,
       description: '机器ID'
     },
     quantity: {
-      type: 'number',
+      type: 'json',
       description: '商品数量'
     },
     sale_price: {
-      type: 'number',
+      type: 'string',
+      allowNull: true,
       description: '商品售价'
     },
     sku: {
       type: 'string',
+      allowNull: true,
       description: '商品SKU'
     },
     mismatch_quantity: {
-      type: 'number',
+      type: 'json',
       description: '不匹配数量'
     },
     product_id: {
       type: 'string',
+      allowNull: true,
       description: '商品ID'
     },
     market_price: {
-      type: 'number',
+      type: 'string',
+      allowNull: true,
       description: '市场售价'
     },
     reserver_quantity: {
-      type: 'number',
+      type: 'json',
       description: '预留数量'
     },
     is_id_card_presented_item: {
-      type: 'number',
+      type: 'json',
       description: '是否需要实名购买'
     },
     slot_max_count: {
@@ -56,6 +61,7 @@ module.exports = {
     },
     name: {
       type: 'string',
+      allowNull: true,
       description: '商品名称'
     }
 

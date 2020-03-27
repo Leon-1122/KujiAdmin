@@ -34,4 +34,8 @@ $.extend($.validator.messages, {
   selectMachineLottery: "请选择要生效售货机一番赏",
   activeSuccess: "生效成功",
   activeFailed: "生效失败",
+  needMachineId: "请输入机器ID",
+  needProductId: "请输入产品ID",
+  refreshSuccess: "刷新成功",
+  refreshFailed: "刷新失败"
 });

@@ -200,6 +200,20 @@ function showAlert(msg, callback) {
   $('#alert-modal').modal({backdrop: 'static'});
 }
 
+function showSuccessMsg(content) {
+  $('.success-message').html(content);
+  $('.error-message').html('');
+  $('.success-message').show();
+  $('.error-message').hide();
+}
+
+function showErrorMsg(content) {
+  $('.success-message').html('');
+  $('.error-message').html(content);
+  $('.success-message').hide();
+  $('.error-message').show();
+}
+
 /***********************************************
  *        delete records
  ***********************************************/
@@ -305,15 +319,23 @@ function takeOutOneProduct(machineId, sku, name) {
 }
 
 async function takeOutProduct(machineId, items) {
+  $('#loading').show();
+
   var result = await Cloud['takeOutProduct'].with({machineId: machineId, items: items})
     .tolerate((err) => {
       console.log(err);
     });
 
-  if (result) {
-    showAlert($.validator.messages.takeOutSuccess, function () {
-      window.location = '/machine/stock';
-    });
+  $('#loading').hide();
+
+  if (result && result.data) {
+    if (result.data.status === 'ok') {
+      showAlert($.validator.messages.takeOutSuccess, function () {
+        window.location = '/machine/stock';
+      });
+    } else {
+      showAlert($.validator.messages.takeOutFailed);
+    }
   } else {
     showAlert($.validator.messages.takeOutFailed);
   }
@@ -354,5 +376,23 @@ async function activeMachineLottery(ids) {
     });
   } else {
     showAlert($.validator.messages.activeFailed);
+  }
+}
+
+/***********************************************
+ *        refresh machine stock
+ ***********************************************/
+async function refreshMachineStock() {
+  var result = await Cloud['refreshMachineStock'].with({})
+    .tolerate((err) => {
+      console.log(err);
+    });
+
+  if (result) {
+    showAlert($.validator.messages.refreshSuccess, function () {
+      window.location = '/machine/stock';
+    });
+  } else {
+    showAlert($.validator.messages.refreshFailed);
   }
 }

@@ -39,7 +39,6 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    // TODO 添加售货机一番赏
     var machineInfo = await Machine.findOne({id: inputs.machineId});
     if (!machineInfo) {
       throw "machineNotExist";

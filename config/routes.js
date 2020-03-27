@@ -84,6 +84,7 @@ module.exports.routes = {
   'DELETE /api/v1/product':                               { action: 'product/delete-product' },
   'PUT   /api/v1/machine':                                { action: 'machine/add-machine' },
   'DELETE /api/v1/machine':                               { action: 'machine/delete-machine' },
+  'PUT  /api/v1/machine/refresh-machine-stock':           { action: 'machine/refresh-machine-stock' },
   'POST  /api/v1/machine/take-out-product':               { action: 'machine/take-out-product' },
   'DELETE /api/v1/machine/lottery':                       { action: 'machine/delete-machine-lottery' },
   'PUT   /api/v1/machine/lottery':                        { action: 'machine/add-machine-lottery' },
