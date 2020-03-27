@@ -26,11 +26,12 @@ module.exports = {
 
 
   fn: async function (inputs) {
+    // TODO 判断库存是否足够，并扣除库存
+    let valueToSet = {status: 2};
+    await MachineLottery.update({
+      id: {in: inputs.ids}
+    }).set(valueToSet);
 
-    for (var i = 0; i < inputs.ids.length; i++) {
-      // TODO 判断库存是否足够，并扣除库存
-      await MachineLottery.activeMachineLottery(inputs.ids[i]);
-    }
   }
 
 };

@@ -28,25 +28,32 @@ module.exports = {
 
 
   fn: async function (inputs) {
-
+    var pager = require('../../custom_modules/sails-pager');
     var perPage = sails.config.custom.dataPerPage;
     var currentPage = 1;
     if (inputs.pageNum) {
       currentPage = inputs.pageNum;
     }
 
-    var where;
+    var criteria = {};
     if (inputs.searchFor) {
-      where = `db.command.or([{machineCode: /${inputs.searchFor}/i},{name: /${inputs.searchFor}/i}])`;
+      criteria = {
+        or: [
+          {'machineId': {'contains': inputs.searchFor}},
+          {'name': {'contains': inputs.searchFor}},
+        ]
+      };
     }
-    var orderBy = [{fieldName: 'machineCode', order: 'asc'}, {fieldName: 'order', order: 'asc'}];
-    var pagerData = await MachineLottery.findPagedList(where, perPage, (currentPage - 1) * perPage, orderBy);
+
+    var pagerData = await pager.paginate(MachineLottery, criteria, currentPage, perPage, null, [{machineId: 'ASC'}, {order: 'ASC'}]);
+    var machineLotteryStatusCode = await Code.find({category: 'machineLotteryStatus'}).sort('order ASC');
 
     return {
       pagename: 'machine-lottery',
       items: pagerData.data,
       pager: pagerData.meta,
-      searchFor: inputs.searchFor
+      searchFor: inputs.searchFor,
+      machineLotteryStatusCode: machineLotteryStatusCode
     };
   }
 

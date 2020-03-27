@@ -103,7 +103,7 @@
                         <div class="item-col fixed item-col-check">
 
                             <label class="item-check">
-                                <input type="checkbox" class="checkbox" value="{{this._id}}">
+                                <input type="checkbox" class="checkbox" value="{{this.id}}">
                                 <span></span>
                             </label>
                         </div>
@@ -111,9 +111,9 @@
                         <div class="item-col fixed pull-left item-col-title item-col-3">
                             <div class="item-heading">{{../__ 'Machine ID'}}</div>
                             <div>
-                                <a href="/machine/lottery/detail/{{this._id}}" class="">
+                                <a href="/machine/lottery/detail/{{this.id}}" class="">
                                     <h4 class="item-title" style="color: #969696;">
-                                      {{this.machineCode}}
+                                      {{this.machineId}}
                                     </h4>
                                 </a>
                             </div>
@@ -133,9 +133,11 @@
                         <div class="item-col item-col-date">
                             <div class="item-heading">{{../__ 'Status'}}</div>
                             <div class="no-overflow">
-                                {{#if this.comingSoon}}{{../__ 'Coming soon'}}
-                                {{else if this.soldOut}}{{../__ 'Sold out'}}
-                                {{else}}{{../__ 'Selling'}}{{/if}}
+                                {{#each ../machineLotteryStatusCode}}
+                                  {{#is ../this.status '==' this.code}}
+                                    {{this.codeName}}
+                                  {{/is}}
+                                {{/each}}
                             </div>
                         </div>
                         <div class="item-col item-col-date">
@@ -169,17 +171,17 @@
                                 <div class="item-actions-block">
                                     <ul class="item-actions-list">
                                         <li>
-                                            <a class="remove" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="deleteOneRecord('machineLottery', '{{this._id}}', '/machine/lottery')">
+                                            <a class="remove" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="deleteOneRecord('machineLottery', '{{this.id}}', '/machine/lottery')">
                                                 <i class="fa fa-trash-o "></i>
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="pull" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="activeOneMachineLottery('{{this._id}}')">
+                                            <a class="pull" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="activeOneMachineLottery('{{this.id}}')">
                                                 <i class="fa fa-trophy"></i>
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="view" href="/machine/lottery/detail/{{this._id}}">
+                                            <a class="view" href="/machine/lottery/detail/{{this.id}}">
                                                 <i class="fa fa-eye "></i>
                                             </a>
                                         </li>

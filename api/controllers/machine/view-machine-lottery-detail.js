@@ -31,15 +31,17 @@ module.exports = {
 
     var machineLotteryInfo;
 
-    machineLotteryInfo = await MachineLottery.findDetail(inputs.id);
+    machineLotteryInfo = await MachineLottery.findOne({id: inputs.id});
 
     if (!machineLotteryInfo) {
       throw "machineLotteryNotExist";
     }
+    var machineLotteryStatusCode = await Code.find({category: 'machineLotteryStatus'}).sort('order ASC');
 
     return {
       pagename: 'machine-lottery-detail',
-      machineLottery: machineLotteryInfo
+      machineLottery: machineLotteryInfo,
+      machineLotteryStatusCode: machineLotteryStatusCode
     };
 
   }

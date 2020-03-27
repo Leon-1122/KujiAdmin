@@ -26,11 +26,11 @@ module.exports = {
 
 
   fn: async function (inputs) {
+    // TODO 返回占用库存
+    await MachineLottery.destroy({
+      id: {in: inputs.ids}
+    });
 
-    for (var i = 0; i < inputs.ids.length; i++) {
-      // TODO 返回占用库存
-      await MachineLottery.deleteMachineLottery(inputs.ids[i]);
-    }
   }
 
 };

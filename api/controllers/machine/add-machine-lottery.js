@@ -35,56 +35,50 @@ module.exports = {
       description: `Lottery not exist.`,
       responseType: 'badRequest'
     },
+
+    lotteryDuplicate: {
+      statusCode: 409,
+      description: 'The lottery duplicated.',
+    },
   },
 
 
   fn: async function (inputs) {
-    var machineInfo = await Machine.findOne({id: inputs.machineId});
+    let machineInfo = await Machine.findOne({id: inputs.machineId});
     if (!machineInfo) {
       throw "machineNotExist";
     }
 
-    var lotteryInfo = await Lottery.findOne({id: inputs.lotteryId});
+    let lotteryInfo = await Lottery.findOne({id: inputs.lotteryId});
     if (!lotteryInfo) {
       throw "lotteryNotExist";
     }
 
-    var timestamp = Date.now();
-    var currentTimeTitle = await MachineLottery.getMachineLotteryTimeTitle(machineInfo.machine_id, lotteryInfo.name);
-    var currentOrder = await MachineLottery.getMachineLotteryOrder(machineInfo.machine_id);
-
-    var mainData = {
-      bannerImg: lotteryInfo.bannerImg,
-      canTap: true,
-      comingSoon: true,
-      machineCode: machineInfo.machine_id,
-      name: lotteryInfo.name,
-      soldOut: false,
-      timeTitle: currentTimeTitle + 1,
-      order: currentOrder + 1,
-      createdAt: timestamp,
-      updatedAt: timestamp
-    };
-
-    var productList = lotteryInfo.productList.map(function (currentValue, index, arr) {
+    let currentTimeTitle = await MachineLottery.getMachineLotteryTimeTitle(machineInfo.machine_id, lotteryInfo.name);
+    let currentOrder = await MachineLottery.getMachineLotteryOrder(machineInfo.machine_id);
+    let productList = lotteryInfo.productList.map(function (currentValue) {
       currentValue.remain = currentValue.total;
       return currentValue;
     });
-    var detailData = {
+
+    let valueToSet = {
+      machineId: machineInfo.machine_id,
+      name: lotteryInfo.name,
+      bannerImg: lotteryInfo.bannerImg,
+      status: 1,
+      timeTitle: currentTimeTitle + 1,
+      order: currentOrder + 1,
       cardRemain: lotteryInfo.cardTotal,
       cardTotal: lotteryInfo.cardTotal,
-      machineCode: machineInfo.machine_id,
-      openStatus: false,
       price: lotteryInfo.price,
       topImg: lotteryInfo.topImg,
       productList: productList,
       productPreview: lotteryInfo.productPreview,
-      order: currentOrder + 1,
-      createdAt: timestamp,
-      updatedAt: timestamp
     };
 
-    await MachineLottery.addMachineLottery(mainData, detailData);
+    await MachineLottery.create(valueToSet).intercept('E_UNIQUE', () => {
+      return {lotteryDuplicate: {errorMsg: sails.__('The code duplicated.')}}
+    });
   }
 
 };
