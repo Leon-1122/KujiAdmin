@@ -95,10 +95,14 @@ module.exports.custom = {
   * Any other custom config this Sails app should use during development.    *
   *                                                                          *
   ***************************************************************************/
-  // …
+  // wechat config
   appid: 'wxe8eb2a0939957411',
   appsecret: '724724dcc80bc3a3d5e3cf10748c4d86',
   envname: 'cloud-rhf5t',
+  mchid: '123456',
+  key: '123456',
+  timeout: 3000,
+  notifyurl: 'https://www.qq.com',
 
   dataPerPage: 10,
   defaultPassword: '$2a$10$nd5LZPfrDoaSxYrilWoQ7udXhtltlWTkr3tW3.gKjKQRSwhraa5Pe',

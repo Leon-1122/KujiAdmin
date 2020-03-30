@@ -10,16 +10,15 @@ module.exports = {
   inputs: {
 
     machineId: {
-      type: 'string'
+      type: 'string',
+      required: true
     },
 
-    id: {
-      type: 'string'
+    lotteryId: {
+      type: 'string',
+      required: true
     },
 
-    order: {
-      type: 'number'
-    },
   },
 
 
@@ -33,15 +32,33 @@ module.exports = {
   fn: async function (inputs) {
 
     let lotteryList = await MachineLottery.find({
-        where: {machineId: inputs.machineId},
-        select: ['name', 'bannerImg', 'timeTitle', 'status'],
-        sort: 'order DESC'
+      where: {
+        machineId: inputs.machineId,
+        status: {'<': 3}
+      },
+      select: ['id']
+    }).sort('order DESC');
+
+    let lotteryInfo = await MachineLottery.findOne({
+        where: {id: inputs.lotteryId},
+        select: ['cardTotal', 'cardRemain', 'topImg', 'price', 'status', 'productPreview', 'productList']
       }
     );
 
+    let sortInfo = {};
+    let count = 0;
+    lotteryList.forEach(function (item) {
+      count++;
+      sortInfo[item.id] = count;
+    });
+
     return ({
       code: 0,
-      data: {},
+      data: {
+        count,
+        sortInfo,
+        lotteryInfo
+      },
       msg: 'ok',
     });
   }

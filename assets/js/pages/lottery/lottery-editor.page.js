@@ -78,7 +78,7 @@ $(function () {
           productList.push({
             sku: sku,
             level: level,
-            total: productTotal,
+            total: parseInt(productTotal),
             name: productName,
             productImg: img
           });

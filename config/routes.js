@@ -98,4 +98,8 @@ module.exports.routes = {
   'PUT   /api/v1/wx/updateUserInfo':                      { action: 'wx/update-wxuser'},
   'GET   /api/v1/wx/getMachineLotteryList':               { action: 'wx/get-machine-lottery'},
   'GET   /api/v1/wx/getMachineLotteryDetail':             { action: 'wx/get-machine-lottery-detail'},
+  'PUT   /api/v1/wx/moneyBagPay':                         { action: 'wx/money-bag-pay'},
+  'PUT   /api/v1/wx/wechatPay':                           { action: 'wx/wechat-pay'},
+  'GET   /api/v1/wx/getCardRemain':                       { action: 'wx/get-card-remain'},
+  'GET   /api/v1/wx/getDrawResult':                       { action: 'wx/get-draw-result'},
 };

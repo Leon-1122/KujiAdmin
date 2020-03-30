@@ -27,7 +27,9 @@ module.exports = {
   fn: async function (inputs) {
 
     let lotteryList = await MachineLottery.find({
-        where: {machineId: inputs.machineId},
+        where: {
+          machineId: inputs.machineId
+        },
         select: ['name', 'bannerImg', 'timeTitle', 'status'],
         sort: 'order DESC'
       }
