@@ -4,6 +4,17 @@
           <h3 class="title">
               {{__ 'Machine detail'}}
           </h3>
+          <div style="text-align: right">
+              <a href="/machine/stock?searchFor={{machine.machine_id}}" class="btn btn-primary btn-sm rounded-s">
+                {{__ 'Stock'}}
+              </a>
+              <a href="/machine/lottery?searchFor={{machine.machine_id}}" class="btn btn-primary btn-sm rounded-s">
+                {{__ 'Lottery'}}
+              </a>
+              <a href="/machine/log?searchFor={{machine.machine_id}}" class="btn btn-primary btn-sm rounded-s">
+                {{__ 'Log'}}
+              </a>
+          </div>
       </div>
 
 

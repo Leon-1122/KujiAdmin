@@ -20,7 +20,7 @@ module.exports = {
   fn: async function () {
 
     var machineList = await Machine.find();
-    var lotteryList = await Lottery.find();
+    var lotteryList = await Lottery.find({status: {'<': 9}});
 
     return {
       pagename: 'machine-lottery-add',

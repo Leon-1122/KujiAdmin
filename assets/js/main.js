@@ -418,3 +418,27 @@ async function refreshMachine() {
     showAlert($.validator.messages.refreshFailed);
   }
 }
+
+/***********************************************
+ *        export csv
+ ***********************************************/
+async function exportCsv(pageName) {
+  var feature = pageName.replace('-list', '');
+  var arr = feature.split('-');
+  var module = '';
+  var camelFeature = '';
+
+  for (var i = 0; i < arr.length; i++) {
+    if (i === 0) {
+      module = arr[i];
+    }
+    camelFeature += arr[i].substring(0, 1).toUpperCase() + arr[i].substring(1, arr[i].length);
+  }
+
+  var searchFor = $(`#${pageName}-form input[name='searchFor']`).val();
+  var a = document.createElement('a');
+  a.href = `/${module}/export${camelFeature}Csv?searchFor=${searchFor}`;
+  a.download = '';
+  document.body.appendChild(a);
+  a.click();
+}

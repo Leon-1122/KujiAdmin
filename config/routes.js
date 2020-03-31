@@ -45,13 +45,19 @@ module.exports.routes = {
   'GET /machine/lottery':          { action: 'machine/view-machine-lottery' },
   'GET /machine/lottery/:pageNum':    { action: 'machine/view-machine-lottery' },
   'GET /machine/lottery/detail/:id':      { action: 'machine/view-machine-lottery-detail' },
-
+  'GET /machine/log':            { action: 'machine/view-machine-log' },
+  'GET /machine/log/:pageNum':   { action: 'machine/view-machine-log' },
+  'GET /machine/exportMachineLogCsv':     { action: 'machine/export-machine-log-csv'},
 
   'GET /lottery/list':          { action: 'lottery/view-lottery-list' },
   'GET /lottery/list/:pageNum': { action: 'lottery/view-lottery-list' },
   'GET /lottery/add':           { action: 'lottery/view-lottery-editor' },
   'GET /lottery/:id':           { action: 'lottery/view-lottery-editor' },
   'GET /lottery/product':       { action: 'lottery/get-paged-product-list' },
+
+  'GET /order/list':          { action: 'sales/view-order-list' },
+  'GET /order/list/:pageNum': { action: 'sales/view-order-list' },
+  'GET /order/exportOrderCsv':     { action: 'sales/export-order-csv'},
 
   //  ╔╦╗╦╔═╗╔═╗  ╦═╗╔═╗╔╦╗╦╦═╗╔═╗╔═╗╔╦╗╔═╗   ┬   ╔╦╗╔═╗╦ ╦╔╗╔╦  ╔═╗╔═╗╔╦╗╔═╗
   //  ║║║║╚═╗║    ╠╦╝║╣  ║║║╠╦╝║╣ ║   ║ ╚═╗  ┌┼─   ║║║ ║║║║║║║║  ║ ║╠═╣ ║║╚═╗

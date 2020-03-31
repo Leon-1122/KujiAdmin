@@ -8,11 +8,14 @@ module.exports = {
 
 
   inputs: {
-    payment: {
+    lotteryId: {
+      type: 'string',
+      required: true
+    },
+    num: {
       type: 'number',
       required: true
     },
-
   },
 
 
@@ -23,6 +26,11 @@ module.exports = {
 
     wxuserNotExist: {
       description: `Wxuser not exist.`,
+      responseType: 'badRequest'
+    },
+
+    machineNotExist: {
+      description: `Machine not exist.`,
       responseType: 'badRequest'
     }
   },
@@ -41,6 +49,19 @@ module.exports = {
       throw "wxuserNotExist";
     }
 
+    // TODO 检测排他状态
+
+    // 获取一番赏信息
+    const lotteryInfo = await MachineLottery.findOne({id: inputs.lotteryId});
+    const machineInfo = await Machine.find({machine_id: lotteryInfo.machineId});
+
+    if (machineInfo.length === 0) {
+      throw "machineNotExist";
+    }
+
+    const machineId = machineInfo[0].id;
+    const payment = lotteryInfo.price * inputs.num;
+
     const {
       WXPay,
       WXPayConstants,
@@ -55,13 +76,13 @@ module.exports = {
       APPID = sails.config.custom.appid;
 
     // 拼凑微信支付统一下单的参数
-    const tradeNo = Date.parse(new Date()) + Math.round(1e3 * Math.random());
-    const body = '奖券';
+    const orderNo = Date.parse(new Date()) + Math.round(1e3 * Math.random());
+    const body = `一番赏 ${lotteryInfo.name} 第${lotteryInfo.timeTitle}期`;
     const spbill_create_ip = ip.address() || '127.0.0.1';
     const notify_url = sails.config.custom.notifyurl;
-    const total_fee = inputs.payment;
+    const total_fee = payment * 1000;
     const time_stamp = '' + Math.ceil(Date.now() / 1000);
-    const out_trade_no = `${tradeNo}`;
+    const out_trade_no = `${orderNo}`;
     const sign_type = WXPayConstants.SIGN_TYPE_MD5;
 
     const wxpay = new WXPay({
@@ -107,8 +128,21 @@ module.exports = {
         timeStamp: time_stamp
       }, KEY);
 
-      // TODO 订单数据插入到数据库
-      const orderId = '1';
+      // 订单数据插入到数据库
+      let orderInfo = {
+        orderNo: orderNo,
+        buyerNick: userInfo.nickName,
+        machineId: lotteryInfo.machineId,
+        wxUser: userId,
+        machine: machineId,
+        lottery: inputs.lotteryId,
+        status: 0,
+        title: body,
+        price: lotteryInfo.price,
+        num: inputs.num,
+        totalFee: payment,
+      };
+      await Order.create(orderInfo);
 
       return {
         code: 0,
@@ -118,7 +152,7 @@ module.exports = {
           signType: 'MD5',
           timeStamp: time_stamp,
           package: package1,
-          orderId: orderId
+          orderNo: orderNo
         },
         msg: 'OK'
       };

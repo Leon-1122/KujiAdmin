@@ -79,6 +79,9 @@ module.exports = {
     await MachineLottery.create(valueToSet).intercept('E_UNIQUE', () => {
       return {lotteryDuplicate: {errorMsg: sails.__('The code duplicated.')}}
     });
+
+    await Lottery.updateOne({id: inputs.lotteryId}).set({status: 2});
+
   }
 
 };
