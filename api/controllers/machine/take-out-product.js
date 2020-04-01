@@ -38,13 +38,13 @@ module.exports = {
     const api = 'remote_deliver';
     // TODO 生成外部订单号
     const orderNo = 'RT' + Date.now();
-    let params = {out_order_no: orderNo, machine_id: inputs.machineId, items: JSON.stringify(inputs.items)};
+    let params = {out_order_no: orderNo, machine_id: inputs.machineId, items: inputs.items};
     let response = await sails.helpers.ceresonApi.with({api, params}).intercept(function (err) {
       console.log(err);
       return 'takeOutProductFailed';
     });
 
-    if (response.status_code === 0) {
+    if (response.status_code === 0 && response.data.success) {
       result = {item: inputs.machineId, status: 'ok', msg: response.msg};
     } else {
       result = {item: inputs.machineId, status: 'ng', msg: response.msg};
