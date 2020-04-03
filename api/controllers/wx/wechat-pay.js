@@ -29,6 +29,11 @@ module.exports = {
       responseType: 'badRequest'
     },
 
+    lotteryNotExist: {
+      description: `Lottery not exist.`,
+      responseType: 'badRequest'
+    },
+
     machineNotExist: {
       description: `Machine not exist.`,
       responseType: 'badRequest'
@@ -49,14 +54,46 @@ module.exports = {
       throw "wxuserNotExist";
     }
 
-    // TODO 检测排他状态
-
     // 获取一番赏信息
     const lotteryInfo = await MachineLottery.findOne({id: inputs.lotteryId});
-    const machineInfo = await Machine.find({machine_id: lotteryInfo.machineId});
+    if (!lotteryInfo) {
+      throw "lotteryNotExist";
+    }
 
+    const machineInfo = await Machine.find({machine_id: lotteryInfo.machineId});
     if (machineInfo.length === 0) {
       throw "machineNotExist";
+    }
+
+    // 检测是否超时
+    const timestamp = Date.now();
+    let queueList = await Queue.find({
+        lotteryId: inputs.lotteryId,
+        userId: userId,
+        status: 2
+      }
+    );
+
+    if (queueList.length === 0) {
+      return ({
+        code: -10,
+        msg: 'operation timeout',
+      });
+    } else if (timestamp - queueList[0].updatedAt > 60000) {
+      // 更新队列状态为完成
+      await Queue.update({
+          lotteryId: inputs.lotteryId,
+          userId: userId,
+          status: 2,
+        }
+      ).set({
+        status: 3
+      });
+
+      return ({
+        code: -10,
+        msg: 'operation timeout',
+      });
     }
 
     const machineId = machineInfo[0].id;

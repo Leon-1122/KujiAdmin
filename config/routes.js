@@ -108,4 +108,8 @@ module.exports.routes = {
   'PUT   /api/v1/wx/wechatPay':                           { action: 'wx/wechat-pay'},
   'GET   /api/v1/wx/getCardRemain':                       { action: 'wx/get-card-remain'},
   'GET   /api/v1/wx/getDrawResult':                       { action: 'wx/get-draw-result'},
+  'GET   /api/v1/wx/getQueue':                            { action: 'wx/get-queue'},
+  'PUT   /api/v1/wx/addQueue':                            { action: 'wx/add-queue'},
+  'PUT   /api/v1/wx/quitQueue':                           { action: 'wx/quit-queue'},
+  'PUT   /api/v1/wx/updateQueuePayStep':                  { action: 'wx/update-queue-pay-step'},
 };

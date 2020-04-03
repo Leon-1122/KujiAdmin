@@ -14,6 +14,8 @@ module.exports = function defineCustomHook(sails) {
 
       sails.log.info('Initializing project hook... (`api/hooks/custom/`)');
 
+      /*
+
       // Check Mailgun configuration (for emails).
       var IMPORTANT_MAILGUN_CONFIG = ['mailgunSecret', 'mailgunDomain', 'internalEmailAddress'];
       var isMissingMailgunConfig = _.difference(IMPORTANT_MAILGUN_CONFIG, Object.keys(sails.config.custom)).length > 0;
@@ -77,6 +79,7 @@ will be disabled and/or hidden in the UI.
       // ... Any other app-specific setup code that needs to run on lift,
       // even in production, goes here ...
 
+*/
     },
 
 

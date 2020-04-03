@@ -1,10 +1,10 @@
 module.exports = {
 
 
-  friendlyName: 'money bag pay',
+  friendlyName: 'update queue step to paying',
 
 
-  description: 'money bag pay',
+  description: 'update queue step to paying',
 
 
   inputs: {
@@ -12,16 +12,12 @@ module.exports = {
       type: 'string',
       required: true
     },
-    num: {
-      type: 'number',
-      required: true
-    },
   },
 
 
   exits: {
     success: {
-      description: 'Money bag pay success.',
+      description: 'update queue step to paying success.',
     },
 
     wxuserNotExist: {
@@ -48,7 +44,7 @@ module.exports = {
     }
 
     const userId = this.req.headers.userid;
-    let userInfo = await WxUser.findOne({id: userId});
+    const userInfo = await WxUser.findOne({id: userId});
 
     if (!userInfo) {
       throw "wxuserNotExist";
@@ -70,7 +66,7 @@ module.exports = {
     let queueList = await Queue.find({
         lotteryId: inputs.lotteryId,
         userId: userId,
-        status: 2
+        status: 2,
       }
     );
 
@@ -96,45 +92,20 @@ module.exports = {
       });
     }
 
-    const machineId = machineInfo[0].id;
-    const payment = lotteryInfo.price * inputs.num;
+    // 更新队列状态为完成
+    await Queue.update({
+        lotteryId: inputs.lotteryId,
+        userId: userId,
+        status: 2,
+      }
+    ).set({
+      step: 2
+    });
 
-    const ObjectId = require('mongodb').ObjectID;
-    const db = WxUser.getDatastore().manager;
-    let where = {'_id': new ObjectId(userId)};
-    let valueToSet = {$inc: {'moneyBag': payment * -1}, $set: {'updatedAt': Date.now()}};
-    let result = await db.collection(WxUser.tableName).updateOne(where, valueToSet);
-
-    if (result.result.nModified) {
-      // 订单数据插入到数据库
-      const orderNo = Date.parse(new Date()) + Math.round(1e3 * Math.random())
-      let orderInfo = {
-        orderNo: orderNo,
-        buyerNick: userInfo.nickName,
-        machineId: lotteryInfo.machineId,
-        wxUser: userId,
-        machine: machineId,
-        lottery: inputs.lotteryId,
-        status: 1,
-        title: `一番赏 ${lotteryInfo.name} 第${lotteryInfo.timeTitle}期`,
-        price: lotteryInfo.price,
-        num: inputs.num,
-        totalFee: payment,
-        payTime: Date.now()
-      };
-      await Order.create(orderInfo);
-
-      return ({
-        code: 0,
-        msg: 'ok',
-      });
-    } else {
-      return ({
-        code: -2,
-        msg: 'money bag update failed',
-      });
-    }
-
+    return ({
+      code: 0,
+      msg: 'ok',
+    });
   }
 
 };

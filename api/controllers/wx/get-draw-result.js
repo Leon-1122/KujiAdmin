@@ -45,6 +45,17 @@ module.exports = {
       throw "wxuserNotExist";
     }
 
+    // 更新队列状态为支付完成
+    await Queue.update({
+        lotteryId: inputs.lotteryId,
+        userId: userId,
+        status: 2,
+      }
+    ).set({
+      status: 3,
+      step: 3
+    });
+
     let lastProduct = null, drawnList = [];
     const lotteryInfo = await MachineLottery.findOne({id: inputs.lotteryId});
 
