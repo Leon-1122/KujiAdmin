@@ -28,7 +28,8 @@ module.exports = {
 
     let lotteryList = await MachineLottery.find({
         where: {
-          machineId: inputs.machineId
+          machineId: inputs.machineId,
+          status: {'<': 9}
         },
         select: ['name', 'bannerImg', 'timeTitle', 'status'],
         sort: 'order DESC'

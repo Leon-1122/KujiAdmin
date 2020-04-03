@@ -1299,6 +1299,10 @@ label,
             color: #3629db; }
           .item-list .item-actions-dropdown .item-actions-block .item-actions-list a.refresh {
             color: #15db2b; }
+          .item-list .item-actions-dropdown .item-actions-block .item-actions-list a.disable {
+            color: #838787; }
+          .item-list .item-actions-dropdown .item-actions-block .item-actions-list a.active {
+            color: #dbaf12; }
 /* *******************************************
 *				Adjustments
 ********************************************** */

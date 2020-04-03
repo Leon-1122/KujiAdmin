@@ -43,7 +43,7 @@ module.exports = {
     let string1 = CryptoJS.MD5(auth_password + timestamp).toString().toUpperCase();
     let arr = [];
     for (let i in params) {
-      if (!_.isArray(params[i])) {
+      if (!_.isArray(params[i]) && !_.isObject(params[i])) {
         arr.push(i + "=" + params[i]);
       }
     }

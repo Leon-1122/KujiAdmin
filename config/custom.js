@@ -111,6 +111,7 @@ module.exports.custom = {
   api_url: 'https://connt.cereson.cn/api/v2/',
   auth_name: 'admin',
   auth_password: 'admin',
+  reserve_order_expire_days: 1
 
 
 };

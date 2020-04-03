@@ -380,6 +380,43 @@ async function activeMachineLottery(ids) {
 }
 
 /***********************************************
+ *        disable machine lottery
+ ***********************************************/
+function disableCheckedMachineLotteries() {
+  var ids = [];
+  $(".item:not(.item-list-header) input.checkbox:checked").each(function (i, e) {
+    ids.push($(this).val());
+  });
+
+  if (ids.length === 0) {
+    showAlert($.validator.messages.selectMachineLottery);
+    return;
+  }
+
+  disableMachineLottery(ids);
+}
+
+function disableOneMachineLottery(id) {
+  var ids = [id];
+  disableMachineLottery(ids);
+}
+
+async function disableMachineLottery(ids) {
+  var result = await Cloud['disableMachineLottery'].with({ids: ids})
+    .tolerate((err) => {
+      console.log(err);
+    });
+
+  if (result) {
+    showAlert($.validator.messages.disableSuccess, function () {
+      window.location = '/machine/lottery';
+    });
+  } else {
+    showAlert($.validator.messages.disableFailed);
+  }
+}
+
+/***********************************************
  *        refresh machine stock
  ***********************************************/
 async function refreshMachineStock() {

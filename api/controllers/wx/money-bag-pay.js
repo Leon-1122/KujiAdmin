@@ -122,16 +122,20 @@ module.exports = {
         totalFee: payment,
         payTime: Date.now()
       };
-      await Order.create(orderInfo);
+
+      const newOrder = await Order.create(orderInfo).fetch();
 
       return ({
         code: 0,
+        data: {
+          orderId: newOrder.id
+        },
         msg: 'ok',
       });
     } else {
       return ({
         code: -2,
-        msg: 'money bag update failed',
+        msg: 'update failed',
       });
     }
 

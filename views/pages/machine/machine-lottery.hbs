@@ -16,8 +16,9 @@
                             {{__ 'More actions...'}}
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="activeCheckedMachineLotteries()"><i class="fa fa-trophy icon"></i>{{__ 'Take Effect'}}</a>
-                              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="deleteCheckedRecords('machineLottery', '/machine/lottery')"><i class="fa fa-close icon"></i>{{__ 'Delete'}}</a>
+                              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="activeCheckedMachineLotteries()"><i class="fa fa-bolt icon"></i>{{__ 'Take Effect'}}</a>
+                              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="disableCheckedMachineLotteries()"><i class="fa fa-close icon"></i>{{__ 'Disable'}}</a>
+                              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="deleteCheckedRecords('machineLottery', '/machine/lottery')"><i class="fa fa-trash-o icon"></i>{{__ 'Delete'}}</a>
                           </div>
                       </div>
                       </h3>
@@ -176,8 +177,13 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="pull" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="activeOneMachineLottery('{{this.id}}')">
-                                                <i class="fa fa-trophy"></i>
+                                            <a class="disable" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="disableOneMachineLottery('{{this.id}}')">
+                                                <i class="fa fa-close"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="active" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="activeOneMachineLottery('{{this.id}}')">
+                                                <i class="fa fa-bolt"></i>
                                             </a>
                                         </li>
                                         <li>

@@ -36,7 +36,7 @@ module.exports = {
     status: {
       type: 'number',
       defaultsTo: 1,
-      description: '1:即将到来 2:在售 3:售磐',
+      description: '1:即将到来 2:在售 3:售磐 9:失效',
     },
     topImg: {
       type: 'string',

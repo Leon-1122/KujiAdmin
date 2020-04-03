@@ -179,7 +179,8 @@ module.exports = {
         num: inputs.num,
         totalFee: payment,
       };
-      await Order.create(orderInfo);
+
+      const newOrder = await Order.create(orderInfo).fetch();
 
       return {
         code: 0,
@@ -189,14 +190,14 @@ module.exports = {
           signType: 'MD5',
           timeStamp: time_stamp,
           package: package1,
-          orderNo: orderNo
+          orderId: newOrder.id
         },
         msg: 'OK'
       };
 
     } else {
       return ({
-        code: -6,
+        code: -4,
         msg: 'wechat pay failed',
       });
     }

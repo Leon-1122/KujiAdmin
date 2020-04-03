@@ -94,6 +94,7 @@ module.exports.routes = {
   'DELETE /api/v1/machine/lottery':                       { action: 'machine/delete-machine-lottery' },
   'PUT   /api/v1/machine/lottery':                        { action: 'machine/add-machine-lottery' },
   'PUT   /api/v1/machine/lottery/active':                 { action: 'machine/active-machine-lottery' },
+  'PUT   /api/v1/machine/lottery/disable':                { action: 'machine/disable-machine-lottery' },
   'PUT    /api/v1/lottery':                               { action: 'lottery/update-lottery' },
   'DELETE /api/v1/lottery':                               { action: 'lottery/delete-lottery' },
   'POST  /api/v1/lottery':                                { action: 'lottery/upload-picture' },
@@ -112,4 +113,5 @@ module.exports.routes = {
   'PUT   /api/v1/wx/addQueue':                            { action: 'wx/add-queue'},
   'PUT   /api/v1/wx/quitQueue':                           { action: 'wx/quit-queue'},
   'PUT   /api/v1/wx/updateQueuePayStep':                  { action: 'wx/update-queue-pay-step'},
+  'POST   /api/v1/wx/reserveOrderNotify':                 { action: 'wx/reserve-order-notify'},
 };

@@ -153,5 +153,6 @@
   "Product name": "商品名",
   "Num": "数量",
   "Operator": "操作者",
-  "Operate time": "操作时间"
+  "Operate time": "操作时间",
+  "Disable": "失效"
 }
