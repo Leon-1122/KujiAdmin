@@ -76,12 +76,22 @@ module.exports = {
       productPreview: lotteryInfo.productPreview,
     };
 
-    await MachineLottery.create(valueToSet).intercept('E_UNIQUE', () => {
+    const newMachineLottery = await MachineLottery.create(valueToSet).intercept('E_UNIQUE', () => {
       return {lotteryDuplicate: {errorMsg: sails.__('The code duplicated.')}}
-    });
+    }).fetch();
 
     await Lottery.updateOne({id: inputs.lotteryId}).set({status: 2});
 
+    // 生成日志
+    await MachineLog.create({
+      machineId: newMachineLottery.machineId,
+      lotteryName: `${newMachineLottery.name} 第${newMachineLottery.timeTitle}期`,
+      desc: '一番赏生成',
+      category: '一番赏',
+      operator: this.req.me.fullName,
+      lottery: newMachineLottery.id,
+      user: this.req.me.id,
+    });
   }
 
 };

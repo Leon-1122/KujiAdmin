@@ -45,9 +45,6 @@ module.exports = {
     lottery: {
       model: 'MachineLottery'
     },
-    machine: {
-      model: 'Machine'
-    },
     user: {
       model: 'User'
     },

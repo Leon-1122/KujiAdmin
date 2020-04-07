@@ -105,7 +105,22 @@ module.exports = {
     for (let i = inputs.count; i > 0; i--) {
       let drawItem = draw(productList, i, drawnList);
       if (drawItem) {
-        drawnList.push(drawItem)
+        drawnList.push(drawItem);
+
+        // 生成日志
+        await MachineLog.create({
+          machineId: lotteryInfo.machineId,
+          lotteryName: `${lotteryInfo.name} 第${lotteryInfo.timeTitle}期`,
+          level: drawItem.level,
+          productName: drawItem.name,
+          num: 1,
+          desc: '抽奖取出',
+          category: '一番赏',
+          operator: userInfo.nickName,
+          lottery: lotteryInfo.id,
+          wxuser: userId
+        });
+
       } else {
         break
       }
@@ -120,11 +135,26 @@ module.exports = {
           lastProduct = {
             name: e.name,
             productImg: e.productImg,
-            sku: e.sku
+            sku: e.sku,
+            level: e.level
           };
         }
       });
       productList[lastIndex].remain = 0;
+
+      // 生成日志
+      await MachineLog.create({
+        machineId: lotteryInfo.machineId,
+        lotteryName: `${lotteryInfo.name} 第${lotteryInfo.timeTitle}期`,
+        level: lastProduct.level,
+        productName: lastProduct.name,
+        num: 1,
+        desc: '抽奖取出',
+        category: '一番赏',
+        operator: userInfo.nickName,
+        lottery: lotteryInfo.id,
+        wxuser: userId
+      });
     }
 
     const ObjectId = require('mongodb').ObjectID;
@@ -207,16 +237,8 @@ module.exports = {
       // 更新订单信息
       await Order.updateOne({id: inputs.orderId}).set({pickCode: pickCode, products: products});
 
-      // 检查当前库存是否满足该一番赏剩下商品余量
-      const stockEnough = await sails.helpers.checkStockAvailable.with({lotteryId: inputs.lotteryId})
-        .tolerate('getMachineStockFailed');
-      if (!stockEnough) {
-        // 库存不足，关闭该一番赏
-        await MachineLottery.updateOne({id: inputs.lotteryId}).set({status: 9});
-      }
-
-      // 奖品抽完后新开该种一番赏
       if (lastProduct) {
+        // 奖品抽完后新开该种一番赏
         let templateLottery = await Lottery.find({name: lotteryInfo.name, status: {'<': 9}});
         if (templateLottery.length > 0) {
           const template = templateLottery[0];
@@ -246,11 +268,49 @@ module.exports = {
             return {lotteryDuplicate: {errorMsg: sails.__('The code duplicated.')}}
           }).fetch();
 
+          // 生成日志
+          await MachineLog.create({
+            machineId: newMachineLottery.machineId,
+            lotteryName: `${newMachineLottery.name} 第${newMachineLottery.timeTitle}期`,
+            desc: '一番赏生成',
+            category: '一番赏',
+            operator: '自动',
+            lottery: newMachineLottery.id,
+          });
+
           const newLotteryEnough = await sails.helpers.checkStockAvailable.with({lotteryId: newMachineLottery.id})
             .tolerate('getMachineStockFailed');
           if (newLotteryEnough) {
             await MachineLottery.updateOne({id: newMachineLottery.id}).set({status: 2});
+
+            // 生成日志
+            await MachineLog.create({
+              machineId: newMachineLottery.machineId,
+              lotteryName: `${newMachineLottery.name} 第${newMachineLottery.timeTitle}期`,
+              desc: '一番赏生效',
+              category: '一番赏',
+              operator: '自动',
+              lottery: newMachineLottery.id,
+            });
           }
+        }
+      } else {
+        // 检查当前库存是否满足该一番赏剩下商品余量
+        const stockEnough = await sails.helpers.checkStockAvailable.with({lotteryId: inputs.lotteryId})
+          .tolerate('getMachineStockFailed');
+        if (!stockEnough) {
+          // 库存不足，关闭该一番赏
+          await MachineLottery.updateOne({id: inputs.lotteryId}).set({status: 9});
+
+          // 生成日志
+          await MachineLog.create({
+            machineId: lotteryInfo.machineId,
+            lotteryName: `${lotteryInfo.name} 第${lotteryInfo.timeTitle}期`,
+            desc: '一番赏失效',
+            category: '一番赏',
+            operator: '自动',
+            lottery: lotteryInfo.id,
+          });
         }
       }
 
@@ -291,7 +351,8 @@ function draw(productList) {
     return {
       name: drawItem.name,
       productImg: drawItem.productImg,
-      sku: drawItem.sku
+      sku: drawItem.sku,
+      level: drawItem.level
     }
   }
 

@@ -292,9 +292,9 @@ function takeOutCheckedProducts() {
   var items = [];
   $(".item:not(.item-list-header) input.checkbox:checked").each(function (i, e) {
     var $selectedRow = $(e).parents('.item-row');
-    var selectedMachineId = $selectedRow.find('.machineId').text();
-    var selectedSku = $(e).find('.sku').text();
-    var selectedName = $(e).find('.name').text();
+    var selectedMachineId = $selectedRow.find('.machineId').text().trim();
+    var selectedSku = $selectedRow.find('.sku').text().trim();
+    var selectedName = $selectedRow.find('.name').text().trim();
 
     if (machineId !== '' && machineId !== selectedMachineId) {
       showAlert($.validator.messages.tooManyMachines);

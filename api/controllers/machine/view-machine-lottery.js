@@ -45,7 +45,7 @@ module.exports = {
       };
     }
 
-    var pagerData = await pager.paginate(MachineLottery, criteria, currentPage, perPage, null, [{machineId: 'ASC'}, {order: 'ASC'}]);
+    var pagerData = await pager.paginate(MachineLottery, criteria, currentPage, perPage, null, [{machineId: 'ASC'}, {order: 'DESC'}]);
     var machineLotteryStatusCode = await Code.find({category: 'machineLotteryStatus'}).sort('order ASC');
 
     return {
