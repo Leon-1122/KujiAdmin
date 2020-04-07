@@ -30,8 +30,8 @@ module.exports = {
       description: 'Get draw result success.',
     },
 
-    wxuserNotExist: {
-      description: `Wxuser not exist.`,
+    wxUserNotExist: {
+      description: `WxUser not exist.`,
       responseType: 'badRequest'
     },
 
@@ -60,13 +60,13 @@ module.exports = {
   fn: async function (inputs) {
 
     if (!this.req.headers.userid) {
-      throw "wxuserNotExist";
+      throw "wxUserNotExist";
     }
 
     const userId = this.req.headers.userid;
     const userInfo = await WxUser.findOne({id: userId});
     if (!userInfo) {
-      throw "wxuserNotExist";
+      throw "wxUserNotExist";
     }
 
     const orderInfo = await Order.findOne({id: inputs.orderId});
@@ -118,7 +118,7 @@ module.exports = {
           category: '一番赏',
           operator: userInfo.nickName,
           lottery: lotteryInfo.id,
-          wxuser: userId
+          wxUser: userId
         });
 
       } else {
@@ -153,7 +153,7 @@ module.exports = {
         category: '一番赏',
         operator: userInfo.nickName,
         lottery: lotteryInfo.id,
-        wxuser: userId
+        wxUser: userId
       });
     }
 

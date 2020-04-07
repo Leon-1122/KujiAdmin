@@ -49,11 +49,13 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    let orderList = await Order.find({orderNo: inputs.order_no});
+    const orderList = await Order.find({orderNo: inputs.order_no}, {lottery: true, wxUser: true});
 
     if (orderList.length === 0) {
       throw "orderNotExist";
     }
+
+    const orderInfo = orderList[0];
 
     await Order.update({orderNo: inputs.order_no}).set({
       pickStatus: inputs.status,
@@ -65,6 +67,20 @@ module.exports = {
         quantity: inputs.quantity,
         status: inputs.status,
       }
+    });
+
+    // 生成日志
+    await MachineLog.create({
+      machineId: inputs.machine_id,
+      lotteryName: `${orderInfo.lottery.name} 第${orderInfo.lottery.timeTitle}期`,
+      orderNo: inputs.order_no,
+      productName: inputs.product_names,
+      num: inputs.quantity,
+      desc: '预定商品取货',
+      category: '一番赏',
+      operator: orderInfo.wxUser.nickName,
+      lottery: orderInfo.lottery.id,
+      wxUser: orderInfo.wxUser.id
     });
 
     return 'success';

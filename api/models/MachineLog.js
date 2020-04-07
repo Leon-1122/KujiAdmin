@@ -21,6 +21,10 @@ module.exports = {
       type: 'string',
       allowNull: true
     },
+    orderNo: {
+      type: 'string',
+      allowNull: true
+    },
     level: {
       type: 'string',
       allowNull: true
