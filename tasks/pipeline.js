@@ -86,6 +86,7 @@ var jsFilesToInject = [
   'dependencies/dropzone/dist/dropzone.js',
   'dependencies/jquery-touchswipe/jquery.touchSwipe.js',
   'dependencies/jquery.browser/dist/jquery.browser.js',
+  'dependencies/popper.js/dist/umd/popper.js',
   'dependencies/bootstrap/dist/js/bootstrap.js',
   'dependencies/raphael/raphael.js',
   'dependencies/morris.js/morris.js',

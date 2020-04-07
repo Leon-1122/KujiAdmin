@@ -36,8 +36,7 @@ module.exports = {
   fn: async function (inputs) {
     let result = {};
     const api = 'remote_deliver';
-    // TODO 生成外部订单号
-    const orderNo = 'RT' + Date.now();
+    const orderNo = 'RD' + Date.now() + Math.round(1e3 * Math.random());
     let params = {out_order_no: orderNo, machine_id: inputs.machineId, items: inputs.items};
     let response = await sails.helpers.ceresonApi.with({api, params}).intercept(function (err) {
       console.log(err);

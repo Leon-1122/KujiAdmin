@@ -66,7 +66,7 @@ module.exports = {
     if (response.data) {
       return response.data;
     } else {
-      throw new Error('System Error');
+      throw new Error('NetworkError');
     }
   }
 

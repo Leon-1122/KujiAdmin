@@ -22,16 +22,38 @@ module.exports = {
       description: 'The requesting machine  lotteries have been successfully active.',
     },
 
+    getMachineStockFailed: {
+      description: `Get machine stock failed.`,
+      responseType: 'badRequest'
+    }
   },
 
 
   fn: async function (inputs) {
-    // TODO 判断库存是否足够，并扣除库存
+    let failedList = [];
     let valueToSet = {status: 2};
-    await MachineLottery.update({
-      id: {in: inputs.ids}
-    }).set(valueToSet);
 
+    for (const id of inputs.ids) {
+      const lotteryInfo = await MachineLottery.findOne({id: id});
+      // 跳过一番赏 2:在售 3:售磐
+      if (lotteryInfo.status === 2 || lotteryInfo.status === 3) {
+        continue;
+      }
+
+      // 判断库存是否足够
+      const stockEnough = await sails.helpers.checkStockAvailable.with({lotteryId: id})
+        .tolerate('getMachineStockFailed');
+
+      if (stockEnough) {
+        await MachineLottery.update({
+          id: id
+        }).set(valueToSet);
+      } else {
+        failedList.push({name: `${lotteryInfo.name} 第${lotteryInfo.timeTitle}期`});
+      }
+    }
+
+    return {data: {failedList}}
   }
 
 };

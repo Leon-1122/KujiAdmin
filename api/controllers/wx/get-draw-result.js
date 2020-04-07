@@ -43,6 +43,16 @@ module.exports = {
     lotteryNotExist: {
       description: `Lottery not exist.`,
       responseType: 'badRequest'
+    },
+
+    reserveOrderFailed: {
+      description: `Reserve order failed.`,
+      responseType: 'badRequest'
+    },
+
+    getMachineStockFailed: {
+      description: `Get machine stock failed.`,
+      responseType: 'badRequest'
     }
   },
 
@@ -182,10 +192,7 @@ module.exports = {
         notify_url: notifyUrl,
         order_detail: orderDetail,
       };
-      let response = await sails.helpers.ceresonApi.with({api, params}).intercept(function (err) {
-        console.log(err);
-        return 'reserveOrderFailed';
-      });
+      let response = await sails.helpers.ceresonApi.with({api, params}).tolerate('NetworkError');
 
       let pickCode = '';
       if (response.status_code === 0) {
@@ -193,16 +200,58 @@ module.exports = {
           pickCode = response.data.pick_code;
         } else {
           // 库存不足，关闭该一番赏
-          await MachineLottery.updateOne({id: inputs.lotteryId}).set({status: 9});
+          await MachineLottery.updateOne({id: inputs.lotteryId, status: 2}).set({status: 9});
         }
       }
 
       // 更新订单信息
       await Order.updateOne({id: inputs.orderId}).set({pickCode: pickCode, products: products});
 
-      // TODO 奖品抽完后新开该种一番赏
-      if (lastProduct) {
+      // 检查当前库存是否满足该一番赏剩下商品余量
+      const stockEnough = await sails.helpers.checkStockAvailable.with({lotteryId: inputs.lotteryId})
+        .tolerate('getMachineStockFailed');
+      if (!stockEnough) {
+        // 库存不足，关闭该一番赏
+        await MachineLottery.updateOne({id: inputs.lotteryId}).set({status: 9});
+      }
 
+      // 奖品抽完后新开该种一番赏
+      if (lastProduct) {
+        let templateLottery = await Lottery.find({name: lotteryInfo.name, status: {'<': 9}});
+        if (templateLottery.length > 0) {
+          const template = templateLottery[0];
+          let currentTimeTitle = await MachineLottery.getMachineLotteryTimeTitle(lotteryInfo.machineId, lotteryInfo.name);
+          let currentOrder = await MachineLottery.getMachineLotteryOrder(lotteryInfo.machineId);
+          let newProductList = template.productList.map(function (currentValue) {
+            currentValue.remain = currentValue.total;
+            return currentValue;
+          });
+
+          let valueToSet = {
+            machineId: lotteryInfo.machineId,
+            name: template.name,
+            bannerImg: template.bannerImg,
+            status: 1,
+            timeTitle: currentTimeTitle + 1,
+            order: currentOrder + 1,
+            cardRemain: template.cardTotal,
+            cardTotal: template.cardTotal,
+            price: template.price,
+            topImg: template.topImg,
+            productList: newProductList,
+            productPreview: template.productPreview,
+          };
+
+          let newMachineLottery = await MachineLottery.create(valueToSet).intercept('E_UNIQUE', () => {
+            return {lotteryDuplicate: {errorMsg: sails.__('The code duplicated.')}}
+          }).fetch();
+
+          const newLotteryEnough = await sails.helpers.checkStockAvailable.with({lotteryId: newMachineLottery.id})
+            .tolerate('getMachineStockFailed');
+          if (newLotteryEnough) {
+            await MachineLottery.updateOne({id: newMachineLottery.id}).set({status: 2});
+          }
+        }
       }
 
       return ({

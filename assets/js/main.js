@@ -193,7 +193,7 @@ function doPage(formName, pageNum) {
  *        message display
  ***********************************************/
 function showAlert(msg, callback) {
-  $('#alert-modal .modal-body p').text(msg);
+  $('#alert-modal .modal-body p').html(msg);
   if (callback && $.isFunction(callback)) {
     $('#alert-close').one('click', callback);
   }
@@ -371,9 +371,17 @@ async function activeMachineLottery(ids) {
     });
 
   if (result) {
-    showAlert($.validator.messages.activeSuccess, function () {
-      window.location = '/machine/lottery';
-    });
+    if (result.data.failedList.length > 0) {
+      var names = '';
+      result.data.failedList.forEach(o => names += o.name + '<br>');
+      showAlert(names + '库存不足，生效失败', function () {
+        window.location = '/machine/lottery';
+      });
+    } else {
+      showAlert($.validator.messages.activeSuccess, function () {
+        window.location = '/machine/lottery';
+      });
+    }
   } else {
     showAlert($.validator.messages.activeFailed);
   }

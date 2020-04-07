@@ -26,7 +26,6 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    // TODO 返回占用库存
     let valueToSet = {status: 9};
     await MachineLottery.update({
       id: {in: inputs.ids}

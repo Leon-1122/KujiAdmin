@@ -26,7 +26,6 @@ module.exports = {
 
 
   fn: async function (inputs) {
-    // TODO 返回占用库存
     await MachineLottery.destroy({
       id: {in: inputs.ids}
     });
