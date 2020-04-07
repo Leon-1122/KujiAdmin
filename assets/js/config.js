@@ -167,3 +167,8 @@ String.prototype.firstUpperCase = function () {
     return s.toUpperCase();
   });
 };
+
+// img lazyload
+var lazyLoadInstance = new LazyLoad({
+  elements_selector: ".lazy"
+});

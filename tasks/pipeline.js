@@ -91,6 +91,7 @@ var jsFilesToInject = [
   'dependencies/raphael/raphael.js',
   'dependencies/morris.js/morris.js',
   'dependencies/baguettebox.js/dist/baguetteBox.js',
+  'dependencies/vanilla-lazyload/dist/lazyload.js',
   'dependencies/cloud.js',
 
   // First amongst the app-level files, bring in cloud configuration

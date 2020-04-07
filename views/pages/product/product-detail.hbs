@@ -118,7 +118,7 @@
                         {{#each product.product_pic}}
                           <a href="{{this.[0]}}">
                               <div class="image-container">
-                                  <div class="image" style="background-image:url('{{this.[0]}}')"></div>
+                                  <div class="image lazy" data-bg="{{this.[0]}}"></div>
                               </div>
                           </a>
                         {{/each}}

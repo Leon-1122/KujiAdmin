@@ -54,7 +54,7 @@
                                       <i class="fa fa-upload"></i>
                                   </span>
                               </div>
-                              <div class="image" style="background-image:url('{{lottery.bannerImg}}')"></div>
+                              <div class="image lazy" data-bg="{{lottery.bannerImg}}"></div>
                               <input type="hidden" name="bannerImg" id="bannerImg" value="{{lottery.bannerImg}}">
                           </div>
                       </div>
@@ -74,7 +74,7 @@
                                       <i class="fa fa-upload"></i>
                                   </span>
                               </div>
-                              <div class="image" style="background-image:url('{{lottery.topImg}}')"></div>
+                              <div class="image lazy" data-bg="{{lottery.topImg}}"></div>
                               <input type="hidden" name="topImg" id="topImg" value="{{lottery.topImg}}">
                           </div>
                       </div>
@@ -123,7 +123,7 @@
                                                   <i class="fa fa-upload"></i>
                                               </span>
                                           </div>
-                                          <div class="image" style="background-image:url('{{this.productImg}}')"></div>
+                                          <div class="image lazy" data-bg="{{this.productImg}}"></div>
                                           <input type="hidden" name="productImg" value="{{this.productImg}}">
                                       </div>
                                       <p class="input-description">{{../__ 'Resolution'}}:1000*1000</p>
@@ -163,7 +163,7 @@
                                                 {{#is this.level ../this.level}}
                                                     <tr>
                                                         <td>
-                                                            <img class="table-img rounded product-img" src="{{this.productImg}}">
+                                                            <img class="table-img rounded product-img lazy" data-src="{{this.productImg}}">
                                                         </td>
                                                         <td class="product-sku">{{this.sku}}</td>
                                                         <td>
