@@ -154,5 +154,13 @@
   "Num": "数量",
   "Operator": "操作者",
   "Operate time": "操作时间",
-  "Disable": "失效"
+  "Disable": "失效",
+  "Increase": "增加赏",
+  "Decrease": "减少赏",
+  "Product not exist.": "商品不存在",
+  "Machine lottery not exist.": "售货机一番赏不存在",
+  "Product not in list.": "需要减少的商品不在售货机一番赏中",
+  "Machine lottery in use.": "售货机一番赏正被使用中，无法修改",
+  "Get machine stock failed.": "库存取得失败",
+  "Stock not enough.": "库存不足"
 }

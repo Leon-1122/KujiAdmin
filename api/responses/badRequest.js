@@ -28,7 +28,8 @@ module.exports = function badRequest(data) {
 
   // If the request wants JSON, send back the appropriate status code.
   if (req.wantsJSON || !res.view) {
-    return res.sendStatus(400);
+    res.status(400);
+    return res.json(data);
   }
 
   return res.view('400', {}, function (err, html) {

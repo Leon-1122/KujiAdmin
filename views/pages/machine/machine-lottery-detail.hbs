@@ -4,6 +4,14 @@
           <h3 class="title">
               {{__ 'Machine lottery detail'}}
           </h3>
+          <div style="text-align: right">
+              <button class="btn btn-primary btn-sm rounded-s" onclick="showAwardModal(1)">
+            {{__ 'Increase'}}
+              </button>
+              <button class="btn btn-primary btn-sm rounded-s" onclick="showAwardModal(2)">
+            {{__ 'Decrease'}}
+              </button>
+          </div>
       </div>
 
 
@@ -145,7 +153,8 @@
                   </div>
               </div>
           </div>
-          <input type="hidden" name="id" value="{{machineLottery._id}}">
+          <input type="hidden" name="id" value="{{machineLottery.id}}">
       </form>
+      {{> app/_common/modals/modal-award/modal-award}}
   {{/content}}
 {{/extend}}

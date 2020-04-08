@@ -100,6 +100,7 @@ module.exports.routes = {
   'POST  /api/v1/lottery':                                { action: 'lottery/upload-picture' },
   'GET   /api/v1/lottery/:id/picture':                    { action: 'lottery/download-picture', skipAssets: false },
   'DELETE  /api/v1/lottery/:id/picture':                  { action: 'lottery/delete-picture' },
+  'POST   /api/v1/machine/lottery/edit':                  { action: 'machine/edit-machine-lottery'},
   'POST   /api/v1/wx/login':                              { action: 'wx/wxuser-login'},
   'GET   /api/v1/wx/getUserInfo':                         { action: 'wx/get-wxuser'},
   'PUT   /api/v1/wx/updateUserInfo':                      { action: 'wx/update-wxuser'},
