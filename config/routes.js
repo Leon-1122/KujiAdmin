@@ -15,6 +15,7 @@ module.exports.routes = {
   //  ╚╩╝╚═╝╚═╝╩  ╩ ╩╚═╝╚═╝╚═╝
   'GET /':                   { action: 'view-homepage-or-redirect' },
   'GET /welcome':            { action: 'dashboard/view-dashboard' },
+  'GET /dashboard/getPagedMachineSales':  { action: 'dashboard/get-paged-machine-sales' },
 
   'GET /login':              { action: 'entrance/view-login' },
   'GET /password/forgot':    { action: 'entrance/view-forgot-password' },
@@ -115,4 +116,8 @@ module.exports.routes = {
   'PUT   /api/v1/wx/quitQueue':                           { action: 'wx/quit-queue'},
   'PUT   /api/v1/wx/updateQueuePayStep':                  { action: 'wx/update-queue-pay-step'},
   'POST   /api/v1/wx/reserveOrderNotify':                 { action: 'wx/reserve-order-notify'},
+  'PUT   /api/v1/wx/reportVisit':                         { action: 'wx/report-visit'},
+  'GET  /api/v1/dashboard/getVisitHistory':               { action: 'dashboard/get-visit-history' },
+  'GET  /api/v1/dashboard/getSalesHistory':               { action: 'dashboard/get-sales-history' },
+  'GET  /api/v1/dashboard/getSalesBreakdown':             { action: 'dashboard/get-sales-breakdown' },
 };

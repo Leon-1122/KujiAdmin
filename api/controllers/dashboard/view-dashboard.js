@@ -19,59 +19,44 @@ module.exports = {
 
   fn: async function () {
 
-    var items = [
-      {
-        title: '12 Myths Uncovered About IT & Software',
-        img: 'https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg',
-        author: 'Meadow Katheryne',
-        category: 'Software',
-        date: '21 SEP 10:45',
-        sales: 4958
-      },
-      {
-        title: "50% of things doesn't really belongs to you",
-        img: 'https://s3.amazonaws.com/uifaces/faces/twitter/_everaldo/128.jpg',
-        author: 'Alexander Sargssyan',
-        category: 'Software',
-        date: '21 SEP 10:45',
-        sales: 192
-      },
-      {
-        title: 'Vestibulum tincidunt amet laoreet mauris sit sem aliquam cras maecenas vel aliquam.',
-        img: 'https://s3.amazonaws.com/uifaces/faces/twitter/eduardo_olv/128.jpg',
-        author: 'Angela Blaine',
-        category: 'Software',
-        date: '21 SEP 10:45',
-        sales: 2143
-      },
-      {
-        title: '10 tips of Object Oriented Design',
-        img: 'https://s3.amazonaws.com/uifaces/faces/twitter/why_this/128.jpg',
-        author: 'Marcus Ulupus',
-        category: 'Software',
-        date: '21 SEP 10:45',
-        sales: 124
-      },
-      {
-        title: 'Sometimes friend tells it is cold',
-        img: 'https://s3.amazonaws.com/uifaces/faces/twitter/w7download/128.jpg',
-        author: 'Grdon Mrdon',
-        category: 'Software',
-        date: '21 SEP 10:45',
-        sales: 10214
-      },
-      {
-        title: 'New ways of conceptual thinking',
-        img: 'https://s3.amazonaws.com/uifaces/faces/twitter/pankogut/128.jpg',
-        author: 'Tiko Charbaxo',
-        category: 'Software',
-        date: '21 SEP 10:45',
-        sales: 3217
-      }
-    ];
+    let dateFrom = new Date();
+    dateFrom.setDate(1);
+    dateFrom.setHours(0);
+    dateFrom.setMinutes(0);
+    dateFrom.setSeconds(0);
+
+    let dateTo = new Date();
+
+    const totalMachineCount = await Machine.count({});
+    const totalOnlineMachineCount = await Machine.count({oo_status: 'online'});
+    const totalStock = await MachineStock.sum('quantity');
+    const totalUserCount = await WxUser.count({});
+    const totalSalesNum = await Order.sum('num', {status: 1});
+    const monthlySalesAmount = await Order.sum('totalFee', {
+      and: [
+        {status: 1},
+        {payTime: {'>=': dateFrom.getTime()}},
+        {payTime: {'<=': dateTo.getTime()}},
+      ]
+    });
+    const totalSalesAmount = await Order.sum('totalFee', {
+      status: 1,
+      payTime: {'<=': dateTo.getTime()}
+    });
+
+    const machineRatio = Math.ceil((totalOnlineMachineCount / totalMachineCount) * 100);
+    const stockRatio = Math.ceil((totalStock / (totalMachineCount * 1000)) * 100);
+
     return {
       pagename: 'dashboard',
-      items: items
+      totalOnlineMachineCount,
+      totalStock,
+      totalUserCount,
+      totalSalesNum,
+      monthlySalesAmount,
+      totalSalesAmount,
+      machineRatio,
+      stockRatio
     };
 
   }

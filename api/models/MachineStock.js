@@ -20,7 +20,8 @@ module.exports = {
       description: '机器ID'
     },
     quantity: {
-      type: 'json',
+      type: 'number',
+      allowNull: true,
       description: '商品数量'
     },
     sale_price: {
