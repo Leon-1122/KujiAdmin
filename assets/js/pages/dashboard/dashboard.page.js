@@ -53,7 +53,6 @@ async function drawVisitsChart() {
   var dataVisits = [];
 
   if (result) {
-    console.log(result.data.viewHistory);
     dataVisits = result.data.viewHistory;
   }
 
@@ -94,7 +93,6 @@ async function drawSalesChart() {
   var dataSales = [];
 
   if (result) {
-    console.log(result.data.salesHistory);
     dataSales = result.data.salesHistory;
   }
 
@@ -129,23 +127,16 @@ function drawDashboardItemsList(pageNum) {
 function drawDashboardItemsListSparklines() {
   $(".dashboard-page .items .sparkline").each(function () {
     var type = $(this).data('type');
-
-    var tendency = $(this).data('tendency')
+    var data = [];
+    var tendency = $(this).data('tendency');
     if (tendency) {
-      var data = tendency.split(',').map(function (item) {
+      data = tendency.split(',').map(function (item) {
         if (item.indexOf(":") > 0) {
           return item.split(":");
         } else {
           return item;
         }
       });
-    }
-    // Generate random data
-    else {
-      var data = [];
-      for (var i = 0; i < 17; i++) {
-        data.push(Math.round(100 * Math.random()));
-      }
     }
 
     $(this).sparkline(data, {
@@ -169,7 +160,6 @@ async function drawSalesBreakdownChart() {
   var dataSalesBreakdown = [];
 
   if (result) {
-    console.log(result.data.salesBreakdown);
     dataSalesBreakdown = result.data.salesBreakdown;
   }
 
