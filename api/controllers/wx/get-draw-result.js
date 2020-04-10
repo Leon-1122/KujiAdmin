@@ -140,21 +140,23 @@ module.exports = {
           };
         }
       });
-      productList[lastIndex].remain = 0;
 
-      // 生成日志
-      await MachineLog.create({
-        machineId: lotteryInfo.machineId,
-        lotteryName: `${lotteryInfo.name} 第${lotteryInfo.timeTitle}期`,
-        level: lastProduct.level,
-        productName: lastProduct.name,
-        num: 1,
-        desc: '抽奖取出',
-        category: '一番赏',
-        operator: userInfo.nickName,
-        lottery: lotteryInfo.id,
-        wxUser: userId
-      });
+      if (lastProduct) {
+        productList[lastIndex].remain = 0;
+        // 生成日志
+        await MachineLog.create({
+          machineId: lotteryInfo.machineId,
+          lotteryName: `${lotteryInfo.name} 第${lotteryInfo.timeTitle}期`,
+          level: lastProduct.level,
+          productName: lastProduct.name,
+          num: 1,
+          desc: '抽奖取出',
+          category: '一番赏',
+          operator: userInfo.nickName,
+          lottery: lotteryInfo.id,
+          wxUser: userId
+        });
+      }
     }
 
     const ObjectId = require('mongodb').ObjectID;
@@ -186,8 +188,9 @@ module.exports = {
       const api = 'reserve_order';
       const expireDays = sails.config.custom.reserve_order_expire_days ? sails.config.custom.reserve_order_expire_days : 3;
       const notifyUrl = sails.config.custom.baseUrl + '/api/v1/wx/reserveOrderNotify';
-      const expireTime = await sails.helpers.formatTimestamp.with({timestamp: orderInfo.payTime + (expireDays - 1) * 24 * 60 * 60 * 1000});
-      const chargeTime = await sails.helpers.formatTimestamp.with({timestamp: orderInfo.payTime});
+      const payTime = orderInfo.payTime ? orderInfo.payTime : Date.now();
+      const expireTime = await sails.helpers.formatTimestamp.with({timestamp: payTime + (expireDays - 1) * 24 * 60 * 60 * 1000});
+      const chargeTime = await sails.helpers.formatTimestamp.with({timestamp: payTime});
       const price = lotteryInfo.price;
 
       let orderDetail = {};
@@ -237,8 +240,8 @@ module.exports = {
       // 更新订单信息
       await Order.updateOne({id: inputs.orderId}).set({pickCode: pickCode, products: products});
 
-      if (lastProduct) {
-        // 奖品抽完后新开该种一番赏
+      // 奖品抽完后新开该种一番赏
+      if (lotteryInfo.cardRemain === inputs.count) {
         let templateLottery = await Lottery.find({name: lotteryInfo.name, status: {'<': 9}});
         if (templateLottery.length > 0) {
           const template = templateLottery[0];

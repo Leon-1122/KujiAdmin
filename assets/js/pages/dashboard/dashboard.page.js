@@ -1,29 +1,17 @@
+var tabItem = 'visits';
+
 $(function () {
 
   if (!$('#dashboard-visits-chart').length) {
     return false;
   }
 
-  drawVisitsChart();
-
-  var el = null;
-  var item = 'visits';
-
   $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-    el = e.target;
-    item = $(el).attr('href').replace('#', '');
-    switchHistoryCharts(item);
+    tabItem = $(e.target).attr('href').replace('#', '');
+    switchHistoryCharts(tabItem);
   });
 
-  drawDashboardItemsList();
-
-  var $dashboardSalesBreakdownChart = $('#dashboard-sales-breakdown-chart');
-
-  if (!$dashboardSalesBreakdownChart.length) {
-    return false;
-  }
-
-  drawSalesBreakdownChart();
+  drawDashboard();
 });
 
 function switchHistoryCharts(item) {
@@ -41,6 +29,12 @@ function switchHistoryCharts(item) {
       drawSalesChart();
       break;
   }
+}
+
+function drawDashboard() {
+  switchHistoryCharts(tabItem);
+  drawDashboardItemsList();
+  drawSalesBreakdownChart();
 }
 
 async function drawVisitsChart() {
@@ -84,8 +78,8 @@ async function drawVisitsChart() {
 }
 
 async function drawSalesChart() {
-
-  var result = await Cloud['getSalesHistory'].with({})
+  var period = $('#period').val();
+  var result = await Cloud['getSalesHistory'].with({period: period})
     .tolerate((err) => {
       console.error(err);
     });
@@ -112,10 +106,12 @@ async function drawSalesChart() {
 }
 
 function drawDashboardItemsList(pageNum) {
+  var period = $('#period').val();
   $.ajax({
     url: '/dashboard/getPagedMachineSales',
     data: {
-      pageNum: pageNum
+      pageNum: pageNum,
+      period: period
     },
     success: function (result) {
       $('#dashboard-item-list-container').html(result);
@@ -148,11 +144,11 @@ function drawDashboardItemsListSparklines() {
 }
 
 async function drawSalesBreakdownChart() {
-
+  var period = $('#period').val();
   var $dashboardSalesBreakdownChart = $('#dashboard-sales-breakdown-chart');
   $dashboardSalesBreakdownChart.empty();
 
-  var result = await Cloud['getSalesBreakdown'].with({})
+  var result = await Cloud['getSalesBreakdown'].with({period: period})
     .tolerate((err) => {
       console.error(err);
     });

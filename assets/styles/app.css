@@ -3132,3 +3132,11 @@ input.form-control.number-input {
     width: 260px;
   }
 }
+
+.online {
+  color: #85CE36;
+}
+
+.offline {
+  color: #FF4444;
+}

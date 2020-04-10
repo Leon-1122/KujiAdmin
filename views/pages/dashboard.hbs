@@ -3,6 +3,18 @@
     <section class="section">
         <div class="row sameheight-container">
             <div class="col col-12 col-sm-12 col-md-6 col-xl-5 stats-col">
+                <select class="c-select form-control boxed" style="width:120px;" name="period" id="period" onchange="drawDashboard()">
+                  {{#each periodList}}
+                      <option value="{{this}}">{{../__ 'Latest %s days' this}}</option>
+                  {{/each}}
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="row sameheight-container">
+            <div class="col col-12 col-sm-12 col-md-6 col-xl-5 stats-col">
                 <div class="card sameheight-item stats" data-exclude="xs">
                     <div class="card-block">
                         <div class="title-block">
@@ -141,14 +153,14 @@
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active fade show" id="visits">
                                 <p class="title-description">
-                                  {{__ 'Number of unique visits last 30 days'}}
+                                  {{__ 'Number of unique visits'}}
                                 </p>
 
                                 <div id="dashboard-visits-chart"></div>
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="sales">
                                 <p class="title-description">
-                                  {{__ 'Number of sales last 30 days'}}
+                                  {{__ 'Number of sales'}}
                                 </p>
 
                                 <div id="dashboard-sales-chart"></div>

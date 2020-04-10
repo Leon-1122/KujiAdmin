@@ -172,12 +172,12 @@
   "Machines online": "在线机器数",
   "Total income": "总销售额",
   "History": "历史记录",
-  "Number of unique visits last 30 days": "最近30天访问数",
-  "Number of sales last 30 days": "最近30天销售额",
+  "Number of unique visits": "访问数",
+  "Number of sales": "销售额",
   "Visits": "访问",
   "Sales breakdown": "销售分析",
   "Sales amount": "销售额",
-  "Machine sales": "最近30天售货机销售统计",
+  "Machine sales": "售货机销售统计",
   "Sales tendency": "销售趋势",
   "Account name": "用户名",
   "Reset password": "重置密码",
@@ -188,5 +188,6 @@
   "Confirm password": "确认密码",
   "The new password is invalid.": "新密码只能包含大小写字母、数字、下划线、减号，且至少6位",
   "The confirm password is not same as new password.": "确认密码与新密码不一致",
-  "The old password is incorrect.": "原密码不正确"
+  "The old password is incorrect.": "原密码不正确",
+  "Latest %s days": "最近%s天"
 }

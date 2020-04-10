@@ -7,7 +7,11 @@ module.exports = {
   description: 'get sales breakdown',
 
 
-  inputs: {},
+  inputs: {
+    period: {
+      type: 'number',
+    },
+  },
 
 
   exits: {
@@ -22,7 +26,7 @@ module.exports = {
     const db = Order.getDatastore().manager;
 
     let dateFrom = new Date();
-    dateFrom.setDate(dateFrom.getDate() - 30);
+    dateFrom.setDate(dateFrom.getDate() - (inputs.period ? inputs.period : 7));
     dateFrom.setHours(0);
     dateFrom.setMinutes(0);
     dateFrom.setSeconds(0);

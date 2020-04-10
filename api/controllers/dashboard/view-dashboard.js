@@ -56,7 +56,8 @@ module.exports = {
       monthlySalesAmount,
       totalSalesAmount,
       machineRatio,
-      stockRatio
+      stockRatio,
+      periodList: [7, 30]
     };
 
   }
