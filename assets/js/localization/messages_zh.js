@@ -39,5 +39,7 @@ $.extend($.validator.messages, {
   needMachineId: "请输入机器ID",
   needProductId: "请输入产品ID",
   refreshSuccess: "刷新成功",
-  refreshFailed: "刷新失败"
+  refreshFailed: "刷新失败",
+  resetPasswordSuccess: "重置密码成功",
+  resetPasswordFailed: "重置密码失败"
 });

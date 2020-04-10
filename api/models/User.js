@@ -11,6 +11,12 @@ module.exports = {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
+    accountName: {
+      type: 'string',
+      required: true,
+      unique: true,
+    },
+
     emailAddress: {
       type: 'string',
       description: 'The email address for this user.',

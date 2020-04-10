@@ -117,7 +117,9 @@ module.exports = {
     const body = `一番赏 ${lotteryInfo.name} 第${lotteryInfo.timeTitle}期`;
     const spbill_create_ip = ip.address() || '127.0.0.1';
     const notify_url = sails.config.custom.notifyurl;
-    const total_fee = payment * 1000;
+    // TODO 测试微信支付金额
+    //const total_fee = payment * 100;
+    const total_fee = 1;
     const time_stamp = '' + Math.ceil(Date.now() / 1000);
     const out_trade_no = `${orderNo}`;
     const sign_type = WXPayConstants.SIGN_TYPE_MD5;
@@ -147,7 +149,7 @@ module.exports = {
       ...restData
     } = await wxpay.unifiedOrder(orderParam);
 
-    sails.log('微信支付统一下单调用结果:\n', restData);
+    sails.log('微信支付统一下单调用结果:\n', JSON.stringify(restData));
 
     if (return_code === 'SUCCESS' && restData.result_code === 'SUCCESS') {
       const {

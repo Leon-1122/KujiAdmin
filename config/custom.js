@@ -96,12 +96,13 @@ module.exports.custom = {
   *                                                                          *
   ***************************************************************************/
   // wechat config
-  appid: 'wxe8eb2a0939957411',
-  appsecret: '724724dcc80bc3a3d5e3cf10748c4d86',
+  appid: 'wxe11547a0fbdd11a1',
+  appsecret: '5ce3bae64a0761da9b625ba0f682e5cf',
   envname: 'cloud-rhf5t',
-  mchid: '123456',
-  key: '123456',
+  mchid: '10011583',
+  key: 'CHINA2016LueshengLCSSHANGHAI0910',
   timeout: 3000,
+  // TODO 微信支付异步通知url
   notifyurl: 'https://www.qq.com',
 
   dataPerPage: 10,

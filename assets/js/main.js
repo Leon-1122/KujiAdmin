@@ -487,3 +487,26 @@ async function exportCsv(pageName) {
   document.body.appendChild(a);
   a.click();
 }
+
+
+/***********************************************
+ *        reset password
+ ***********************************************/
+async function resetPassword(userId) {
+  $('#loading').show();
+
+  var result = await Cloud['resetPassword'].with({id: userId})
+    .tolerate((err) => {
+      console.log(err);
+    });
+
+  $('#loading').hide();
+
+  if (result) {
+    showAlert($.validator.messages.resetPasswordSuccess, function () {
+      window.location = `/user/${userId}`;
+    });
+  } else {
+    showAlert($.validator.messages.resetPasswordFailed);
+  }
+}

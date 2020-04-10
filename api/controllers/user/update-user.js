@@ -1,16 +1,21 @@
 module.exports = {
 
 
-  friendlyName: 'Update profile',
+  friendlyName: 'Update user',
 
 
-  description: 'Update the profile for user.',
+  description: 'Update user.',
 
 
   inputs: {
 
     id: {
       type: 'string',
+    },
+
+    accountName: {
+      type: 'string',
+      required: true
     },
 
     emailAddress: {
@@ -27,18 +32,17 @@ module.exports = {
       type: 'string',
       required: true
     },
-
   },
 
 
   exits: {
     success: {
-      description: 'The requesting user profile has been successfully edited.',
+      description: 'The requesting user has been successfully edited.',
     },
 
-    emailAlreadyInUse: {
+    accountNameOrEmailAlreadyInUse: {
       statusCode: 409,
-      description: 'The provided email address is already in use.',
+      description: 'The provided account name or email address is already in use.',
     },
 
   },
@@ -47,6 +51,7 @@ module.exports = {
   fn: async function (inputs) {
 
     var valuesToSet = {
+      accountName: inputs.accountName.toLowerCase(),
       emailAddress: inputs.emailAddress.toLowerCase(),
       fullName: inputs.fullName,
       role: inputs.role
@@ -55,7 +60,7 @@ module.exports = {
     if (inputs.id) {
       await User.updateOne({id: inputs.id}).set(valuesToSet)
         .intercept('E_UNIQUE', () => {
-          return {emailAlreadyInUse: {errorMsg: sails.__('The provided email address is already in use.')}}
+          return {accountNameOrEmailAlreadyInUse: {errorMsg: sails.__('The provided email address is already in use.')}}
         });
 
     } else {
@@ -65,7 +70,7 @@ module.exports = {
 
       await User.create(valuesToSet)
         .intercept('E_UNIQUE', () => {
-          return {emailAlreadyInUse: {errorMsg: sails.__('The provided email address is already in use.')}}
+          return {accountNameOrEmailAlreadyInUse: {errorMsg: sails.__('The provided account name or email address is already in use.')}}
         });
     }
 

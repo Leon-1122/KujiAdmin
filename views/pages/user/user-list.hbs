@@ -53,7 +53,12 @@
                               <span></span>
                           </label>
                       </div>
-                      <div class="item-col item-col-header item-col-title item-col-6">
+                      <div class="item-col item-col-header item-col-title item-col-3">
+                          <div>
+                              <span>{{__ 'Account name'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date item-col-3">
                           <div>
                               <span>{{__ 'Email Address'}}</span>
                           </div>
@@ -96,14 +101,20 @@
                             </label>
                         </div>
 
-                        <div class="item-col fixed pull-left item-col-title item-col-6">
-                            <div class="item-heading">{{../__ 'Email Address'}}</div>
+                        <div class="item-col fixed pull-left item-col-title item-col-3">
+                            <div class="item-heading">{{../__ 'Account name'}}</div>
                             <div>
                                 <a href="/user/{{this.id}}" class="">
                                     <h4 class="item-title">
-                                      {{this.emailAddress}}
+                                      {{this.accountName}}
                                     </h4>
                                 </a>
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date item-col-3">
+                            <div class="item-heading">{{../__ 'Email Address'}}</div>
+                            <div>
+                              {{this.emailAddress}}
                             </div>
                         </div>
                         <div class="item-col item-col-date item-col-3">

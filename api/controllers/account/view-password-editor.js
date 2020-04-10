@@ -10,7 +10,7 @@ module.exports = {
   exits: {
 
     success: {
-      viewTemplatePath: 'pages/account/edit-password'
+      viewTemplatePath: 'pages/account/password-editor'
     }
 
   },
