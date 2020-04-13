@@ -116,10 +116,8 @@ module.exports = {
     const orderNo = Date.parse(new Date()) + Math.round(1e3 * Math.random());
     const body = `一番赏 ${lotteryInfo.name} 第${lotteryInfo.timeTitle}期`;
     const spbill_create_ip = ip.address() || '127.0.0.1';
-    const notify_url = sails.config.custom.notifyurl;
-    // TODO 测试微信支付金额
-    //const total_fee = payment * 100;
-    const total_fee = 1;
+    const notify_url = sails.config.custom.baseUrl + '/api/v1/wx/wechatPayNotify';
+    const total_fee = payment * 100;
     const time_stamp = '' + Math.ceil(Date.now() / 1000);
     const out_trade_no = `${orderNo}`;
     const sign_type = WXPayConstants.SIGN_TYPE_MD5;

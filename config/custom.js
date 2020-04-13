@@ -11,46 +11,46 @@
 module.exports.custom = {
 
   /**************************************************************************
-  *                                                                         *
-  * The base URL to use during development.                                 *
-  *                                                                         *
-  * • No trailing slash at the end                                          *
-  * • `http://` or `https://` at the beginning.                             *
-  *                                                                         *
-  * > This is for use in custom logic that builds URLs.                     *
-  * > It is particularly handy for building dynamic links in emails,        *
-  * > but it can also be used for user-uploaded images, webhooks, etc.      *
-  *                                                                         *
-  **************************************************************************/
+   *                                                                         *
+   * The base URL to use during development.                                 *
+   *                                                                         *
+   * • No trailing slash at the end                                          *
+   * • `http://` or `https://` at the beginning.                             *
+   *                                                                         *
+   * > This is for use in custom logic that builds URLs.                     *
+   * > It is particularly handy for building dynamic links in emails,        *
+   * > but it can also be used for user-uploaded images, webhooks, etc.      *
+   *                                                                         *
+   **************************************************************************/
   baseUrl: 'http://localhost:1337',
 
   /**************************************************************************
-  *                                                                         *
-  * The TTL (time-to-live) for various sorts of tokens before they expire.  *
-  *                                                                         *
-  **************************************************************************/
-  passwordResetTokenTTL: 24*60*60*1000,// 24 hours
-  emailProofTokenTTL:    24*60*60*1000,// 24 hours
+   *                                                                         *
+   * The TTL (time-to-live) for various sorts of tokens before they expire.  *
+   *                                                                         *
+   **************************************************************************/
+  passwordResetTokenTTL: 24 * 60 * 60 * 1000,// 24 hours
+  emailProofTokenTTL: 24 * 60 * 60 * 1000,// 24 hours
 
   /**************************************************************************
-  *                                                                         *
-  * The extended length that browsers should retain the session cookie      *
-  * if "Remember Me" was checked while logging in.                          *
-  *                                                                         *
-  **************************************************************************/
-  rememberMeCookieMaxAge: 30*24*60*60*1000, // 30 days
+   *                                                                         *
+   * The extended length that browsers should retain the session cookie      *
+   * if "Remember Me" was checked while logging in.                          *
+   *                                                                         *
+   **************************************************************************/
+  rememberMeCookieMaxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
 
   /**************************************************************************
-  *                                                                         *
-  * Automated email configuration                                           *
-  *                                                                         *
-  * Sandbox Mailgun credentials for use during development, as well as any  *
-  * other default settings related to "how" and "where" automated emails    *
-  * are sent.                                                               *
-  *                                                                         *
-  * (https://app.mailgun.com/app/domains)                                   *
-  *                                                                         *
-  **************************************************************************/
+   *                                                                         *
+   * Automated email configuration                                           *
+   *                                                                         *
+   * Sandbox Mailgun credentials for use during development, as well as any  *
+   * other default settings related to "how" and "where" automated emails    *
+   * are sent.                                                               *
+   *                                                                         *
+   * (https://app.mailgun.com/app/domains)                                   *
+   *                                                                         *
+   **************************************************************************/
   // mailgunDomain: 'sandboxaa1234fake678.mailgun.org',
   // mailgunSecret: 'key-fakeb183848139913858e8abd9a3',
   //--------------------------------------------------------------------------
@@ -77,12 +77,12 @@ module.exports.custom = {
   verifyEmailAddresses: false,
 
   /**************************************************************************
-  *                                                                         *
-  * Billing & payments configuration                                        *
-  *                                                                         *
-  * (https://dashboard.stripe.com/account/apikeys)                          *
-  *                                                                         *
-  **************************************************************************/
+   *                                                                         *
+   * Billing & payments configuration                                        *
+   *                                                                         *
+   * (https://dashboard.stripe.com/account/apikeys)                          *
+   *                                                                         *
+   **************************************************************************/
   // stripePublishableKey: 'pk_test_Zzd814nldl91104qor5911gjald',
   // stripeSecret: 'sk_test_Zzd814nldl91104qor5911gjald',
   //--------------------------------------------------------------------------
@@ -91,10 +91,10 @@ module.exports.custom = {
   //--------------------------------------------------------------------------
 
   /***************************************************************************
-  *                                                                          *
-  * Any other custom config this Sails app should use during development.    *
-  *                                                                          *
-  ***************************************************************************/
+   *                                                                          *
+   * Any other custom config this Sails app should use during development.    *
+   *                                                                          *
+   ***************************************************************************/
   // wechat config
   appid: 'wxe11547a0fbdd11a1',
   appsecret: '5ce3bae64a0761da9b625ba0f682e5cf',
@@ -102,8 +102,6 @@ module.exports.custom = {
   mchid: '10011583',
   key: 'CHINA2016LueshengLCSSHANGHAI0910',
   timeout: 3000,
-  // TODO 微信支付异步通知url
-  notifyurl: 'https://www.qq.com',
 
   dataPerPage: 10,
   defaultPassword: '$2a$10$nd5LZPfrDoaSxYrilWoQ7udXhtltlWTkr3tW3.gKjKQRSwhraa5Pe',

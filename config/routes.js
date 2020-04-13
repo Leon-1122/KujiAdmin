@@ -122,4 +122,5 @@ module.exports.routes = {
   'GET  /api/v1/dashboard/getVisitHistory':               { action: 'dashboard/get-visit-history' },
   'GET  /api/v1/dashboard/getSalesHistory':               { action: 'dashboard/get-sales-history' },
   'GET  /api/v1/dashboard/getSalesBreakdown':             { action: 'dashboard/get-sales-breakdown' },
+  'POST   /api/v1/wx/wechatPayNotify':                    { action: 'wx/wechat-pay-notify'},
 };
