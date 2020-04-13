@@ -130,7 +130,7 @@ module.exports = {
     if (drawnList.length > 0 && lotteryInfo.cardRemain === inputs.count) {
       let lastIndex = 0;
       productList.map(function (e, i) {
-        if (e.level === 'Last One') {
+        if (e.last) {
           lastIndex = i;
           lastProduct = {
             name: e.name,
@@ -341,7 +341,7 @@ function draw(productList) {
   let index = 0,
     indexList = [];
   productList.map(function (e, i) {
-    if (e.remain > 0 && e.level !== 'Last One') {
+    if (e.remain > 0 && !e.last) {
       indexList[index] = i;
       index++;
     }

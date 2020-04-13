@@ -87,12 +87,7 @@
                     {{__ 'Awards setting'}}:
                   </label>
                   <div class="col-sm-10">
-                      <select class="c-select form-control boxed" id="addLevel">
-                          <option value="">{{__ 'Select level to add'}}</option>
-                        {{#each level}}
-                            <option value="{{this.code}}">{{this.code}}</option>
-                        {{/each}}
-                      </select>
+                      <input type="text" class="form-control boxed" id="addLevel" placeholder="{{__ 'Input level to add'}}">
                       <div class="level-add-container">
                           <div class="control-btn" id="addLevelBtn" onclick="addAward()">
                               <i class="fa fa-plus"></i>
@@ -101,15 +96,26 @@
                   </div>
               </div>
 
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                  </label>
+                  <div class="col-sm-10">
+                      <label>
+                          <input class="checkbox" type="checkbox" id="last" value="1">
+                          <span>{{__ 'If last award'}}</span>
+                      </label>
+                  </div>
+              </div>
+
               <div class="form-group row" id="productPreviewContainer">
                   {{#each lottery.productPreview}}
-                      <div class="card float-card card-info">
+                      <div class="card float-card {{#if this.last}}card-warning{{else}}card-info{{/if}}">
                           <div class="card-header">
                               <div class="header-block row">
                                   <p class="title col-sm-4">
-                                    {{this.level}}{{../__ 'Award'}}
+                                    {{this.level}}
                                   </p>
-                                  <span class="control-btn remove col-sm-8" data-level="{{this.level}}" onclick="deleteAward(this)">
+                                  <span class="control-btn remove col-sm-8" data-level="{{this.level}}" data-last="{{this.last}}" onclick="deleteAward(this)">
                                       <i class="fa fa-remove"></i>
                                   </span>
                               </div>
@@ -206,7 +212,7 @@
           <input type="hidden" name="productPreview" id="productPreview">
       </form>
 
-      <div id="awardTemplate" class="card float-card card-info" style="display: none">
+      <div id="awardTemplate" class="card float-card" style="display: none">
           <div class="card-header">
               <div class="header-block row">
                   <p class="title col-sm-4">

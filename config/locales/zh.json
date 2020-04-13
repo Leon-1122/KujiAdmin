@@ -98,7 +98,7 @@
   "Awards setting": "奖项设置",
   "Award": "赏",
   "Amount": "数量",
-  "Select level to add": "选择要添加的奖项...",
+  "Input level to add": "输入要添加的奖项...",
   "Product Select": "商品选择",
   "Machine": "售货机",
   "Machine ID": "机器ID",
@@ -189,5 +189,6 @@
   "The new password is invalid.": "新密码只能包含大小写字母、数字、下划线、减号，且至少6位",
   "The confirm password is not same as new password.": "确认密码与新密码不一致",
   "The old password is incorrect.": "原密码不正确",
-  "Latest %s days": "最近%s天"
+  "Latest %s days": "最近%s天",
+  "If last award": "是否最终赏"
 }
