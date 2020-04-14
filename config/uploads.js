@@ -27,5 +27,5 @@ module.exports.uploads = {
   *                                                                          *
   ***************************************************************************/
   // dirpath: '.tmp/uploads',
-
+  adapter: 'skipper-disk'
 };

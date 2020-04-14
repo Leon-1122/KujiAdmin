@@ -147,7 +147,7 @@ module.exports = {
       ...restData
     } = await wxpay.unifiedOrder(orderParam);
 
-    sails.log('微信支付统一下单调用结果:\n', JSON.stringify(restData));
+    sails.log.info('微信支付统一下单调用结果:\n', JSON.stringify(restData));
 
     if (return_code === 'SUCCESS' && restData.result_code === 'SUCCESS') {
       const {

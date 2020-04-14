@@ -21,14 +21,14 @@ const logger = createLogger({
   level: 'silly',
   exitOnError: false,
   format: combine(
-    timestamp(),
+    timestamp({format: 'YYYY-MM-DD HH:mm:ss'}),
     myFormat
   ),
   transports: [
     new transports.Console({
       format: combine(
         format.colorize(),
-        timestamp(),
+        timestamp({format: 'YYYY-MM-DD HH:mm:ss'}),
         myFormat
       )}),
     new transports.File({ filename: 'logs/error.log', level: 'error' }),
@@ -51,7 +51,7 @@ module.exports.log = {
   ***************************************************************************/
 
   // level: 'info'
-  level: 'silly',
+  level: 'info',
   custom: logger,
 
   // Disable captain's log so it doesn't prefix or stringify our meta data.

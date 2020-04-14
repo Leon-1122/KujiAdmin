@@ -59,9 +59,9 @@ module.exports = {
       params: JSON.stringify(params)
     };
 
-    sails.log(`cereson api request: ${JSON.stringify(postData)}`);
+    sails.log.info(`cereson api request: ${JSON.stringify(postData)}`);
     let response = await axios.post(api_url, qs.stringify(postData));
-    sails.log(`cereson api response: ${response.status} ${response.statusText} ${JSON.stringify(response.data)}`);
+    sails.log.info(`cereson api response: ${response.status} ${response.statusText} ${JSON.stringify(response.data)}`);
 
     if (response.data) {
       return response.data;

@@ -44,11 +44,6 @@ module.exports = {
     }
 
     const userId = this.req.headers.userid;
-    const userInfo = await WxUser.findOne({id: userId});
-
-    if (!userInfo) {
-      throw "wxUserNotExist";
-    }
 
     // 获取一番赏信息
     const lotteryInfo = await MachineLottery.findOne({id: inputs.lotteryId});

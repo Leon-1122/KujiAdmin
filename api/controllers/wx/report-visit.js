@@ -39,11 +39,6 @@ module.exports = {
     }
 
     const userId = this.req.headers.userid;
-    const userInfo = await WxUser.findOne({id: userId});
-
-    if (!userInfo) {
-      throw "wxUserNotExist";
-    }
 
     const machineInfo = await Machine.find({machine_id: inputs.machineId});
     if (machineInfo.length === 0) {
