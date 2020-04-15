@@ -223,6 +223,6 @@ db.order.createIndex( { orderNo:1 }, { unique: true } )
 
 
 // 更新用户角色位MA的_id
-var roleCursor = db.role.find({code: 'OP'});
+var roleCursor = db.role.find({code: 'MA'});
 var roleInfo = roleCursor.next();
 db.user.update({accountName: 'admin'},{$set:{'role':roleInfo._id}});
