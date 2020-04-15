@@ -36,7 +36,6 @@ module.exports = {
 
     // 验证签名
     if (wxpay.isPayResultNotifySignatureValid(data)) {
-      console.log('success');
       if (data.result_code === 'SUCCESS') {
         // 验证订单金额是否正确
         const orderInfo = await Order.findOne({orderNo: data.out_trade_no});
@@ -75,7 +74,7 @@ function json2Xml(json) {
 }
 
 function strToDate(dateStr) {
-  return new Date(dateStr.substr(0, 4), dateStr.substr(4, 2),
+  return new Date(dateStr.substr(0, 4), parseInt(dateStr.substr(4, 2)) - 1,
     dateStr.substr(6, 2), dateStr.substr(8, 2),
     dateStr.substr(10, 2), dateStr.substr(12, 2));
 }

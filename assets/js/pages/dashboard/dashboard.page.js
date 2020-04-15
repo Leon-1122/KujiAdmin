@@ -38,8 +38,9 @@ function drawDashboard() {
 }
 
 async function drawVisitsChart() {
-
-  var result = await Cloud['getVisitHistory'].with({})
+  $('#dashboard-visits-chart').empty();
+  var period = $('#period').val();
+  var result = await Cloud['getVisitHistory'].with({period: period})
     .tolerate((err) => {
       console.error(err);
     });
@@ -50,34 +51,37 @@ async function drawVisitsChart() {
     dataVisits = result.data.viewHistory;
   }
 
-  Morris.Line({
-    element: 'dashboard-visits-chart',
-    data: dataVisits,
-    xkey: 'date',
-    ykeys: ['count'],
-    ymin: 'auto 40',
-    labels: ['Visits'],
-    xLabels: "day",
-    hideHover: 'auto',
-    yLabelFormat: function (y) {
-      // Only integers
-      if (y === parseInt(y, 10)) {
-        return y;
-      } else {
-        return '';
-      }
-    },
-    resize: true,
-    lineColors: [
-      config.chart.colorSecondary.toString(),
-    ],
-    pointFillColors: [
-      config.chart.colorPrimary.toString(),
-    ]
-  });
+  if (dataVisits.length > 0) {
+    Morris.Line({
+      element: 'dashboard-visits-chart',
+      data: dataVisits,
+      xkey: 'date',
+      ykeys: ['count'],
+      ymin: 'auto 40',
+      labels: ['Visits'],
+      xLabels: "day",
+      hideHover: 'auto',
+      yLabelFormat: function (y) {
+        // Only integers
+        if (y === parseInt(y, 10)) {
+          return y;
+        } else {
+          return '';
+        }
+      },
+      resize: true,
+      lineColors: [
+        config.chart.colorSecondary.toString(),
+      ],
+      pointFillColors: [
+        config.chart.colorPrimary.toString(),
+      ]
+    });
+  }
 }
 
 async function drawSalesChart() {
+  $('#dashboard-sales-chart').empty();
   var period = $('#period').val();
   var result = await Cloud['getSalesHistory'].with({period: period})
     .tolerate((err) => {
@@ -90,19 +94,21 @@ async function drawSalesChart() {
     dataSales = result.data.salesHistory;
   }
 
-  Morris.Bar({
-    element: 'dashboard-sales-chart',
-    data: dataSales,
-    xkey: 'date',
-    ykeys: ['sales'],
-    labels: ['Sales'],
-    hideHover: 'auto',
-    resize: true,
-    barColors: [
-      config.chart.colorPrimary.toString(),
-      tinycolor(config.chart.colorPrimary.toString()).darken(10).toString()
-    ],
-  });
+  if (dataSales.length > 0) {
+    Morris.Bar({
+      element: 'dashboard-sales-chart',
+      data: dataSales,
+      xkey: 'date',
+      ykeys: ['sales'],
+      labels: ['Sales'],
+      hideHover: 'auto',
+      resize: true,
+      barColors: [
+        config.chart.colorPrimary.toString(),
+        tinycolor(config.chart.colorPrimary.toString()).darken(10).toString()
+      ],
+    });
+  }
 }
 
 function drawDashboardItemsList(pageNum) {
@@ -159,19 +165,20 @@ async function drawSalesBreakdownChart() {
     dataSalesBreakdown = result.data.salesBreakdown;
   }
 
-  Morris.Donut({
-    element: 'dashboard-sales-breakdown-chart',
-    data: dataSalesBreakdown,
-    resize: true,
-    colors: [
-      tinycolor(config.chart.colorPrimary.toString()).lighten(10).toString(),
-      tinycolor(config.chart.colorPrimary.toString()).darken(8).toString(),
-      config.chart.colorPrimary.toString()
-    ],
-  });
+  if (dataSalesBreakdown.length > 0) {
+    Morris.Donut({
+      element: 'dashboard-sales-breakdown-chart',
+      data: dataSalesBreakdown,
+      resize: true,
+      colors: [
+        tinycolor(config.chart.colorPrimary.toString()).lighten(10).toString(),
+        tinycolor(config.chart.colorPrimary.toString()).darken(8).toString(),
+        config.chart.colorPrimary.toString()
+      ],
+    });
+  }
 
   var $sameheightContainer = $dashboardSalesBreakdownChart.closest(".sameheight-container");
-
   setSameHeights($sameheightContainer);
 }
 

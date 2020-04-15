@@ -75,77 +75,79 @@ module.exports = {
       currentPage = inputs.pageNum <= 0 ? totalPage : (inputs.pageNum > totalPage ? 1 : inputs.pageNum);
     }
 
-    let cursor = db.collection(Order.tableName).aggregate([
-        {
-          $match: {
-            $and: [
-              {payTime: {$gte: dateFrom.getTime()}},
-              {payTime: {$lte: dateTo.getTime()}},
-            ]
-          }
-        },
-        {
-          $group: {
-            _id: "$machineId",
-            sales: {$sum: "$totalFee"},
-            num: {$sum: "$num"}
-          }
-        },
-        {$sort: {_id: 1}},
-        {$skip: (currentPage - 1) * perPage},
-        {$limit: perPage},
-      ]
-    );
-
     let items = [];
-    let totalInfo = await cursor.next();
-    while (totalInfo) {
-      // 根据机器ID获取日销售数据
-      let dailySalesCursor = db.collection(Order.tableName).aggregate([
+    if (totalCount > 0) {
+      let cursor = db.collection(Order.tableName).aggregate([
           {
             $match: {
               $and: [
                 {payTime: {$gte: dateFrom.getTime()}},
                 {payTime: {$lte: dateTo.getTime()}},
-                {machineId: totalInfo._id,}
               ]
             }
           },
           {
             $group: {
-              _id: {
-                "payDate": {$dateToString: {format: "%Y-%m-%d", date: {$toDate: "$payTime"}}},
-              },
-              sales: {$sum: "$totalFee"}
+              _id: "$machineId",
+              sales: {$sum: "$totalFee"},
+              num: {$sum: "$num"}
             }
           },
           {$sort: {_id: 1}},
+          {$skip: (currentPage - 1) * perPage},
+          {$limit: perPage},
         ]
       );
 
-      let dailySalesMap = {};
-      let dailySalesInfo = await dailySalesCursor.next();
-      while (dailySalesInfo) {
-        dailySalesMap[dailySalesInfo._id.payDate] = dailySalesInfo.sales;
-        dailySalesInfo = await dailySalesCursor.next();
-      }
+      let totalInfo = await cursor.next();
+      while (totalInfo) {
+        // 根据机器ID获取日销售数据
+        let dailySalesCursor = db.collection(Order.tableName).aggregate([
+            {
+              $match: {
+                $and: [
+                  {payTime: {$gte: dateFrom.getTime()}},
+                  {payTime: {$lte: dateTo.getTime()}},
+                  {machineId: totalInfo._id,}
+                ]
+              }
+            },
+            {
+              $group: {
+                _id: {
+                  "payDate": {$dateToString: {format: "%Y-%m-%d", date: {$toDate: "$payTime"}}},
+                },
+                sales: {$sum: "$totalFee"}
+              }
+            },
+            {$sort: {_id: 1}},
+          ]
+        );
 
-      let tendency = '';
-      for (let date = new Date(dateFrom.getTime()); date <= dateTo; date.setDate(date.getDate() + 1)) {
-        let formattedDate = await sails.helpers.formatTimestamp.with({timestamp: date.getTime()});
-        formattedDate = formattedDate.substr(0, 10);
-        if (dailySalesMap.hasOwnProperty(formattedDate)) {
-          tendency += `${dailySalesMap[formattedDate]},`;
-        } else {
-          tendency += `0,`;
+        let dailySalesMap = {};
+        let dailySalesInfo = await dailySalesCursor.next();
+        while (dailySalesInfo) {
+          dailySalesMap[dailySalesInfo._id.payDate] = dailySalesInfo.sales;
+          dailySalesInfo = await dailySalesCursor.next();
         }
-      }
 
-      if (tendency.length > 0) {
-        tendency = tendency.substr(0, tendency.length - 1);
+        let tendency = '';
+        for (let date = new Date(dateFrom.getTime()); date <= dateTo; date.setDate(date.getDate() + 1)) {
+          let formattedDate = await sails.helpers.formatTimestamp.with({timestamp: date.getTime()});
+          formattedDate = formattedDate.substr(0, 10);
+          if (dailySalesMap.hasOwnProperty(formattedDate)) {
+            tendency += `${dailySalesMap[formattedDate]},`;
+          } else {
+            tendency += `0,`;
+          }
+        }
+
+        if (tendency.length > 0) {
+          tendency = tendency.substr(0, tendency.length - 1);
+        }
+        items.push({machineId: totalInfo._id, sales: totalInfo.sales, num: totalInfo.num, tendency: tendency});
+        totalInfo = await cursor.next();
       }
-      items.push({machineId: totalInfo._id, sales: totalInfo.sales, num: totalInfo.num, tendency: tendency});
-      totalInfo = await cursor.next();
     }
 
     return {
