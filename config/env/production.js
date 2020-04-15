@@ -58,6 +58,8 @@ module.exports = {
       //  sails_datastores__default__url=mysql://admin:myc00lpAssw2D@db.example.com:3306/my_prod_db
       //  ```
       //--------------------------------------------------------------------------
+      adapter: 'sails-mongo',
+      url: 'mongodb://kuji:asdfasdf@localhost:27017/kuji',
 
       /****************************************************************************
       *                                                                           *
@@ -372,8 +374,20 @@ module.exports = {
   custom: {
     baseUrl: 'https://sh.lucksung.com',
     internalEmailAddress: 'li.jian@lucksung.com',
+
+    // wechat config
+    appid: 'wxe11547a0fbdd11a1',
+    appsecret: '5ce3bae64a0761da9b625ba0f682e5cf',
+    envname: 'cloud-rhf5t',
+    mchid: '10011583',
+    key: 'CHINA2016LueshengLCSSHANGHAI0910',
+    timeout: 3000,
+
+    // cereson api config
+    api_url: 'https://connt.cereson.cn/api/v2/',
+    auth_name: 'admin',
+    auth_password: 'admin',
+    reserve_order_expire_days: 1
   },
-
-
 
 };
