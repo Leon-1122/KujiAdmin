@@ -30,26 +30,17 @@ module.exports = {
 
     var lotteryInfo;
 
-    var levelInfo = await Code.find({category: 'level'}).sort('order ASC');
-
     if (inputs.id) {
       lotteryInfo = await Lottery.findOne({id: inputs.id});
 
       if (!lotteryInfo) {
         throw "lotteryNotExist";
       }
-
-      lotteryInfo.productPreview.map(function (item) {
-        levelInfo = _.reject(levelInfo, function (el) {
-          return el.code === item.level;
-        })
-      });
     }
 
     return {
       pagename: 'lottery-editor',
       lottery: lotteryInfo,
-      level: levelInfo,
     };
 
   }

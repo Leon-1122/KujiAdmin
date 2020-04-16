@@ -26,6 +26,6 @@ module.exports.uploads = {
   * (Instead, you might want to have a look at `config/env/production.js`.)  *
   *                                                                          *
   ***************************************************************************/
-  // dirpath: '.tmp/uploads',
-
+  dirpath: '.tmp/uploads',
+  adapter: require('skipper-disk')
 };

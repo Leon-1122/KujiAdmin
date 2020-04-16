@@ -22,4 +22,5 @@ module.exports.policies = {
   'entrance/*': true,
   'view-homepage-or-redirect': true,
   'lottery/download-picture': true,
+  'wx/*': true,
 };

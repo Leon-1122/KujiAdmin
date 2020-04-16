@@ -58,6 +58,8 @@ module.exports = {
       //  sails_datastores__default__url=mysql://admin:myc00lpAssw2D@db.example.com:3306/my_prod_db
       //  ```
       //--------------------------------------------------------------------------
+      adapter: 'sails-mongo',
+      url: 'mongodb://kuji:asdfasdf@localhost:27017/kuji',
 
       /****************************************************************************
       *                                                                           *
@@ -221,8 +223,8 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     cookie: {
-      // secure: true,
-      maxAge: 24 * 60 * 60 * 1000,  // 24 hours
+      secure: true,
+      maxAge: 60 * 60 * 1000,  // 1 hour
     },
 
   },
@@ -250,10 +252,9 @@ module.exports = {
     * > Be sure to use the right protocol!  ("http://" vs. "https://")         *
     *                                                                          *
     ***************************************************************************/
-    // onlyAllowOrigins: [
-    //   'https://example.com',
-    //   'https://staging.example.com',
-    // ],
+    onlyAllowOrigins: [
+      'https://sh.lucksung.com',
+    ],
 
 
     /***************************************************************************
@@ -292,7 +293,7 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   log: {
-    level: 'debug'
+    level: 'info'
   },
 
 
@@ -322,7 +323,7 @@ module.exports = {
     * (https://sailsjs.com/config/http)                                        *
     *                                                                          *
     ***************************************************************************/
-    // trustProxy: true,
+    trustProxy: true,
 
   },
 
@@ -371,26 +372,22 @@ module.exports = {
   *                                                                         *
   ***************************************************************************/
   custom: {
-    baseUrl: 'https://example.com',
-    internalEmailAddress: 'support@example.com',
+    baseUrl: 'https://sh.lucksung.com',
+    internalEmailAddress: 'li.jian@lucksung.com',
 
-    // mailgunDomain: 'mg.example.com',
-    // mailgunSecret: 'key-prod_fake_bd32301385130a0bafe030c',
-    // stripeSecret: 'sk_prod__fake_Nfgh82401348jaDa3lkZ0d9Hm',
-    //--------------------------------------------------------------------------
-    // /\   OR, to avoid checking them in to version control, you might opt to
-    // ||   set sensitive credentials like these using environment variables.
-    //
-    // For example:
-    // ```
-    // sails_custom__mailgunDomain=mg.example.com
-    // sails_custom__mailgunSecret=key-prod_fake_bd32301385130a0bafe030c
-    // sails_custom__stripeSecret=sk_prod__fake_Nfgh82401348jaDa3lkZ0d9Hm
-    // ```
-    //--------------------------------------------------------------------------
+    // wechat config
+    appid: 'wxe11547a0fbdd11a1',
+    appsecret: '5ce3bae64a0761da9b625ba0f682e5cf',
+    envname: 'cloud-rhf5t',
+    mchid: '10011583',
+    key: 'CHINA2016LueshengLCSSHANGHAI0910',
+    timeout: 3000,
 
+    // cereson api config
+    api_url: 'https://connt.cereson.cn/api/v2/',
+    auth_name: 'admin',
+    auth_password: 'admin',
+    reserve_order_expire_days: 1
   },
-
-
 
 };

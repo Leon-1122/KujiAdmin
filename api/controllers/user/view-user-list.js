@@ -39,6 +39,7 @@ module.exports = {
     if (inputs.searchFor) {
       criteria = {
         or: [
+          {accountName: {'contains': inputs.searchFor}},
           {emailAddress: {'contains': inputs.searchFor}},
           {fullName: {'contains': inputs.searchFor}}
         ]

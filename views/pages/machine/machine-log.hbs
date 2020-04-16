@@ -1,0 +1,158 @@
+{{#extend "app-layout"}}
+  {{#content "article" mode="append"}}
+      <div class="title-search-block">
+
+          <div class="title-block">
+              <div class="row">
+                {{!-- Title --}}
+                  <div class="col-md-6">
+                      <h3 class="title">
+                        {{__ 'Machine'}}
+                          <a href="javascript:exportCsv('machine-log')" class="btn btn-primary btn-sm rounded-s">
+                            {{__ 'Export'}}
+                          </a>
+                      </h3>
+                      <p class="title-description">
+                        {{__ 'Machine Log'}}
+                      </p>
+                  </div>
+
+              </div>
+          </div>
+
+
+          <div class="items-search">
+              <form id="machine-log-form" class="form-inline" action="/machine/log">
+                  <div class="input-group">
+                      <input type="text" name="searchFor" class="form-control boxed rounded-s" style="width:350px;" placeholder="{{__ 'Search for machine log'}}" value="{{searchFor}}">
+                      <span class="input-group-btn">
+                        <button class="btn btn-secondary rounded-s" type="submit">
+                          <i class="fa fa-search"></i>
+                        </button>
+                      </span>
+                  </div>
+              </form>
+          </div>
+      </div>
+
+
+      <div class="card items">
+          <ul class="item-list striped">
+              <li class="item item-list-header">
+                  <div class="item-row">
+                      <div class="item-col item-col-header item-col-date">
+                          <div>
+                              <span>{{__ 'Machine ID'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date item-col-6">
+                          <div class="no-overflow">
+                              <span>{{__ 'Lottery name'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date">
+                          <div class="no-overflow">
+                              <span>{{__ 'Level'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date item-col-6">
+                          <div class="no-overflow">
+                              <span>{{__ 'Product name'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date">
+                          <div class="no-overflow">
+                              <span>{{__ 'Num'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date">
+                          <div>
+                              <span>{{__ 'Category'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date">
+                          <div>
+                              <span>{{__ 'Description'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date">
+                          <div>
+                              <span>{{__ 'Operator'}}</span>
+                          </div>
+                      </div>
+                      <div class="item-col item-col-header item-col-date">
+                          <div>
+                              <span>{{__ 'Operate time'}}</span>
+                          </div>
+                      </div>
+                  </div>
+              </li>
+            {{#each items}}
+                <li class="item">
+
+                    <div class="item-row">
+
+                        <div class="item-col item-col-date">
+                            <div class="item-heading">{{../__ 'Machine ID'}}</div>
+                            <div class="no-overflow">
+                              {{this.machineId}}
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date item-col-6">
+                            <div class="item-heading">{{../__ 'Lottery name'}}</div>
+                            <div class="no-overflow">
+                              {{this.lotteryName}}
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date">
+                            <div class="item-heading">{{../__ 'Level'}}</div>
+                            <div class="no-overflow">
+                              {{this.level}}
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date item-col-6">
+                            <div class="item-heading">{{../__ 'Product name'}}</div>
+                            <div class="no-overflow">
+                              {{this.productName}}
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date">
+                            <div class="item-heading">{{../__ 'Num'}}</div>
+                            <div class="no-overflow">
+                              {{this.num}}
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date">
+                            <div class="item-heading">{{../__ 'Category'}}</div>
+                            <div class="no-overflow">
+                              {{this.category}}
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date">
+                            <div class="item-heading">{{../__ 'Description'}}</div>
+                            <div class="no-overflow">
+                              {{this.desc}}
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date">
+                            <div class="item-heading">{{../__ 'Operator'}}</div>
+                            <div class="no-overflow">
+                              {{this.operator}}
+                            </div>
+                        </div>
+                        <div class="item-col item-col-date">
+                            <div class="item-heading">{{../__ 'Operate time'}}</div>
+                            <div class="no-overflow">
+                              {{#date this.createdAt}}{{/date}}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            {{/each}}
+          </ul>
+      </div>
+
+      {{> app/_common/pager/pager}}
+
+  {{/content}}
+{{/extend}}

@@ -36,16 +36,29 @@ module.exports = {
   fn: async function (inputs) {
     let result = {};
     const api = 'remote_deliver';
-    // TODO 生成外部订单号
-    const orderNo = 'RT' + Date.now();
-    let params = {out_order_no: orderNo, machine_id: inputs.machineId, items: JSON.stringify(inputs.items)};
+    const orderNo = 'RD' + Date.now() + Math.round(1e3 * Math.random());
+    let params = {out_order_no: orderNo, machine_id: inputs.machineId, items: inputs.items};
     let response = await sails.helpers.ceresonApi.with({api, params}).intercept(function (err) {
       console.log(err);
       return 'takeOutProductFailed';
     });
 
-    if (response.status_code === 0) {
+    if (response.status_code === 0 && response.data.success) {
       result = {item: inputs.machineId, status: 'ok', msg: response.msg};
+
+      // 生成日志
+      for (const item of inputs.items) {
+        await MachineLog.create({
+          machineId: inputs.machineId,
+          productName: item.name,
+          num: item.count,
+          desc: '指定取出',
+          category: '库存',
+          operator: this.req.me.fullName,
+          user: this.req.me.id,
+        });
+      }
+
     } else {
       result = {item: inputs.machineId, status: 'ng', msg: response.msg};
     }

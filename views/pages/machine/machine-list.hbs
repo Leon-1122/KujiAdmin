@@ -16,7 +16,7 @@
                             {{__ 'More actions...'}}
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="deleteCheckedRecords('machine')"><i class="fa fa-close icon"></i>{{__ 'Delete'}}</a>
+                              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="deleteCheckedRecords('machine')"><i class="fa fa-trash-o icon"></i>{{__ 'Delete'}}</a>
                           </div>
                       </div>
                       </h3>
@@ -137,7 +137,7 @@
                         </div>
                         <div class="item-col item-col-date">
                             <div class="item-heading">{{../__ 'OO status'}}</div>
-                            <div class="no-overflow">
+                            <div class="no-overflow {{this.oo_status}}" >
                               {{this.oo_status}}
                             </div>
                         </div>

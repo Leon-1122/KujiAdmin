@@ -1,7 +1,7 @@
 {{#extend "main-layout"}}
   {{#content "body" mode="append"}}
     <div class="main-wrapper">
-      <div class="app" id="app">
+      <div class="app sidebar-fixed" id="app">
         {{!-- Default header block --}}
         {{> app/_common/header/header}}
 
@@ -11,7 +11,7 @@
         <div class="mobile-menu-handle"></div>
 
         {{!-- Content section --}}
-        <article class="content {{pagename}}-page {{#is pagename "like" "/.*-list|machine-stock|machine-lottery|machine-logs$/g"}}items-list-page{{/is}} ">
+        <article class="content {{pagename}}-page {{#is pagename "like" "/.*-list|machine-stock|machine-lottery|machine-log$/g"}}items-list-page{{/is}} ">
           {{#block "article"}}
 
           {{/block}}

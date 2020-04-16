@@ -11,9 +11,12 @@
     "axios": "^0.19.2",
     "consolidate": "^0.15.1",
     "crypto-js": "^4.0.0",
+    "express-xml-bodyparser": "^0.3.0",
     "handlebars": "^4.7.3",
     "handlebars-layouts": "^3.1.4",
     "handlebars-registrar": "^1.5.2",
+    "ip": "^1.1.5",
+    "json2csv": "^5.0.0",
     "nodemailer": "^6.4.5",
     "sails": "^1.2.3",
     "sails-hook-apianalytics": "^2.0.3",
@@ -23,7 +26,9 @@
     "sails-hook-uploads": "^0.3.1",
     "sails-mongo": "^1.1.0",
     "sails-pager": "^2.1.0",
-    "winston": "^3.2.1"
+    "skipper": "^0.8.7",
+    "winston": "^3.2.1",
+    "wx-js-utils": "^1.0.0"
   },
   "devDependencies": {
     "eslint": "5.16.0",

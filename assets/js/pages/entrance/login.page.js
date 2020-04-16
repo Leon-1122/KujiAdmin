@@ -6,9 +6,8 @@ $(function () {
 
   var loginValidationSettings = {
     rules: {
-      emailAddress: {
+      userName: {
         required: true,
-        email: true
       },
       password: "required"
     },

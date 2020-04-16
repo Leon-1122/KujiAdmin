@@ -49,6 +49,7 @@ module.exports = {
 
     var url = require('url');
     var util = require('util');
+    var path = require('path');
 
     // Upload the image.
     var info = await sails.uploadOne(file, {
@@ -63,9 +64,15 @@ module.exports = {
       throw 'noFileAttached';
     }
 
+    var dirpath = path.resolve(
+      process.cwd(),
+      sails.config.appPath,
+      sails.config.uploads.dirpath
+    );
+
     // Create a new "picture" record.
     var newPicture = await Picture.create({
-      imageUploadFd: info.fd,
+      imageUploadFd: path.join(dirpath, info.fd),
       imageUploadMime: info.type,
       imageFileName: info.filename
     }).fetch();

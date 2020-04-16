@@ -9,11 +9,35 @@
                 {{__ 'Add user'}}
               {{/unless}}
           </h3>
+          {{#if user.id}}
+              <div style="text-align: right">
+                  <button class="btn btn-primary btn-sm rounded-s" data-toggle="modal" data-target="#confirm-modal" data-callback="resetPassword('{{user.id}}')">
+                    {{__ 'Reset password'}}
+                  </button>
+              </div>
+          {{/if}}
       </div>
 
 
-      <form id="user-editor-form" data-action="updateProfile" data-redirect="/user/list" novalidate="" onsubmit="return false">
+      <form id="user-editor-form" data-action="updateUser" data-redirect="/user/list" novalidate="" onsubmit="return false">
           <div class="card card-block">
+
+              <div class="form-group row">
+                  <label class="col-sm-2 form-control-label text-xs-right">
+                    {{__ 'Account name'}}:
+                  </label>
+                  <div class="col-sm-10">
+                    {{#if user.id}}
+                      <div style="padding-left:12px;">
+                        {{user.accountName}}
+                          <input type="hidden" name="accountName" id="accountName" value="{{user.accountName}}">
+                      </div>
+                    {{/if}}
+                    {{#unless user.id}}
+                        <input type="text" class="form-control boxed" name="accountName" id="accountName" placeholder="" value="{{user.accountName}}" required>
+                    {{/unless}}
+                  </div>
+              </div>
 
               <div class="form-group row">
                   <label class="col-sm-2 form-control-label text-xs-right">

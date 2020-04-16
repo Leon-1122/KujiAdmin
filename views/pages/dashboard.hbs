@@ -3,10 +3,172 @@
     <section class="section">
         <div class="row sameheight-container">
             <div class="col col-12 col-sm-12 col-md-6 col-xl-5 stats-col">
-                {{> app/dashboard/stats/stats}}
+                <select class="c-select form-control boxed" style="width:120px;" name="period" id="period" onchange="drawDashboard()">
+                  {{#each periodList}}
+                      <option value="{{this}}">{{../__ 'Latest %s days' this}}</option>
+                  {{/each}}
+                </select>
             </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="row sameheight-container">
+            <div class="col col-12 col-sm-12 col-md-6 col-xl-5 stats-col">
+                <div class="card sameheight-item stats" data-exclude="xs">
+                    <div class="card-block">
+                        <div class="title-block">
+                            <h4 class="title">
+                                {{__ 'Stats'}}
+                            </h4>
+                            <p class="title-description">
+                            </p>
+                        </div>
+
+                        <div class="row row-sm stats-container">
+                            <div class="col-12 col-sm-6  stat-col">
+                                <div class="stat-icon">
+                                    <i class="fa fa-list-alt"></i>
+                                </div>
+                                <div class="stat">
+                                    <div class="value">
+                                        {{totalOnlineMachineCount}}
+                                    </div>
+                                    <div class="name">
+                                      {{__ 'Machines online'}}
+                                    </div>
+                                </div>
+                                <div class="progress stat-progress">
+                                    <div class="progress-bar" style="width: {{machineRatio}}%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-6 stat-col">
+                                <div class="stat-icon">
+                                    <i class="fa fa-rocket"></i>
+                                </div>
+                                <div class="stat">
+                                    <div class="value">
+                                      {{totalStock}}
+                                    </div>
+                                    <div class="name">
+                                      {{__ 'Active items'}}
+                                    </div>
+                                </div>
+                                <div class="progress stat-progress">
+                                    <div class="progress-bar" style="width: {{stockRatio}}%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-6  stat-col">
+                                <div class="stat-icon">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                                <div class="stat">
+                                    <div class="value">
+                                      {{totalUserCount}}
+                                    </div>
+                                    <div class="name">
+                                      {{__ 'Total users'}}
+                                    </div>
+                                </div>
+                                <div class="progress stat-progress">
+                                    <div class="progress-bar" style="width: 100%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-6 stat-col">
+                                <div class="stat-icon">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </div>
+                                <div class="stat">
+                                    <div class="value">
+                                      {{totalSalesNum}}
+                                    </div>
+                                    <div class="name">
+                                      {{__ 'Items sold'}}
+                                    </div>
+                                </div>
+                                <div class="progress stat-progress">
+                                    <div class="progress-bar" style="width: 100%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-6  stat-col">
+                                <div class="stat-icon">
+                                    <i class="fa fa-line-chart"></i>
+                                </div>
+                                <div class="stat">
+                                    <div class="value">
+                                        ￥{{monthlySalesAmount}}
+                                    </div>
+                                    <div class="name">
+                                      {{__ 'Monthly income'}}
+                                    </div>
+                                </div>
+                                <div class="progress stat-progress">
+                                    <div class="progress-bar" style="width: 100%;"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-6 stat-col">
+                                <div class="stat-icon">
+                                    <i class="fa fa-cny"></i>
+                                </div>
+                                <div class="stat">
+                                    <div class="value">
+                                        ￥{{totalSalesAmount}}
+                                    </div>
+                                    <div class="name">
+                                      {{__ 'Total income'}}
+                                    </div>
+                                </div>
+                                <div class="progress stat-progress">
+                                    <div class="progress-bar" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
             <div class="col col-12 col-sm-12 col-md-6 col-xl-7 history-col">
-                {{> app/dashboard/history/history}}
+                <div class="card sameheight-item" data-exclude="xs" id="dashboard-history">
+                    <div class="card-header card-header-sm bordered">
+                        <div class="header-block">
+                            <h3 class="title">{{__ 'History'}}</h3>
+                        </div>
+                        <ul class="nav nav-tabs pull-right" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#visits" role="tab" data-toggle="tab">{{__ 'Visits'}}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#sales" role="tab" data-toggle="tab">{{__ 'Sales'}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-block">
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active fade show" id="visits">
+                                <p class="title-description">
+                                  {{__ 'Number of unique visits'}}
+                                </p>
+
+                                <div id="dashboard-visits-chart"></div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="sales">
+                                <p class="title-description">
+                                  {{__ 'Number of sales'}}
+                                </p>
+
+                                <div id="dashboard-sales-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -14,12 +176,23 @@
     <section class="section">
         <div class="row sameheight-container">
 
-            <div class="col-xl-8">
+            <div class="col-xl-8" id="dashboard-item-list-container">
                 {{> app/dashboard/items/items}}
             </div>
 
             <div class="col-xl-4">
-                 {{> app/dashboard/sales-breakdown/sales-breakdown}}
+                <div class="card sameheight-item sales-breakdown" data-exclude="xs,sm,lg">
+                    <div class="card-header">
+                        <div class="header-block">
+                            <h3 class="title">
+                                {{__ 'Sales breakdown'}}
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="card-block">
+                        <div class="dashboard-sales-breakdown-chart" id="dashboard-sales-breakdown-chart"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

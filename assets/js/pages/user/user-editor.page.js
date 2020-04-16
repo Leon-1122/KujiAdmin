@@ -6,6 +6,7 @@ $(function () {
 
   var userEditorValidationSettings = {
     rules: {
+      accountName: "required",
       emailAddress: {
         required: true,
         email: true

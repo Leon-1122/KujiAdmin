@@ -16,7 +16,7 @@
                             {{__ 'More actions...'}}
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="deleteCheckedRecords('lottery')"><i class="fa fa-close icon"></i>{{__ 'Delete'}}</a>
+                              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#confirm-modal" data-callback="deleteCheckedRecords('lottery')"><i class="fa fa-trash-o icon"></i>{{__ 'Delete'}}</a>
                           </div>
                       </div>
                       </h3>
@@ -109,7 +109,7 @@
 
                         <div class="item-col fixed item-col-img md">
                             <a href="/lottery/{{this.id}}">
-                                <div class="item-img rounded" style="background-image: url({{this.bannerImg}})"></div>
+                                <div class="item-img rounded lazy" data-bg="{{this.bannerImg}}"></div>
                             </a>
                         </div>
                         <div class="item-col fixed pull-left item-col-title">

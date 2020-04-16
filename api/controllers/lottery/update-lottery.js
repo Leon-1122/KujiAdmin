@@ -58,8 +58,8 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    var productPreview = _.sortByAll(JSON.parse(inputs.productPreview), ['level']);
-    var productList = _.sortByAll(JSON.parse(inputs.productList), ['level', 'sku']);
+    var productPreview = _.sortByAll(JSON.parse(inputs.productPreview), ['last', 'level']);
+    var productList = _.sortByAll(JSON.parse(inputs.productList), ['last', 'level', 'sku']);
 
     var valuesToSet = {
       name: inputs.name,

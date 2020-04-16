@@ -193,7 +193,7 @@ function doPage(formName, pageNum) {
  *        message display
  ***********************************************/
 function showAlert(msg, callback) {
-  $('#alert-modal .modal-body p').text(msg);
+  $('#alert-modal .modal-body p').html(msg);
   if (callback && $.isFunction(callback)) {
     $('#alert-close').one('click', callback);
   }
@@ -292,9 +292,9 @@ function takeOutCheckedProducts() {
   var items = [];
   $(".item:not(.item-list-header) input.checkbox:checked").each(function (i, e) {
     var $selectedRow = $(e).parents('.item-row');
-    var selectedMachineId = $selectedRow.find('.machineId').text();
-    var selectedSku = $(e).find('.sku').text();
-    var selectedName = $(e).find('.name').text();
+    var selectedMachineId = $selectedRow.find('.machineId').text().trim();
+    var selectedSku = $selectedRow.find('.sku').text().trim();
+    var selectedName = $selectedRow.find('.name').text().trim();
 
     if (machineId !== '' && machineId !== selectedMachineId) {
       showAlert($.validator.messages.tooManyMachines);
@@ -371,11 +371,143 @@ async function activeMachineLottery(ids) {
     });
 
   if (result) {
-    showAlert($.validator.messages.activeSuccess, function () {
+    if (result.data.failedList.length > 0) {
+      var names = '';
+      result.data.failedList.forEach(o => names += o.name + '<br>');
+      showAlert(names + '库存不足，生效失败', function () {
+        window.location = '/machine/lottery';
+      });
+    } else {
+      showAlert($.validator.messages.activeSuccess, function () {
+        window.location = '/machine/lottery';
+      });
+    }
+  } else {
+    showAlert($.validator.messages.activeFailed);
+  }
+}
+
+/***********************************************
+ *        disable machine lottery
+ ***********************************************/
+function disableCheckedMachineLotteries() {
+  var ids = [];
+  $(".item:not(.item-list-header) input.checkbox:checked").each(function (i, e) {
+    ids.push($(this).val());
+  });
+
+  if (ids.length === 0) {
+    showAlert($.validator.messages.selectMachineLottery);
+    return;
+  }
+
+  disableMachineLottery(ids);
+}
+
+function disableOneMachineLottery(id) {
+  var ids = [id];
+  disableMachineLottery(ids);
+}
+
+async function disableMachineLottery(ids) {
+  var result = await Cloud['disableMachineLottery'].with({ids: ids})
+    .tolerate((err) => {
+      console.log(err);
+    });
+
+  if (result) {
+    showAlert($.validator.messages.disableSuccess, function () {
       window.location = '/machine/lottery';
     });
   } else {
-    showAlert($.validator.messages.activeFailed);
+    showAlert($.validator.messages.disableFailed);
+  }
+}
+
+/***********************************************
+ *        refresh machine stock
+ ***********************************************/
+async function refreshMachineStock() {
+  var result = await Cloud['refreshMachineStock'].with({})
+    .tolerate((err) => {
+      console.log(err);
+    });
+
+  if (result) {
+    showAlert($.validator.messages.refreshSuccess, function () {
+      window.location = '/machine/stock';
+    });
+  } else {
+    showAlert($.validator.messages.refreshFailed);
+  }
+}
+
+/***********************************************
+ *        refresh machine
+ ***********************************************/
+async function refreshMachine() {
+  var result = await Cloud['addMachine'].with({})
+    .tolerate((err) => {
+      console.log(err);
+    });
+
+  if (result) {
+    if (result.data.status === 'ok') {
+      showAlert($.validator.messages.refreshSuccess, function () {
+        window.location = '/machine/list';
+      });
+    } else {
+      showAlert(result.data.msg);
+    }
+  } else {
+    showAlert($.validator.messages.refreshFailed);
+  }
+}
+
+/***********************************************
+ *        export csv
+ ***********************************************/
+async function exportCsv(pageName) {
+  var feature = pageName.replace('-list', '');
+  var arr = feature.split('-');
+  var module = '';
+  var camelFeature = '';
+
+  for (var i = 0; i < arr.length; i++) {
+    if (i === 0) {
+      module = arr[i];
+    }
+    camelFeature += arr[i].substring(0, 1).toUpperCase() + arr[i].substring(1, arr[i].length);
+  }
+
+  var searchFor = $(`#${pageName}-form input[name='searchFor']`).val();
+  var a = document.createElement('a');
+  a.href = `/${module}/export${camelFeature}Csv?searchFor=${searchFor}`;
+  a.download = '';
+  document.body.appendChild(a);
+  a.click();
+}
+
+
+/***********************************************
+ *        reset password
+ ***********************************************/
+async function resetPassword(userId) {
+  $('#loading').show();
+
+  var result = await Cloud['resetPassword'].with({id: userId})
+    .tolerate((err) => {
+      console.log(err);
+    });
+
+  $('#loading').hide();
+
+  if (result) {
+    showAlert($.validator.messages.resetPasswordSuccess, function () {
+      window.location = `/user/${userId}`;
+    });
+  } else {
+    showAlert($.validator.messages.resetPasswordFailed);
   }
 }
 

@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,800,700,600);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,800,700,600);
 /*************************************************************
 *						App Variables
 **************************************************************/
@@ -1147,6 +1147,8 @@ label,
   /********************************************
 	*			   Something else?
 	*********************************************/ }
+  .item-list .item .item-col {
+    font-size: 0.8rem; }
   .item-list .item-list-header .item-col.item-col-header span {
     color: #999;
     font-size: 0.8rem;
@@ -1297,6 +1299,10 @@ label,
             color: #3629db; }
           .item-list .item-actions-dropdown .item-actions-block .item-actions-list a.refresh {
             color: #15db2b; }
+          .item-list .item-actions-dropdown .item-actions-block .item-actions-list a.disable {
+            color: #838787; }
+          .item-list .item-actions-dropdown .item-actions-block .item-actions-list a.active {
+            color: #dbaf12; }
 /* *******************************************
 *				Adjustments
 ********************************************** */
@@ -1675,7 +1681,7 @@ pre {
     height: 225px;
     margin: auto; }
 
-.dashboard-page #dashboard-downloads-chart,
+.dashboard-page #dashboard-sales-chart,
 .dashboard-page #dashboard-visits-chart {
   height: 220px; }
 
@@ -3125,4 +3131,12 @@ input.form-control.number-input {
   #addLevel {
     width: 260px;
   }
+}
+
+.online {
+  color: #85CE36;
+}
+
+.offline {
+  color: #FF4444;
 }

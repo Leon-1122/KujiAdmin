@@ -4,6 +4,14 @@
           <h3 class="title">
               {{__ 'Machine lottery detail'}}
           </h3>
+          <div style="text-align: right">
+              <button class="btn btn-primary btn-sm rounded-s" onclick="showAwardModal(1)">
+            {{__ 'Increase'}}
+              </button>
+              <button class="btn btn-primary btn-sm rounded-s" onclick="showAwardModal(2)">
+            {{__ 'Decrease'}}
+              </button>
+          </div>
       </div>
 
 
@@ -15,7 +23,7 @@
                     {{__ 'Machine ID'}}:
                   </label>
                   <div class="col-sm-10">
-                      {{machineLottery.main.machineCode}}
+                      {{machineLottery.machineId}}
                   </div>
               </div>
 
@@ -24,7 +32,7 @@
                     {{__ 'Name'}}:
                   </label>
                   <div class="col-sm-10">
-                      {{machineLottery.main.name}}
+                      {{machineLottery.name}}
                   </div>
               </div>
 
@@ -33,7 +41,7 @@
                     {{__ 'Time title'}}:
                   </label>
                   <div class="col-sm-10">
-                    {{machineLottery.main.timeTitle}}
+                    {{machineLottery.timeTitle}}
                   </div>
               </div>
 
@@ -42,7 +50,7 @@
                     {{__ 'Card total'}}:
                   </label>
                   <div class="col-sm-10">
-                      {{machineLottery.detail.cardTotal}}
+                      {{machineLottery.cardTotal}}
                   </div>
               </div>
 
@@ -51,7 +59,7 @@
                     {{__ 'Card remain'}}:
                   </label>
                   <div class="col-sm-10">
-                    {{machineLottery.detail.cardRemain}}
+                    {{machineLottery.cardRemain}}
                   </div>
               </div>
 
@@ -60,9 +68,11 @@
                     {{__ 'Status'}}:
                   </label>
                   <div class="col-sm-10">
-                    {{#if machineLottery.main.comingSoon}}{{../__ 'Coming soon'}}
-                    {{else if machineLottery.main.soldOut}}{{../__ 'Sold out'}}
-                    {{else}}{{../__ 'Selling'}}{{/if}}
+                      {{#each machineLotteryStatusCode}}
+                        {{#is ../machineLottery.status '==' this.code}}
+                          {{this.codeName}}
+                        {{/is}}
+                      {{/each}}
                   </div>
               </div>
 
@@ -71,7 +81,7 @@
                     {{__ 'Sort'}}:
                   </label>
                   <div class="col-sm-10">
-                    {{machineLottery.detail.order}}
+                    {{machineLottery.order}}
                   </div>
               </div>
 
@@ -84,7 +94,7 @@
               </div>
 
               <div class="form-group row" id="productPreviewContainer">
-                  {{#each machineLottery.detail.productPreview}}
+                  {{#each machineLottery.productPreview}}
                       <div class="card float-card card-info">
                           <div class="card-header">
                               <div class="header-block row">
@@ -113,7 +123,7 @@
                                                   </tr>
                                               </thead>
                                           <tbody>
-                                            {{#each ../machineLottery.detail.productList}}
+                                            {{#each ../machineLottery.productList}}
                                                 {{#is this.level ../this.level}}
                                                     <tr>
                                                         <td>{{this.sku}}</td>
@@ -143,7 +153,8 @@
                   </div>
               </div>
           </div>
-          <input type="hidden" name="id" value="{{machineLottery.main._id}}">
+          <input type="hidden" name="id" value="{{machineLottery.id}}">
       </form>
+      {{> app/_common/modals/modal-award/modal-award}}
   {{/content}}
 {{/extend}}

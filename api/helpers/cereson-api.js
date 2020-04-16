@@ -43,7 +43,9 @@ module.exports = {
     let string1 = CryptoJS.MD5(auth_password + timestamp).toString().toUpperCase();
     let arr = [];
     for (let i in params) {
-      arr.push(i + "=" + params[i]);
+      if (!_.isArray(params[i]) && !_.isObject(params[i])) {
+        arr.push(i + "=" + params[i]);
+      }
     }
     arr.sort();
     let string2 = string1 + arr.join(',');
@@ -57,14 +59,14 @@ module.exports = {
       params: JSON.stringify(params)
     };
 
-    sails.log(`cereson api request: ${JSON.stringify(postData)}`);
+    sails.log.info(`cereson api request: ${JSON.stringify(postData)}`);
     let response = await axios.post(api_url, qs.stringify(postData));
-    sails.log(`cereson api response: ${response.status} ${response.statusText} ${JSON.stringify(response.data)}`);
+    sails.log.info(`cereson api response: ${response.status} ${response.statusText} ${JSON.stringify(response.data)}`);
 
     if (response.data) {
       return response.data;
     } else {
-      throw new Error('System Error');
+      throw new Error('NetworkError');
     }
   }
 

@@ -63,12 +63,14 @@ $(function () {
       var productList = [];
       $('#productPreviewContainer .float-card').each(function (i, e) {
         var level = $(this).find('.card-header .control-btn.remove').data('level');
+        var last = $(this).find('.card-header .control-btn.remove').data('last');
         var awardName = $(this).find('input[name=awardName]').val();
         var productImg = $(this).find('input[name=productImg]').val();
         productPreview.push({
           level: level,
           name: awardName,
-          productImg: productImg
+          productImg: productImg,
+          last: last
         });
         $(this).find('.table tbody tr').each(function (ii, ee) {
           var img = $(this).find('.product-img').attr('src');
@@ -78,9 +80,10 @@ $(function () {
           productList.push({
             sku: sku,
             level: level,
-            total: productTotal,
+            total: parseInt(productTotal),
             name: productName,
-            productImg: img
+            productImg: img,
+            last: last
           });
         });
       });
@@ -98,13 +101,52 @@ $(function () {
 
 // 添加奖项
 function addAward() {
-  var addLevel = $('#addLevel').val();
+  var addLevel = $('#addLevel').val().trim();
+  var lastChecked = $('#last').is(":checked");
+  var awardAdded = false;
+  var lastAdded = false;
+
   if (addLevel) {
+    $('#productPreviewContainer .float-card').each(function (i, e) {
+      var level = $(this).find('.card-header .control-btn.remove').data('level');
+      var last = $(this).find('.card-header .control-btn.remove').data('last');
+
+      if (addLevel === level) {
+        awardAdded = true;
+        return false;
+      }
+
+      if (lastChecked && last === true) {
+        lastAdded = true;
+        return false;
+      }
+    });
+
+    // 检查奖项名称是否重复
+    if (awardAdded) {
+      showAlert('输入的奖项重复');
+      return;
+    }
+
+    // 检查最终赏是否已添加
+    if (lastAdded) {
+      showAlert('最终赏已存在');
+      return;
+    }
+
     var newAward = $('#awardTemplate').clone();
     newAward.removeAttr('style');
     newAward.removeAttr('id');
-    newAward.find('.card-header .header-block .title').text(addLevel + '赏');
+
+    if (lastChecked) {
+      newAward.addClass('card-warning');
+    } else {
+      newAward.addClass('card-info');
+    }
+
+    newAward.find('.card-header .header-block .title').text(addLevel);
     newAward.find('.card-header .header-block .remove').data('level', addLevel);
+    newAward.find('.card-header .header-block .remove').data('last', lastChecked);
     newAward.find('.image-container .controls .control-btn.upload').on('click', function (e) {
       mediaTarget = $(e.currentTarget);
       $('#modal-media').modal();
@@ -117,24 +159,6 @@ function addAward() {
 
 // 删除奖项
 function deleteAward(element) {
-  // 删除奖项添加进下拉列表
-  var level = $(element).data('level');
-  $('#addLevel').append(`<option value="${level}">${level}</option>`);
-
-  // 下拉列表重新排序
-  var $options = $('#addLevel option');
-  $options.sort(function (a, b) {
-    var valA = $(a).val();
-    var valB = $(b).val();
-    if (valA < valB) {
-      return -1;
-    } else {
-      return 1;
-    }
-  });
-  $options.detach().appendTo('#addLevel');
-  $('#addLevel').val('');
-
   $(element).parents('.float-card').remove();
   calculateCardTotal();
 }
@@ -176,8 +200,8 @@ function addAwardProduct(element) {
 function calculateCardTotal() {
   var total = 0;
   $('input[name=total]').each(function () {
-    var level = $(this).parents('.float-card').find('.card-header .header-block .remove').data('level');
-    if ($(this).val() && !isNaN($(this).val()) && level !== 'Last One') {
+    var last = $(this).parents('.float-card').find('.card-header .header-block .remove').data('last');
+    if ($(this).val() && !isNaN($(this).val()) && !last) {
       total += parseInt($(this).val());
     }
   });

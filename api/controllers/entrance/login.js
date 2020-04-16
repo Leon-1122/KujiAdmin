@@ -9,8 +9,8 @@ module.exports = {
 
   inputs: {
 
-    emailAddress: {
-      description: 'The email to try in this attempt, e.g. "irl@example.com".',
+    userName: {
+      description: 'The account name or email to try in this attempt, e.g. "irl@example.com".',
       type: 'string',
       required: true
     },
@@ -46,7 +46,10 @@ module.exports = {
   fn: async function (inputs) {
 
     var userRecord = await User.findOne({
-      emailAddress: inputs.emailAddress.toLowerCase(),
+      or: [
+        {accountName: inputs.userName.toLowerCase()},
+        {emailAddress: inputs.userName.toLowerCase()},
+      ]
     });
 
     // If there was no matching user, respond thru the "badCombo" exit.
