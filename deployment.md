@@ -76,7 +76,7 @@
     - git拉取代码
 
             mkdir -p /var/local/www
-            git clone -b non-cloud https://github.com/Leon-1122/KujiAdmin.git
+            git clone https://github.com/Leon-1122/KujiAdmin.git
 
     - 修改配置文件
 
