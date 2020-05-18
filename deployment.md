@@ -46,7 +46,7 @@
             use admin
             db.createUser({ user:"root", pwd:"123456", roles:["root"] })
             use kuji
-            db.createUser({ user:"kuji", pwd:"asdfadf", roles:["readWrite", "dbAdmin"] })
+            db.createUser({ user:"kuji", pwd:"asdfasdf", roles:["readWrite", "dbAdmin"] })
 
     - 修改密码
 

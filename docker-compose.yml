@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./compose/nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 8000:8000
+    networks:
+      - front
+    depends_on:
+      - sails
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_DATABASE=kuji #初始化脚本对应数据库
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=123456
+      - MONGO_DATA_DIR=/data/db
+    volumes:
+      - ./compose/mongo/:/docker-entrypoint-initdb.d/ #初始化脚本存放路径
+      - ./data/db:/data/db
+    networks:
+      - backend
+  sails:
+    build:
+      context: .
+      dockerfile: compose/sails/Dockerfile
+    container_name: sails
+    command: /start-dev.sh
+    environment:
+      - USE_DOCKER=yes
+    volumes:
+      - .:/app
+    links:
+      - mongodb
+    networks:
+      - backend
+      - front
+  #mongodb web管理端，适用开发环境，生产环境不要加载
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=123456
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+    links:
+      - mongodb
+    networks:
+      - backend
+networks:
+  backend:
+  front:

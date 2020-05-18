@@ -59,7 +59,7 @@ module.exports = {
       //  ```
       //--------------------------------------------------------------------------
       adapter: 'sails-mongo',
-      url: 'mongodb://kuji:asdfasdf@localhost:27017/kuji',
+      url: 'mongodb://kuji:asdfasdf@mongodb:27017/kuji',
 
       /****************************************************************************
       *                                                                           *
