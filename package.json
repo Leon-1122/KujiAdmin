@@ -29,7 +29,7 @@
     "skipper": "^0.8.7",
     "winston": "^3.2.1",
     "wx-js-utils": "^1.0.0",
-    "grunt": "1.0.4",
+    "grunt": "1.5.3",
     "sails-hook-grunt": "^4.0.0"
   },
   "devDependencies": {
